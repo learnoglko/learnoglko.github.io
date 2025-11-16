@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>LearnOpenGL Korea</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <link href="css/brands.min.css" rel="stylesheet">
+        <link href="css/solid.min.css" rel="stylesheet">
+        <link href="css/v4-font-face.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">LearnOpenGL Korea</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#learnopengl" class="nav-link">LearnOpenGL</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">소개</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="learnopengl">LearnOpenGL</h1>
+<p>이것은 <a href="https://learnopengl.com">LearnOpenGL</a>의 한국어 번역입니다.</p>
+<p>번역기를 사용했으며, 오역이 있을 수 있습니다.</p>
+<h2 id="_1">소개</h2>
+<p>이곳에 오셨다니 아마 컴퓨터 그래픽의 내부 구조를 배우고, 유명 프로그래머들이 하는 모든 일을 직접 해보고 싶으실 겁니다. 직접 해보고 배우는건 정말 재미있고 유익하며, 컴퓨터 그래픽스에 대한 깊은 지식을 알 수 있습니다. 이 하지만 이 모든 것을 시작하기 전에 몇 가지 고려해야 할 사항이 있습니다.</p>
+<h3 id="_2">필수 조건</h3>
+<p>OpenGL은 자체 플랫폼이 아닌 그래픽 API이므로 작동할 언어가 필요하며 우리는 C++를 사용할 것입니다. 따라서 C++에 대한 지식이 필요합니다. 그래도 고급 C++ 개념은 같이 설명 할 예정이니 C++에 대해서 전문가일 필요는 없습니다. 단지 'Hello World'프로그램 이상을 작성할 수 있으면 됩니다. C++에 대한 경험이 많지 않은 경우 <a href="https://www.learncpp.com/">www.learncpp.com</a>를 추천드립니다.</p>
+<p>또한, 이 과정에서 선형대수, 기하학, 삼각법과 같은 수학을 사용할 예정이며, 필요한 모든 수학 개념을 설명하려고 노력할 것입니다. 하지만 저는 수학에 정통하지 않기 때문에 제 설명이 이해하기 쉬울지라도 대부분 불완전할 것입니다. 따라서 필요한 경우, 자료를 더 완벽하게 설명하는 좋은 자료들을 참고하실 수 있도록 안내해 드리겠습니다. OpenGL을 시작하기 전에 필요한 수학적 지식에 대해 걱정하지 마세요. 기본적인 수학적 배경 지식만 있으면 거의 모든 개념을 이해할 수 있으며, 가능한 한 수학적인 내용은 최소화하려고 노력할 것입니다. 대부분의 기능은 사용법만 알면 모든 수학적 지식을 이해할 필요가 없습니다. </p>
+<h3 id="_3">구조</h3>
+<p>LearnOpenGL은 여러 개의 일반 섹션으로 나뉩니다. 각 섹션은 여러 장으로 구성되어 있으며, 각 장은 다양한 개념을 자세히 설명합니다. 각 장은 왼쪽 메뉴에서 찾을 수 있습니다. 개념은 선형적으로 학습되므로 별도의 지시가 없는 한 처음부터 끝까지 순차적으로 학습하는 것이 좋습니다. 각 장에서는 배경 이론과 실제적인 측면을 설명합니다. </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js"></script>
+        <script src="search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-11-15 20:08:23.871364+00:00
+-->
