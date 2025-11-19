@@ -20,8 +20,8 @@ LearnOpenGL은 여러 개의 일반 섹션으로 나뉩니다. 각 섹션은 여
 
 ### 번역자
 저의 사이트도 확인해 보세요.  
-https://sinoka.dev
+[https://sinoka.dev](https://sinoka.dev)
 
 이 페이지의 원본은  
-https://git.sinoka.dev/learn-opengl-korean.git  
+[https://git.sinoka.dev/learn-opengl-korean.git](https://git.sinoka.dev/learn-opengl-korean.git)  
 에 있습니다.
