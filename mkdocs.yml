@@ -1,4 +1,6 @@
-site_name: LearnOpenGL Korea
+site_name: LearnOpenGL Korean
+
+site_description: https://learnopengl.com의 한국어 번역입니다.
 
 markdown_extensions:
   - admonition
