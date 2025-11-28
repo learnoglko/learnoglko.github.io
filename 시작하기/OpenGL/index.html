@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>OpenGL - LearnOpenGL Korean</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">LearnOpenGL Korean</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">LearnOpenGL</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">GL docs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../GL-docs/" class="dropdown-item">문서</a>
+</li>
+                                    
+<li>
+    <a href="../../GL-docs/funcs/" class="dropdown-item">Funcs</a>
+</li>
+                                    
+<li>
+    <a href="../../GL-docs/words/" class="dropdown-item">Words</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">시작하기</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">OpenGL</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../GL-docs/words/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#opengl" class="nav-link">OpenGL</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#core-profile-immediate-mode" class="nav-link">코어 프로파일(Core-profile)과 즉시 모드(Immediate mode)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#extensions" class="nav-link">확장 기능 (Extensions)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#state-machine" class="nav-link">상태 머신(State machine)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="opengl">OpenGL</h1>
+<p>긴 여정을 시작하기 전에 먼저 OpenGL이 실제로 무엇인지 알아야 합니다. OpenGL은 그래픽과 이미지를 조작하는 데 사용할 수 있는 다양한 함수를 제공하는 API 입니다. 그러나 OpenGL 자체는 API가 아니라 <a href="https://www.khronos.org/">크로노스 그룹</a>에서 개발하고 관리하는 사양(모양)일 뿐입니다.</p>
+<p>OpenGL 사양은 각 함수의 결과와 출력, 그리고 실행 방식만을 명시합니다. 따라서 이 사양을 어떤 방식으로 구현하는지는 온전히 개발자의 몫입니다. OpenGL 사양은 구현 세부 정보를 제공하지 않으므로, 실제로 개발된 OpenGL 버전은 결과가 사양을 준수하는 한(즉, 사용자에게 동일한 결과를 제공하는 한) 서로 다른 구현 방식을 가질 수 있습니다. </p>
+<p>실제 OpenGL 라이브러리를 개발하는 사람들은 보통 그래픽 카드 제조업체입니다. 구입하는 각 그래픽 카드는 해당 카드(시리즈)에 맞춰 특별히 개발된 특정 버전의 OpenGL을 지원합니다. Apple 시스템(맥북 등)을 사용하는 경우, OpenGL 라이브러리는 Apple에서 직접 관리하며, Linux에서는 그래픽 공급업체의 버전과 오픈소스 기여자들이 이러한 라이브러리를 변형한 버전이 함께 제공됩니다. 따라서 OpenGL이 예상치 못한 이상한 동작을 보일 경우, 이는 그래픽 카드 제조업체(또는 라이브러리를 개발/관리하는 업체)의 잘못일 가능성이 높습니다.</p>
+<div class="admonition tip">
+<p>대다수의 그래픽 카드 구현은 그래픽 카드 제조업체에서 직접 제작하므로, 구현에 버그가 발생할 경우 일반적으로 비디오 카드 드라이버를 업데이트하면 해결됩니다. 드라이버에는 카드가 지원하는 최신 버전의 OpenGL이 포함되어 있습니다. 따라서 그래픽 드라이버를 주기적으로 업데이트하는 것이 좋습니다. </p>
+</div>
+<p>크로노스 그룹에서는 모든 OpenGL 버전에 대한 사양 문서를 공개합니다. 이것에 대해 관심이 있다면 3.3 버전(이번에 사용할 버전)의 OpenGL 사양을 <a href="https://www.opengl.org/registry/doc/glspec33.core.20100311.withchanges.pdf">여기</a>에서 확인할 수 있습니다. OpenGL에 대한 자세한 내용을 알고 싶다면 참고할 만한 자료입니다(대부분 구현 내용이 아닌 결과만 설명합니다). 또한 이 사양은 해당 함수의 정확한 작동 방식을 찾는 데 유용한 참고 자료입니다.</p>
+<h2 id="core-profile-immediate-mode">코어 프로파일(Core-profile)과 즉시 모드(Immediate mode)</h2>
+<p>예전에는 OpenGL을 사용하면 <span style="color: #228B22;">즉시 모드</span>(또는 <span style="color: #228B22;">고정 기능 파이프라인</span>이라고 함)로 개발할 수 있었습니다. 이는 그래픽을 그리는 사용하기 쉬운 방법이었습니다. OpenGL의 기능 대부분은 라이브러리 내부에 숨겨져 있었고 개발자는 OpenGL의 계산 방식을 크게 제어할 수 없었습니다. 결국 개발자들은 더 큰 유연성을 갈망하게 되었고, 시간이 지남에 따라 사양도 더욱 유연해졌습니다. 개발자는 그래픽에 대한 제어력을 더 많이 확보하게 되었습니다. 즉시 모드는 사용하고 이해하기 매우 쉽지만 매우 비효율적입니다. 이러한 이유로 OpenGL 사양에서는 3.2 버전부터 즉시 모드 사용을 권장하지 않게 되었고(deprecate), 개발자들이 <span style="color: #228B22;">코어 프로파일</span>을 사용하여 개발하도록 동기를 부여하기 시작했습니다. 코어 프로파일 모드는 조금 더 현대적인 OpenGL 모드로, 오래되고 사용을 권장하지 않는 모든 기능이 제거된 모드입니다.</p>
+<div class="admonition note">
+<p>즉시 모드는 조금 더 사용하기 쉽지만 비효율적이고, 기능이 제한되어 있습니다. 그리고 코어 프로파일 모드에선 더 이상 사용되지 않는 함수 등이 제거되어 있고, 개발자가 그래픽 프로그래밍에 관여할 수 있는 부분이 조금 더 많은 현대적인 모드입니다.</p>
+</div>
+<p>OpenGL의 코어 프로파일을 사용할 때 OpenGL은 최신 방식을 사용하도록 강요합니다. OpenGL의 더 이상 사용되지 않는 함수 중 하나를 사용하려고 할 때마다 OpenGL은 오류를 발생시키고 그리기를 중단합니다. 최신 방식을 배우는 장점은 매우 유연하고 효율적이라는 것입니다. 하지만 배우기가 더 어렵다는 단점도 있습니다. 즉시 모드는 OpenGL이 수행하는 실제 연산에서 많은 부분을 추상화했기 때문에 배우기는 쉬웠지만 OpenGL의 실제 작동 방식을 파악하기는 어려웠습니다. 최신 방식을 사용하려면 개발자가 OpenGL과 그래픽 프로그래밍에 대한 진정한 이해를 요구하며, 다소 어렵기는 하지만 훨씬 더 높은 유연성과 효율성을 제공하고, 무엇보다도 그래픽 프로그래밍에 대한 이해도를 높여줍니다.</p>
+<p>이 책이 핵심 OpenGL 버전 3.3을 기반으로 작성된 이유도 바로 여기에 있습니다. 비록 더 어렵더라도, 그만한 가치가 충분히 있습니다.</p>
+<p>현재 OpenGL의 상위 버전(4.6 작성 시점)을 선택할 수 있는데, "OpenGL 4.6이 나왔는데 왜 OpenGL 3.3을 배워야 하나요?"라는 의문이 들 수 있습니다. 이 질문에 대한 답은 비교적 간단합니다. 3.3부터 시작되는 향후 모든 OpenGL 버전은 OpenGL의 핵심 메커니즘을 변경하지 않고 OpenGL에 유용한 추가 기능을 추가합니다. 최신 버전은 동일한 작업을 수행하는 데 약간 더 효율적이거나 유용한 방법이 존재할 뿐입니다. 결과적으로 OpenGL 3.3 이상의 버전은 기본적인 작동 방식이 동일하므로 OpenGL 3.3을 사용합니다. 많은 경험이 쌓였다면 새로운 OpenGL 기술을 응용하기 더 쉬워질 것입니다.</p>
+<div class="admonition warning">
+<p>최신 버전의 OpenGL 기능을 사용하는 경우, 최신 그래픽 카드에서만 애플리케이션을 실행할 수 있습니다. 이러한 이유로 대부분의 개발자는 일반적으로 하위 버전의 OpenGL을 사용하고, 선택적으로 상위 버전의 기능을 활성화합니다. </p>
+</div>
+<p>일부 장에서는 더욱 현대적인 기능을 사용할 수 있으며, 그러한 기능은 그대로 기록되어 있습니다. </p>
+<div class="admonition note">
+<p>2025년 기준으로도 마지막 OpenGL 버전은 2017년에 출시된 4.6이며, <a href="https://www.vulkan.org/">Vulkan</a>이라는 새로운 API가 나왔기 때문에 더 업데이트 될 것 같지는 않으나, Vulkan은 OpenGL과 많이 다르고 사용하기 훨신 어렵기 때문에 컴퓨터 그래픽스를 처음 사용한다면 OpenGL을 사용해주세요. Vulkan은 나중에 해도 충분합니다.<br />
+그리고 더 이상 업데이트 되지 않는것에서 두려움을 느낀다면 걱정하지 마세요. OpenGL은 아직도 많이 사용되는 API입니다.</p>
+</div>
+<h2 id="extensions">확장 기능 (Extensions)</h2>
+<p>OpenGL의 가장 큰 특징 중 하나는 확장 기능 지원입니다. 그래픽 회사가 새로운 기술이나 렌더링 최적화를 도입할 때마다 드라이버에 구현된 확장 기능을 통해 이를 확인할 수 있습니다. 애플리케이션이 실행되는 하드웨어가 이러한 <span style="color: #228B22;">확장 기능</span>을 지원하면 개발자는 해당 확장 기능이 제공하는 기능을 사용하여 더욱 고급적이고 효율적인 그래픽을 구현할 수 있습니다. 이렇게 하면 그래픽 개발자는 OpenGL이 향후 버전에 해당 기능을 포함할 때까지 기다릴 필요 없이, 그래픽 카드에서 해당 확장 기능을 지원하는지 확인하는 것만으로 새로운 렌더링 기술을 계속 사용할 수 있습니다. 일반적으로 확장 기능이 널리 사용되거나 매우 유용하면 향후 OpenGL 버전에 포함되는 경우가 많습니다. </p>
+<p>개발자는 이러한 확장 기능을 사용하기 전에(또는 OpenGL 확장 라이브러리를 사용하기 전에) 사용 가능한 확장 기능이 있는지 확인해야 합니다. 이를 통해 개발자는 확장 기능의 사용 가능 여부에 따라 작업을 더 효율적으로 수행할 수 있습니다. </p>
+<pre><code class="language-cpp">if(GL_ARB_extension_name)
+{
+    // 멋진 신기술을 사용해 보세요.
+}
+else
+{
+    // 그런 기술은 우리가 사용할 만큼 싸지 않아요.
+    // 오래된 방법을 사용해봅시다.
+}
+</code></pre>
+<p>OpenGL 버전 3.3에서는 대부분 기술에 확장 기능이 거의 필요하지 않지만, 필요한 경우 적절한 지침이 제공됩니다. </p>
+<h2 id="state-machine">상태 머신(State machine)</h2></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
