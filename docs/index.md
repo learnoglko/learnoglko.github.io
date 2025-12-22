@@ -59,10 +59,10 @@ LearnOpenGL은 여러 개의 일반 섹션으로 나뉩니다. 각 섹션은 여
 
 이 웹사이트는 같은 엔진을 사용하는 [중국어 LearnOpenGL](https://learnopengl-cn.github.io) 웹사이트를 일부 참고하였습니다.
 
+
+
 ## 번역자
 저의 사이트도 확인해 보세요.  
 [https://sinoka.dev](https://sinoka.dev)
 
-이 페이지의 원본은  
-[https://github.com/sinokadev/sinokadev.github.io](https://github.com/sinokadev/sinokadev.github.io)  
-에 있습니다.
+깃허브: [https://github.com/sinokadev/sinokadev.github.io](https://github.com/sinokadev/sinokadev.github.io)  
