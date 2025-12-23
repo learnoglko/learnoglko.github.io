@@ -82,7 +82,7 @@ struct OpenGL_Context {
   	...  	
 };
 ```
-```
+```c
 // 객체 만들기
 unsigned int objectId = 0;
 glGenObject(1, &objectId);
