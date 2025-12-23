@@ -1,11 +1,12 @@
 .admonition.tip {
-    background-color: rgba(56, 211, 56, 0.2);
-    color: rgb(12, 90, 12);
-    border-color: rgba(12, 90, 12, 0.2);
+    background-color: oklch(0.7592 0.2303 142.89 / 20%);
+    color: oklch(0.4078 0.1296 142.73);
+    border-color: oklch(0.4078 0.1296 142.73 / 20%);
 }
 
-.admonition.tip {
-    background-color: rgba(56, 211, 56, 0.2);
-    color: rgb(12, 90, 12);
-    border-color: rgba(12, 90, 12, 0.2);
+
+.admonition.warning {
+    background-color: oklch(66.554% 0.2213 25.559 / 0.2);
+    color: oklch(38.719% 0.14704 27.643);
+    border-color: oklch(30.421% 0.11003 26.799 / 0.2);
 }
