@@ -2,8 +2,12 @@ site_name: LearnOpenGL Korean
 
 site_description: https://learnopengl.com의 한국어 번역입니다.
 
+theme:
+  name: material
+
 markdown_extensions:
   - admonition
+  - pymdownx.mark
 
 extra_css:
   - css/style.css
@@ -16,3 +20,4 @@ nav:
       - OpenGL: 시작하기/OpenGL.md
       - 최초의 창: 시작하기/최초의 창.md
       - 안녕 창: 시작하기/안녕 창.md
+      - 안녕 삼각형: 시작하기/안녕 삼각형.md
