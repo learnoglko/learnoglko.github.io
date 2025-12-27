@@ -7,7 +7,10 @@ theme:
 
 markdown_extensions:
   - admonition
-  - pymdownx.mark
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
 
 extra_css:
   - css/style.css
@@ -15,9 +18,8 @@ extra_css:
 nav:
   - 소개: index.md
   - GL 문서: GL-docs/
-  - 목차:
-    - 시작하기:
-      - OpenGL: 시작하기/OpenGL.md
-      - 최초의 창: 시작하기/최초의 창.md
-      - 안녕 창: 시작하기/안녕 창.md
-      - 안녕 삼각형: 시작하기/안녕 삼각형.md
+  - 시작하기:
+    - OpenGL: 시작하기/OpenGL.md
+    - 최초의 창: 시작하기/최초의 창.md
+    - 안녕 창: 시작하기/안녕 창.md
+    - 안녕 삼각형: 시작하기/안녕 삼각형.md

@@ -16,3 +16,23 @@
     color: rgb(49, 49, 49);
     border-color: oklch(30.947% 0.08552 254.951 / 0.2);
 }
+
+/* 정의 (초록) */
+.g {
+  background-color: transparent;
+  color: #228B22;
+  font-weight: 600;
+}
+
+/* 프로그램 구조 (빨강) */
+.r {
+  color: #8B0000;
+  font-weight: 600;
+}
+
+/* 변수 / 상수 (파랑) */
+.b {
+  color: #00008B;
+  font-weight: 600;
+  font-family: monospace;
+}
