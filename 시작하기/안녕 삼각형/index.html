@@ -556,12 +556,13 @@
 <span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span>
 <span class="p">};</span><span class="w">  </span>
 </code></pre></div>
-<p>OpenGL은 3D 공간에서 작동하기 때문에 각 꼭짓점의 z 좌표가 0.0인 2D 삼각형을 렌더링합니다. 이렇게 하면 삼각형의 깊이가 그대로 유지되어 2D처럼 보이게 됩니다.</p>
+<p>OpenGL은 3D 공간에서 작동하기 때문에 각 꼭짓점의 z축 좌표가 0.0인 2D 삼각형을 렌더링합니다. 이렇게 하면 삼각형의 깊이가 그대로 유지되어 2D처럼 보이게 됩니다.</p>
 <div class="admonition tip">
 <p><strong>Normalized Device Coordinates (NDC)</strong>
 정점 셰이더에서 정점 좌표가 처리되면, x, y, z 값이 -1.0에서 1.0 사이의 작은 범위인 <strong class="g">정규화된 장치 좌표(normalized device coordinates)</strong>로 변환됩니다. 이 범위를 벗어나는 좌표는 버려지거나 잘려나가 화면에 표시되지 않습니다. 아래 그림에서 정규화된 장치 좌표(z축 제외)로 표현된 삼각형을 확인할 수 있습니다.</p>
 <p><img alt="" src="../../static/ndc.png" /></p>
-<p>일반적인 화면 좌표계와 달리 양의 y축은 위쪽 방향을 가리키고 (0,0) 좌표는 그래프의 왼쪽 상단이 아닌 중앙에 위치합니다. 최종적으로 모든 (변환된) 좌표가 이 좌표 공간에 있어야 하며, 그렇지 않으면 표시되지 않습니다.</p>
+<p>일반적인 화면 좌표계와 달리 양의 y축은 위쪽 방향을 가리키고 (0,0) 좌표는 그래프의 왼쪽 상단이 아닌 중앙에 위치합니다. 최종적으로 모든 (변환된) 좌표가 이 좌표 공간 안에 있어야 하며, 그렇지 않으면 표시되지 않습니다.</p>
+<p>그러면 NDC 좌표는 glViewport 함수로 제공한 데이터를 사용하여 뷰포트 변환을 통해 화면 공간 좌표로 변환됩니다. 이렇게 변환된 화면 공간 좌표는 다시 프래그먼트 셰이더의 입력으로 사용될 프래그먼트 좌표로 변환됩니다.</p>
 </div>
 
 
