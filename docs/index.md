@@ -44,12 +44,6 @@ LearnOpenGL은 여러 개의 일반 섹션으로 나뉩니다. 각 섹션은 여
  - **정의**{:.g} : 초록색 단어는 정의를 나타냅니다. 즉, 앞으로 자주 듣게 될 만한 중요한 개념 또는 이름입니다. 
  - **프로그램 구조**{:.r} : 빨간색 단어는 함수 이름이나 클래스 이름을 말합니다.
  - **변수**{:.b} : 파란색 단어는 모든 OpenGL 상수를 포함한 변수를 말합니다. 
- 
-### OpenGL 함수 참조
-
-원본 웹사이트에서는 마우스를 올리면 함수의 관한 내용이 나오는 마법같은 기술을 보여주었으나 저는 그런 기능을 모르기 때문에 아래와 같이 자체적으로 번역한 내용이 담긴 문서를 링크하겠습니다.
-
-[glEnable](ogldocs/funcs#glenable)
 
 ## 라이선스
 모든 내용은 CC BY 4.0 라이선스로 배포됩니다.([https://creativecommons.org/licenses/by-nc/4.0/legalcode](https://creativecommons.org/licenses/by-nc/4.0/legalcode))
