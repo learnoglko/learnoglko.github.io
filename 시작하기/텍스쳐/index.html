@@ -700,7 +700,7 @@
 <div class="admonition tip">
 <p>이미지 외에도 텍스처는 셰이더로 전송할 다양한 종류의 데이터를 저장하는 데 사용할 수 있지만, 이는 다른 주제에서 다루도록 하겠습니다.</p>
 </div>
-<p>아래 이미지는 이전 장에서 다룬 삼각형에 <img alt="벽돌 벽의 텍스처" src="https://learnopengl.com/img/textures/wall.jpg" />를 적용한 것입니다.</p>
+<p>아래 이미지는 이전 장에서 다룬 삼각형에 <a href="../../static/wall.jpg">벽돌 벽의 텍스처</a>를 적용한 것입니다.</p>
 <p><img alt="" src="../../static/textures.png" /></p>
 <p>삼각형에 텍스처를 매핑하려면 삼각형의 각 정점에 텍스처의 어느 부분에 해당하는지 알려줘야 합니다. 따라서 각 정점에는 텍스처 이미지의 어느 부분을 샘플링할지 지정하는 <strong class="g">텍스처 좌표(texture coordinate)</strong>가 연결되어야 합니다. 그런 다음 프래그먼트 보간이 나머지 프래그먼트에 대해 작업을 수행합니다.</p>
 <p>텍스처 좌표는 x축과 y축에서 0부터 1까지의 범위를 갖습니다(2D 텍스처 이미지를 사용한다는 점을 기억하세요). 텍스처 좌표를 사용하여 텍스처 색상을 추출하는 것을 <strong class="g">샘플링(sampling)</strong>이라고 합니다. 텍스처 좌표는 텍스처 이미지의 왼쪽 아래 모서리를 (0,0)에서 시작하여 오른쪽 위 모서리를 (1,1)에서 시작합니다. 다음 이미지는 텍스처 좌표를 삼각형에 매핑하는 방법을 보여줍니다.</p>
@@ -765,13 +765,19 @@
 <p>흔히 저지르는 실수 중 하나는 밉맵 필터링 옵션 중 하나를 확대 필터로 설정하는 것입니다. 밉맵은 주로 텍스처 크기를 줄일 때 사용되므로, 텍스처 확대에는 밉맵이 적용되지 않습니다. 따라서 밉맵 필터링 옵션을 지정하면 OpenGL <code>GL_INVALID_ENUM</code> 오류 코드가 발생합니다.</p>
 <h2 id="_5">텍스처 불러오기 및 생성</h2>
 <p>텍스처를 실제로 사용하려면 먼저 텍스처 이미지를 애플리케이션에 불러와야 합니다. 텍스처 이미지는 수십 가지 파일 형식으로 저장될 수 있으며, 각 형식마다 고유한 구조와 데이터 순서를 가지고 있습니다. 그렇다면 이러한 이미지를 애플리케이션에서 어떻게 불러올 수 있을까요? 한 가지 방법은 사용하려는 파일 형식(예: .PNG)을 선택하고 해당 형식을 큰 바이트 배열로 변환하는 자체 이미지 로더를 작성하는 것입니다. 자체 이미지 로더를 작성하는 것이 아주 어렵지는 않지만, 여전히 번거롭고, 더 많은 파일 형식을 지원해야 한다면 어떻게 될까요? 지원하려는 각 형식마다 이미지 로더를 작성해야 합니다.</p>
-<p>또 다른 해결책이자 아마도 좋은 방법은 여러 인기 있는 이미지 형식을 지원하고 모든 어려운 작업을 대신 처리해주는 이미지 로딩 라이브러리를 사용하는 것입니다. <code>stb_image.h</code>와 같은 라이브러리가 그 예입니다.</p>
+<p>또 다른 해결책이자 아마도 좋은 방법은 여러 인기 있는 이미지 형식을 지원하고 모든 어려운 작업을 대신 처리해주는 이미지 로딩 라이브러리를 사용하는 것입니다. stb_image.h와 같은 라이브러리가 그 예입니다.</p>
 <h3 id="stb_imageh">stb_image.h</h3>
-<p><code>stb_image.h</code>는 <a href="https://github.com/nothings">Sean Barrett</a>이 개발한 매우 인기 있는 단일 헤더 이미지 로딩 라이브러리로, 대부분의 인기 있는 파일 형식을 로드할 수 있으며 프로젝트에 쉽게 통합할 수 있습니다. <code>stb_image.h</code>는 <a href="https://github.com/nothings/stb/blob/master/stb_image.h">여기</a>에서 다운로드할 수 있습니다. 단일 헤더 파일을 다운로드하고 프로젝트에 <code>stb_image.h</code>로 추가한 다음, 다음 코드가 포함된 C++ 파일을 추가로 생성하면 됩니다.</p>
+<p>stb_image.h는 <a href="https://github.com/nothings">Sean Barrett</a>이 개발한 매우 인기 있는 단일 헤더 이미지 로딩 라이브러리로, 대부분의 인기 있는 파일 형식을 로드할 수 있으며 프로젝트에 쉽게 통합할 수 있습니다. stb_image.h는 <a href="https://github.com/nothings/stb/blob/master/stb_image.h">여기</a>에서 다운로드할 수 있습니다. 단일 헤더 파일을 다운로드하고 프로젝트에 stb_image.h로 추가한 다음, 다음 코드가 포함된 C++ 파일을 추가로 생성하면 됩니다.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define STB_IMAGE_IMPLEMENTATION</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;stb_image.h&quot;</span>
 </code></pre></div>
 <p><code>STB_IMAGE_IMPLEMENTATION</code>을 정의하면 전처리기가 헤더 파일을 수정하여 관련 정의 소스 코드만 포함하도록 만듭니다. 이렇게 하면 헤더 파일이 사실상 .cpp 파일이 됩니다. 이제 프로그램의 적절한 위치에 stb_image.h를 포함하고 컴파일하면 됩니다.</p>
+<p>다음 텍스처 섹션에서는 <a href="../../static/container.jpg">나무 상자 이미지</a>를 사용하겠습니다. stb_image.h를 사용하여 이미지를 로드하려면 <code>stbi_load</code> 함수를 사용합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">nrChannels</span><span class="p">;</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stbi_load</span><span class="p">(</span><span class="s">&quot;container.jpg&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>이 함수는 먼저 이미지 파일의 위치를 ​​입력으로 받습니다. 그런 다음 두 번째, 세 번째, 네 번째 인수로 세 개의 정수를 입력받아야 하는데, stb_image.h 파일은 이 값들을 결과 이미지의 너비, 높이, 그리고 색상 채널 수로 채웁니다. 이미지의 너비와 높이는 나중에 텍스처를 생성하는 데 필요합니다.</p>
+<p>l</p>
 
 
 
