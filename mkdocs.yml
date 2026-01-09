@@ -11,6 +11,12 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 extra_css:
   - css/style.css
@@ -25,3 +31,4 @@ nav:
     - 안녕 삼각형: 시작하기/안녕 삼각형.md
     - 셰이더: 시작하기/셰이더.md
     - 텍스쳐: 시작하기/텍스쳐.md
+    - 변형: 시작하기/변형.md
