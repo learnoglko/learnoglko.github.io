@@ -552,6 +552,50 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        벡터 반전
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        덧셈과 뺄셈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        길이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        벡터-벡터 곱셈
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -622,6 +666,50 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        벡터 반전
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        덧셈과 뺄셈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        길이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        벡터-벡터 곱셈
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -663,15 +751,159 @@
 <div class="arithmatex">\[
 \vec{v} =
 \begin{pmatrix}
-\color{red}{x} \\
-\color{green}{y} \\
-\color{blue}{z}
+\textcolor{red}{x} \\
+\textcolor{green}{y} \\
+\textcolor{blue}{z}
 \end{pmatrix}
 \]</div>
 <p>벡터는 방향을 나타내기 때문에 위치로 시각화하기가 어려울 때가 있습니다. 벡터를 위치로 시각화하려면 방향 벡터의 원점을 (0,0,0)으로 설정하고 특정 방향을 가리키는 지점을 나타내는 <strong class="g">위치 벡터</strong>를 만들 수 있습니다. (원점을 다르게 지정하고 '이 벡터는 이 원점에서 공간의 저 지점을 가리킨다'라고 표현할 수도 있습니다.) 따라서 위치 벡터 (3,5)는 원점 (0,0)을 기준으로 그래프에서 (3,5)를 가리킵니다. 이처럼 벡터를 사용하면 2차원 및 3차원 공간에서 방향과 위치를 설명할 수 있습니다.</p>
 <p>일반 숫자와 마찬가지로 벡터에도 여러 가지 연산을 정의할 수 있습니다(이미 보신 것도 있을 겁니다).</p>
 <h3 id="_3">스칼라 벡터 연산</h3>
 <p><strong class="g">스칼라(scalar)</strong>는 한 자리 숫자입니다. 스칼라를 포함하는 벡터를 더하거나 빼거나 곱하거나 나눌 때는 벡터의 각 요소에 스칼라를 더하거나 빼거나 곱하거나 나누면 됩니다. 덧셈의 경우 다음과 같습니다.</p>
+<div class="arithmatex">\[
+\begin{pmatrix}
+\textcolor{red}{1} \\
+\textcolor{green}{2} \\
+\textcolor{blue}{3}
+\end{pmatrix}
++ x
+\;\rightarrow\;
+\begin{pmatrix}
+\textcolor{red}{1} \\
+\textcolor{green}{2} \\
+\textcolor{blue}{3}
+\end{pmatrix}
++
+\begin{pmatrix}
+x \\
+x \\
+x
+\end{pmatrix}
+=
+\begin{pmatrix}
+\textcolor{red}{1} + x \\
+\textcolor{green}{2} + x \\
+\textcolor{blue}{3} + x
+\end{pmatrix}
+\]</div>
+<p>여기서 <span class="arithmatex">\(+\)</span>는 <span class="arithmatex">\(+\)</span>, <span class="arithmatex">\(-\)</span>, <span class="arithmatex">\(\cdot\)</span> 또는 <span class="arithmatex">\(\div\)</span>가 될 수 있으며, <span class="arithmatex">\(\cdot\)</span>는 곱셈 연산자입니다.</p>
+<h3 id="_4">벡터 반전</h3>
+<p>벡터를 반전시키면 방향이 반대인 벡터가 됩니다. 북동쪽을 가리키는 벡터는 반전 후 남서쪽을 가리키게 됩니다. 벡터를 반전시키려면 각 성분에 마이너스 부호를 붙입니다(스칼라 값 -1을 사용하여 스칼라와 벡터의 곱으로 나타낼 수도 있습니다).</p>
+<div class="arithmatex">\[
+-\vec{v}
+=
+-
+\begin{pmatrix}
+\textcolor{red}{v_x} \\
+\textcolor{green}{v_y} \\
+\textcolor{blue}{v_z}
+\end{pmatrix}
+=
+\begin{pmatrix}
+-\textcolor{red}{v_x} \\
+-\textcolor{green}{v_y} \\
+-\textcolor{blue}{v_z}
+\end{pmatrix}
+\]</div>
+<h3 id="_5">덧셈과 뺄셈</h3>
+<p>두 벡터의 덧셈은 <strong class="g">성분별 덧셈</strong>으로 정의됩니다. 즉, 한 벡터의 각 성분을 다른 벡터의 동일한 성분에 더하는 것입니다.</p>
+<div class="arithmatex">\[
+\vec{v}
+=
+\begin{pmatrix}
+\textcolor{red}{1} \\
+\textcolor{green}{2} \\
+\textcolor{blue}{2}
+\end{pmatrix},
+\vec{k}
+=
+\begin{pmatrix}
+\textcolor{red}{4} \\
+\textcolor{green}{5} \\
+\textcolor{blue}{6}
+\end{pmatrix}
+\;\rightarrow\;
+\vec{v} + \vec{k}
+=
+\begin{pmatrix}
+\textcolor{red}{1} + \textcolor{red}{4} \\
+\textcolor{green}{2} + \textcolor{green}{5} \\
+\textcolor{blue}{3} + \textcolor{blue}{6}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\textcolor{red}{5} \\
+\textcolor{green}{7} \\
+\textcolor{blue}{9}
+\end{pmatrix}
+\]</div>
+<p>시각적으로 보면, 벡터 v=(4,2)와 k=(1,2)에서 두 번째 벡터를 첫 번째 벡터의 끝점 위에 더하여 결과 벡터의 끝점을 찾는 방식(머리-꼬리 방식)과 같습니다.</p>
+<p><img alt="" src="../../static/vectors_addition.png" /></p>
+<p>일반적인 덧셈과 뺄셈처럼, 벡터 뺄셈은 두 번째 벡터의 부호를 반전시킨 덧셈과 같습니다.</p>
+<div class="arithmatex">\[
+\vec{v}
+=
+\begin{pmatrix}
+\textcolor{red}{1} \\
+\textcolor{green}{2} \\
+\textcolor{blue}{3}
+\end{pmatrix},
+\quad
+\vec{k}
+=
+\begin{pmatrix}
+\textcolor{red}{4} \\
+\textcolor{green}{5} \\
+\textcolor{blue}{6}
+\end{pmatrix}
+\;\rightarrow\;
+\vec{v} - \vec{k}
+=
+\begin{pmatrix}
+\textcolor{red}{1} + (-\textcolor{red}{4}) \\
+\textcolor{green}{2} + (-\textcolor{green}{5}) \\
+\textcolor{blue}{3} + (-\textcolor{blue}{6})
+\end{pmatrix}
+=
+\begin{pmatrix}
+-\textcolor{red}{3} \\
+-\textcolor{green}{3} \\
+-\textcolor{blue}{3}
+\end{pmatrix}
+\]</div>
+<p>두 벡터를 서로 빼면 두 벡터가 가리키는 위치의 차이가 되는 벡터가 나옵니다. 이는 두 점 사이의 차이를 나타내는 벡터를 구해야 하는 특정 경우에 유용합니다.</p>
+<p><img alt="" src="../../static/vectors_subtraction.png" /></p>
+<h3 id="_6">길이</h3>
+<p>벡터의 길이/크기를 구하려면 수학 시간에 배웠던 <strong class="g">피타고라스 정리</strong>를 사용합니다. 벡터의 x축과 y축 성분을 삼각형의 두 변으로 생각하면 벡터는 삼각형을 이룹니다.</p>
+<p><img alt="" src="../../static/vectors_triangle.png" /></p>
+<p>두 변의 길이(x, y)가 알려져 있고 기울어진 변의 길이 <span class="arithmatex">\(\color{red}{\vec{v}}\)</span>를 알고 싶으므로 피타고라스 정리를 사용하여 다음과 같이 계산할 수 있습니다.</p>
+<div class="arithmatex">\[
+\lVert {\color{red}{\vec{v}}} \rVert
+=
+\sqrt{\textcolor{green}{x}^2 + \textcolor{blue}{y}^2}
+\]</div>
+<p>여기서 <span class="arithmatex">\(\lVert {\color{red}{\vec{v}}} \rVert\)</span>는 벡터 <span class="arithmatex">\(\color{red}{\vec{v}}\)</span>의 길이를 나타냅니다. 이는 <span class="arithmatex">\(z^2\)</span>를 추가함으로써 3D로 쉽게 확장할 수 있습니다.</p>
+<p>이 경우 벡터 (4, 2)의 길이는 다음과 같습니다.</p>
+<div class="arithmatex">\[
+\lVert {\color{red}{\vec{v}}} \rVert
+=
+\sqrt{\textcolor{green}{4}^2 + \textcolor{blue}{2}^2}
+=
+\sqrt{{\textcolor{green}{16}} + {\textcolor{blue}{4}}}
+=
+\sqrt{20}
+\approx 4.47
+\]</div>
+<p>즉 4.47(근사값)입니다.</p>
+<p>벡터에는 특별한 종류가 있는데, 이를 <strong class="g">단위 벡터</strong>라고 합니다. 단위 벡터는 길이가 정확히 1이라는 추가적인 특징을 가지고 있습니다. 어떤 벡터든 각 성분을 벡터의 길이로 나누면 단위 벡터 <span class="arithmatex">\(\hat{n}\)</span>을 구할 수 있습니다.</p>
+<div class="arithmatex">\[
+\hat{n}
+=
+\frac{\vec{v}}{\lVert \vec{v} \rVert}
+\]</div>
+<p>이를 <strong class="g">벡터 정규화(normalizing)</strong>라고 합니다. 단위 벡터는 머리 위에 작은 지붕 모양으로 표시되며, 특히 방향만 중요한 경우(벡터의 길이가 바뀌어도 방향은 변하지 않음) 다루기가 훨씬 쉽습니다.</p>
+<h3 id="-">벡터-벡터 곱셈</h3>
+<p>두 벡터의 곱셈은 다소 특이한 경우입니다. 일반적인 벡터 곱셈은 시각적인 의미가 없기 때문에 명확하게 정의되어 있지 않지만, 곱셈을 할 때 선택할 수 있는 두 가지 특정한 경우가 있습니다. 하나는 내적(<span class="arithmatex">\(\vec{v}\cdot\vec{k}\)</span>)이고 다른 하나는 외적(<span class="arithmatex">\(\vec{v}\times\vec{k}\)</span>)입니다.</p>
 
 
 
@@ -725,8 +957,6 @@
     
     
       <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
-      
-        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
