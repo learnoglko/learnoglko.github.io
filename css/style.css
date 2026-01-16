@@ -43,3 +43,10 @@ img {
   border-radius: 10px;
 }
 
+.katex {
+  font-size: 1.2em;
+}
+
+.md-grid {
+  max-width: 80%; /* or 100%, if you want to stretch to full-width */
+}

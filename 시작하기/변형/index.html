@@ -46,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../css/style.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -735,8 +737,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        행렬 결합
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        코드에서...
+      
+    </span>
+  </a>
   
 </li>
       
@@ -988,8 +1012,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        행렬 결합
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        코드에서...
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1339,9 +1385,7 @@ x
 <p>머릿속으로 곱셈을 떠올리는 데 어려움을 느끼더라도 걱정하지 마세요. 손으로 직접 계산해 보면서 어려움이 있을 때마다 이 페이지로 돌아오세요. 시간이 지나면서 행렬 곱셈은 자연스럽게 익숙해질 것입니다.</p>
 <p>좀 더 큰 예제를 통해 행렬 곱셈에 대한 논의를 마무리해 보겠습니다. 색깔을 이용하여 패턴을 시각화해 보세요. 유용한 연습으로, 직접 곱셈 결과를 계산해 보고 결과 행렬과 비교해 보세요. (행렬 곱셈을 직접 손으로 계산해 보면 금방 이해할 수 있을 겁니다.)</p>
 <div class="arithmatex">\[
-{\small
 \begin{bmatrix} \textcolor{red}4 &amp; \textcolor{red}2 &amp; \textcolor{red}0 \\ \textcolor{green}0 &amp; \textcolor{green}8 &amp; \textcolor{green}1 \\ \textcolor{blue}0 &amp; \textcolor{blue}1 &amp; \textcolor{blue}0 \end{bmatrix} \cdot \begin{bmatrix} \textcolor{red}4 &amp; \textcolor{green}2 &amp; \textcolor{blue}1 \\ \textcolor{red}2 &amp; \textcolor{green}0 &amp; \textcolor{blue}4 \\ \textcolor{red}9 &amp; \textcolor{green}4 &amp; \textcolor{blue}2 \end{bmatrix} = \begin{bmatrix} \textcolor{red}4 \cdot \textcolor{red}4 + \textcolor{red}2 \cdot \textcolor{red}2 + \textcolor{red}0 \cdot \textcolor{red}9 &amp; \textcolor{red}4 \cdot \textcolor{green}2 + \textcolor{red}2 \cdot \textcolor{green}0 + \textcolor{red}0 \cdot \textcolor{green}4 &amp; \textcolor{red}4 \cdot \textcolor{blue}1 + \textcolor{red}2 \cdot \textcolor{blue}4 + \textcolor{red}0 \cdot \textcolor{blue}2 \\ \textcolor{green}0 \cdot \textcolor{red}4 + \textcolor{green}8 \cdot \textcolor{red}2 + \textcolor{green}1 \cdot \textcolor{red}9 &amp; \textcolor{green}0 \cdot \textcolor{green}2 + \textcolor{green}8 \cdot \textcolor{green}0 + \textcolor{green}1 \cdot \textcolor{green}4 &amp; \textcolor{green}0 \cdot \textcolor{blue}1 + \textcolor{green}8 \cdot \textcolor{blue}4 + \textcolor{green}1 \cdot \textcolor{blue}2 \\ \textcolor{blue}0 \cdot \textcolor{red}4 + \textcolor{blue}1 \cdot \textcolor{red}2 + \textcolor{blue}0 \cdot \textcolor{red}9 &amp; \textcolor{blue}0 \cdot \textcolor{green}2 + \textcolor{blue}1 \cdot \textcolor{green}0 + \textcolor{blue}0 \cdot \textcolor{green}4 &amp; \textcolor{blue}0 \cdot \textcolor{blue}1 + \textcolor{blue}1 \cdot \textcolor{blue}4 + \textcolor{blue}0 \cdot \textcolor{blue}2 \end{bmatrix} \\ = \begin{bmatrix} 20 &amp; 8 &amp; 12 \\ 25 &amp; 4 &amp; 34 \\ 2 &amp; 0 &amp; 4 \end{bmatrix}
-}
 \]</div>
 <p>보시다시피, 행렬 곱셈은 상당히 번거롭고 오류 발생 가능성이 매우 높습니다(그래서 보통 컴퓨터가 이 작업을 수행합니다). 특히 행렬의 크기가 커질수록 문제는 더욱 심각해집니다. 행렬의 수학적 속성에 대해 더 자세히 알고 싶으시다면 <a href="https://www.khanacademy.org/math/algebra-home/alg-matrices">칸 아카데미의 행렬 관련 영상</a>을 시청해 보시기를 강력히 추천합니다.</p>
 <p>어쨌든, 이제 행렬 곱셈 방법을 알았으니 본격적인 내용을 살펴볼 수 있겠네요.</p>
@@ -1381,6 +1425,10 @@ x
 <p>또한, 동차 좌표가 0일 때 그 벡터는 특히 <strong class="g">방향 벡터(direction vector)</strong>라고 불리는데, 이는 w 좌표가 0인 벡터는 변환 될 수 없기 때문입니다.</p>
 </div>
 <p>변환 행렬을 사용하면 객체를 3축 방향(x, y, z) 중 어느 방향으로든 이동시킬 수 있으므로 변형 행렬중에서 매우 유용한 변형 행렬중 하나입니다.</p>
+<div class="admonition note">
+<p class="admonition-title">Translation</p>
+<p>Translation는 평행 이동으로도 번역됩니다.</p>
+</div>
 <h3 id="_14">회전</h3>
 <p>앞선 몇 가지 변환은 2D 또는 3D 공간에서 비교적 쉽게 이해하고 시각화할 수 있었지만, 회전은 조금 더 까다롭습니다. 이러한 행렬이 어떻게 구성되는지 정확히 알고 싶다면 <a href="https://www.khanacademy.org/math/linear-algebra/matrix_transformations">칸 아카데미의 선형대수 강의 중 회전 관련 부분</a>을 시청하는 것을 추천합니다.</p>
 <p>먼저 벡터의 회전이 무엇인지 정의해 보겠습니다. 2차원 또는 3차원에서의 회전은 각도로 표현됩니다. 각도는 도 또는 라디안으로 나타낼 수 있는데, 원은 360도 또는 2π 라디안입니다. 저는 일반적으로 더 익숙한 도 단위를 사용하여 회전을 설명하는 것을 선호합니다.</p>
@@ -1391,6 +1439,41 @@ x
 </code></pre></div>
 여기서 PI는 (반올림하여) 3.14159265359입니다.</p>
 </div>
+<p>반원을 회전하면 360/2 = 180도가 회전하고, 오른쪽으로 1/5을 회전하면 360/5 = 72도가 회전합니다. 이는 기본적인 2차원 벡터 <span class="arithmatex">\(\textcolor{red}{\vec{v}}\)</span>가 <span class="arithmatex">\(\textcolor{green}{\bar{k}}\)</span>에서 오른쪽으로, 즉 시계 방향으로 72도 회전한 경우를 통해 확인할 수 있습니다.</p>
+<p><img alt="" src="../../static/vectors_angle.png" /></p>
+<p>3D 공간에서의 회전은 각도와 <strong class="g">회전축</strong>을 이용하여 지정합니다. 지정된 각도는 지정된 회전축을 따라 객체를 회전시킵니다. 머리를 특정 각도로 돌리면서 하나의 회전축을 계속 내려다본다고 상상해 보세요. 예를 들어 2D 벡터를 3D 공간에서 회전시킬 때는 회전축을 z축으로 설정합니다(이를 상상해 보세요).</p>
+<p>삼각법을 이용하면 주어진 각도에 따라 벡터를 회전된 벡터로 변환할 수 있습니다. 이는 일반적으로 사인 함수와 코사인 함수(흔히 sin과 cos로 줄여 부름)를 적절히 조합하여 수행됩니다. 회전 행렬의 생성 방법에 대한 자세한 설명은 이 장의 범위를 벗어납니다.</p>
+<p>3차원 공간의 각 단위 축에 대해 회전 행렬이 정의되며, 각도는 세타 기호 <span class="arithmatex">\(\theta\)</span>로 표현됩니다.</p>
+<p>X축을 중심으로 한 회전:</p>
+<div class="arithmatex">\[
+\begin{bmatrix} \textcolor{red}1 &amp; \textcolor{red}0 &amp; \textcolor{red}0 &amp; \textcolor{red}0 \\ \textcolor{green}0 &amp; \textcolor{green}{\cos \theta} &amp; - \textcolor{green}{\sin \theta} &amp; \textcolor{green}0 \\ \textcolor{blue}0 &amp; \textcolor{blue}{\sin \theta} &amp; \textcolor{blue}{\cos \theta} &amp; \textcolor{blue}0 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix} = \begin{pmatrix} x \\ \textcolor{green}{\cos \theta} \cdot y - \textcolor{green}{\sin \theta} \cdot z \\ \textcolor{blue}{\sin \theta} \cdot y + \textcolor{blue}{\cos \theta} \cdot z \\ 1 \end{pmatrix}
+\]</div>
+<p>Y축을 중심으로 한 회전:</p>
+<div class="arithmatex">\[
+\begin{bmatrix} \textcolor{red}{\cos \theta} &amp; \textcolor{red}0 &amp; \textcolor{red}{\sin \theta} &amp; \textcolor{red}0 \\ \textcolor{green}0 &amp; \textcolor{green}1 &amp; \textcolor{green}0 &amp; \textcolor{green}0 \\ - \textcolor{blue}{\sin \theta} &amp; \textcolor{blue}0 &amp; \textcolor{blue}{\cos \theta} &amp; \textcolor{blue}0 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix} = \begin{pmatrix} \textcolor{red}{\cos \theta} \cdot x + \textcolor{red}{\sin \theta} \cdot z \\ y \\ - \textcolor{blue}{\sin \theta} \cdot x + \textcolor{blue}{\cos \theta} \cdot z \\ 1 \end{pmatrix}
+\]</div>
+<p>Z축을 중심으로 한 회전:</p>
+<div class="arithmatex">\[
+\begin{bmatrix} \textcolor{red}{\cos \theta} &amp; - \textcolor{red}{\sin \theta} &amp; \textcolor{red}0 &amp; \textcolor{red}0 \\ \textcolor{green}{\sin \theta} &amp; \textcolor{green}{\cos \theta} &amp; \textcolor{green}0 &amp; \textcolor{green}0 \\ \textcolor{blue}0 &amp; \textcolor{blue}0 &amp; \textcolor{blue}1 &amp; \textcolor{blue}0 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} \cdot \begin{pmatrix} x \\ y \\ z \\ 1 \end{pmatrix} = \begin{pmatrix} \textcolor{red}{\cos \theta} \cdot x - \textcolor{red}{\sin \theta} \cdot y  \\ \textcolor{green}{\sin \theta} \cdot x + \textcolor{green}{\cos \theta} \cdot y \\ z \\ 1 \end{pmatrix}
+\]</div>
+<p>회전 행렬을 사용하면 세 개의 단위 축 중 하나를 중심으로 위치 벡터를 변환할 수 있습니다. 임의의 3D 축을 중심으로 회전하려면 먼저 X축을 중심으로 회전한 다음 Y축, 마지막으로 Z축을 중심으로 회전하는 식으로 세 개의 회전 행렬을 모두 결합할 수 있습니다. 그러나 이 방법은 <strong class="g">짐벌 록(Gimbal lock)</strong>이라는 문제를 야기합니다. 자세한 내용은 생략하겠지만, 회전 행렬을 결합하는 대신 임의의 단위 축(예: (0.662, 0.2, 0.722) (단위 벡터임))을 중심으로 바로 회전하는 것이 더 나은 해결책입니다. 이러한 (상세한) 회전 행렬은 다음과 같습니다. 여기서 <span class="arithmatex">\((\textcolor{red}{R_x}, \textcolor{green}{R_y}, \textcolor{blue}{R_z})\)</span>는 임의의 회전 축입니다.</p>
+<div class="arithmatex">\[
+\begin{bmatrix} \cos \theta + \textcolor{red}{R_x}^2(1 - \cos \theta) &amp; \textcolor{red}{R_x}\textcolor{green}{R_y}(1 - \cos \theta) - \textcolor{blue}{R_z} \sin \theta &amp; \textcolor{red}{R_x}\textcolor{blue}{R_z}(1 - \cos \theta) + \textcolor{green}{R_y} \sin \theta &amp; 0 \\ \textcolor{green}{R_y}\textcolor{red}{R_x} (1 - \cos \theta) + \textcolor{blue}{R_z} \sin \theta &amp; \cos \theta + \textcolor{green}{R_y}^2(1 - \cos \theta) &amp; \textcolor{green}{R_y}\textcolor{blue}{R_z}(1 - \cos \theta) - \textcolor{red}{R_x} \sin \theta &amp; 0 \\ \textcolor{blue}{R_z}\textcolor{red}{R_x}(1 - \cos \theta) - \textcolor{green}{R_y} \sin \theta &amp; \textcolor{blue}{R_z}\textcolor{green}{R_y}(1 - \cos \theta) + \textcolor{red}{R_x} \sin \theta &amp; \cos \theta + \textcolor{blue}{R_z}^2(1 - \cos \theta) &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}
+\]</div>
+<p>이러한 행렬을 생성하는 수학적 논의는 이 장의 범위를 벗어납니다. 이 행렬조차도 짐벌 록 현상을 완전히 방지하지는 못한다는 점을 기억하십시오(물론 훨씬 더 어려워지긴 합니다). 짐벌 록 현상을 진정으로 방지하려면 <strong class="g">쿼터니언</strong>을 사용하여 회전을 표현해야 하는데, 이는 더 안전할 뿐만 아니라 계산 효율성도 더 높습니다. 하지만 쿼터니언에 대한 논의는 이 장의 범위를 벗어납니다.</p>
+<h3 id="_15">행렬 결합</h3>
+<p>행렬을 이용한 변환의 진정한 강점은 행렬 곱셈 덕분에 여러 변환을 하나의 행렬로 결합할 수 있다는 점입니다. 여러 변환을 결합한 변환 행렬을 만들어 보겠습니다. 벡터 (x, y, z)를 2배로 확대하고 (1, 2, 3)만큼 이동시킨다고 가정해 봅시다. 이를 위해서는 이동 행렬과 확대/축소 행렬이 필요합니다. 그러면 결과적인 변환 행렬은 다음과 같습니다.</p>
+<div class="arithmatex">\[
+Trans . Scale = \begin{bmatrix} \textcolor{red}1 &amp; \textcolor{red}0 &amp; \textcolor{red}0 &amp; \textcolor{red}1 \\ \textcolor{green}0 &amp; \textcolor{green}1 &amp; \textcolor{green}0 &amp; \textcolor{green}2 \\ \textcolor{blue}0 &amp; \textcolor{blue}0 &amp; \textcolor{blue}1 &amp; \textcolor{blue}3 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} . \begin{bmatrix} \textcolor{red}2 &amp; \textcolor{red}0 &amp; \textcolor{red}0 &amp; \textcolor{red}0 \\ \textcolor{green}0 &amp; \textcolor{green}2 &amp; \textcolor{green}0 &amp; \textcolor{green}0 \\ \textcolor{blue}0 &amp; \textcolor{blue}0 &amp; \textcolor{blue}2 &amp; \textcolor{blue}0 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} = \begin{bmatrix} \textcolor{red}2 &amp; \textcolor{red}0 &amp; \textcolor{red}0 &amp; \textcolor{red}1 \\ \textcolor{green}0 &amp; \textcolor{green}2 &amp; \textcolor{green}0 &amp; \textcolor{green}2 \\ \textcolor{blue}0 &amp; \textcolor{blue}0 &amp; \textcolor{blue}2 &amp; \textcolor{blue}3 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix}
+\]</div>
+<p>행렬 곱셈을 할 때는 먼저 평행 이동을 하고 그 다음에 크기 조정을 한다는 점에 유의하세요. 행렬 곱셈은 교환 법칙이 성립하지 않으므로 순서가 중요합니다. 행렬 곱셈에서는 가장 오른쪽에 있는 행렬이 먼저 벡터와 곱해지므로 곱셈은 오른쪽에서 왼쪽으로 읽어야 합니다. 행렬을 결합할 때는 크기 조정, 회전, 평행 이동 순으로 하는 것이 좋습니다. 그렇지 않으면 각 연산이 서로 (부정적인) 영향을 미칠 수 있습니다. 예를 들어, 평행 이동을 먼저 하고 그 다음에 평행 이동을 하면 평행 이동 벡터도 함께 확대/축소됩니다!</p>
+<p>벡터에 최종 변환 행렬을 적용하면 다음과 같은 벡터가 생성됩니다.</p>
+<div class="arithmatex">\[
+\begin{bmatrix} \textcolor{red}2 &amp; \textcolor{red}0 &amp; \textcolor{red}0 &amp; \textcolor{red}1 \\ \textcolor{green}0 &amp; \textcolor{green}2 &amp; \textcolor{green}0 &amp; \textcolor{green}2 \\ \textcolor{blue}0 &amp; \textcolor{blue}0 &amp; \textcolor{blue}2 &amp; \textcolor{blue}3 \\ \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}0 &amp; \textcolor{purple}1 \end{bmatrix} . \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} \textcolor{red}2x + \textcolor{red}1 \\ \textcolor{green}2y + \textcolor{green}2  \\ \textcolor{blue}2z + \textcolor{blue}3 \\ 1 \end{bmatrix}   
+\]</div>
+<p>훌륭합니다! 벡터는 먼저 2배로 확대된 다음 (1,2,3)만큼 이동합니다.</p>
+<h2 id="_16">코드에서...</h2>
+<p>이제 변환에 대한 모든 이론적 배경을 설명했으니, 실제로 이 지식을 어떻게 활용할 수 있는지 살펴보겠습니다. OpenGL에는 행렬이나 벡터에 대한 기능이 내장되어 있지 않으므로, 직접 수학 클래스와 함수를 정의해야 합니다. 이 책에서는 세부적인 수학적 계산은 생략하고 미리 만들어진 수학 라이브러리를 사용하는 방식을 택하겠습니다. 다행히 OpenGL에 최적화된 사용하기 쉬운 수학 라이브러리인 GLM이 있습니다.</p>
 
 
 
@@ -1445,9 +1528,11 @@ x
     
       <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
-        <script src="../../js/mathjax.js"></script>
+        <script src="../../javascripts/katex.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
       
     
   </body>
