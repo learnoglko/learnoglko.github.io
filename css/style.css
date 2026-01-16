@@ -43,6 +43,18 @@ img {
   border-radius: 10px;
 }
 
+image {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+video {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 .katex {
   font-size: 1.2em;
 }
