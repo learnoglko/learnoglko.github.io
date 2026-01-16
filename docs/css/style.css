@@ -1,20 +1,20 @@
 .admonition.tip {
-    background-color: oklch(0.7592 0.2303 142.89 / 20%);
-    color: rgb(49, 49, 49);
-    border-color: oklch(0.4078 0.1296 142.73 / 20%);
+  background-color: oklch(76.5% 0.19173 149.85 / 0.2);
+  color: rgb(49, 49, 49);
+  border-color: oklch(0.4078 0.1296 142.73 / 20%);
 }
 
 
 .admonition.warning {
-    background-color: oklch(66.554% 0.2213 25.559 / 0.2);
-    color: rgb(49, 49, 49);
-    border-color: oklch(30.421% 0.11003 26.799 / 0.2);
+  background-color: oklch(66.554% 0.2213 25.559 / 0.2);
+  color: rgb(49, 49, 49);
+  border-color: oklch(30.421% 0.11003 26.799 / 0.2);
 }
 
 .admonition.note {
-    background-color: oklch(72.22% 0.15313 246.787 / 0.2);
-    color: rgb(49, 49, 49);
-    border-color: oklch(30.947% 0.08552 254.951 / 0.2);
+  background-color: oklch(72.22% 0.15313 246.787 / 0.2);
+  color: rgb(49, 49, 49);
+  border-color: oklch(30.947% 0.08552 254.951 / 0.2);
 }
 
 /* 정의 (초록) */
