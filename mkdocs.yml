@@ -2,6 +2,8 @@ site_name: LearnOpenGL Korean
 
 site_description: https://learnopengl.com의 한국어 번역입니다.
 
+site_url: https://learnoglko.github.io/
+
 theme:
   name: material
 
