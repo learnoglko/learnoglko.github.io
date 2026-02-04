@@ -788,6 +788,116 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%83%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    색
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기본적인 조명 효과
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1144,7 +1254,7 @@ V_{clip} = M_{projection} \cdot M_{view} \cdot M_{model} \cdot V_{local}
 <p><img alt="" src="../../static/coordinate_systems_result.png" /></p>
 <p>정말 평면이 가상의 바닥 위에 놓여 있는 3차원 평면처럼 보이네요. 만약 같은 결과가 나오지 않는다면, 여러분의 코드와 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/6.1.coordinate_systems/coordinate_systems.cpp">전체 소스 코드</a>를 비교해 보세요.</p>
 <h2 id="3d_1">더 많은 3D</h2>
-<p>지금까지는 3D 공간에서도 2D 평면만을 다뤄왔지만, 이제 좀 더 나아가 2D 평면을 3D 정육면체로 확장해 보겠습니다. 정육면체를 렌더링하려면 총 36개의 정점(면 6개 * 삼각형 2개 * 각 삼각형당 정점 3개)이 필요합니다. 36개의 정점은 계산하기 어려우니, <a href="https://learnopengl.com/code_viewer.php?code=getting-started/cube_vertices">여기</a>에서 필요한 정점들을 가져올 수 있습니다.</p>
+<p>지금까지는 3D 공간에서도 2D 평면만을 다뤄왔지만, 이제 좀 더 나아가 2D 평면을 3D 정육면체로 확장해 보겠습니다. 정육면체를 렌더링하려면 총 36개의 정점(면 6개 * 삼각형 2개 * 각 삼각형당 정점 3개)이 필요합니다. 36개의 정점은 계산하기 어려우니, <a href="../../cube_code2/">여기</a>에서 필요한 정점들을 가져올 수 있습니다.</p>
 <p>재미 삼아 시간이 지남에 따라 큐브가 회전하도록 두겠습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">glfwGetTime</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">radians</span><span class="p">(</span><span class="mf">50.0f</span><span class="p">),</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">));</span><span class="w"> </span>
 </code></pre></div>
