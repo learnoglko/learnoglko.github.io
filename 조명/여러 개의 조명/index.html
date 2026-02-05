@@ -1,0 +1,1202 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="https://learnopengl.com의 한국어 번역입니다.">
+      
+      
+      
+        <link rel="canonical" href="https://learnoglko.github.io/%EC%A1%B0%EB%AA%85/%EC%97%AC%EB%9F%AC%20%EA%B0%9C%EC%9D%98%20%EC%A1%B0%EB%AA%85/">
+      
+      
+        <link rel="prev" href="../%EB%8B%A4%EC%96%91%ED%95%9C%20%EA%B4%91%EC%9B%90%20%EB%AA%A8%EB%8D%B8/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>여러 개의 조명 - LearnOpenGL Korean</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnOpenGL Korean" class="md-header__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnOpenGL Korean
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              여러 개의 조명
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnOpenGL Korean" class="md-nav__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LearnOpenGL Korean
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시작하기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시작하기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/OpenGL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD-%EB%A6%AC%EB%88%85%EC%8A%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    리눅스에서의 최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%82%BC%EA%B0%81%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 삼각형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%85%B0%EC%9D%B4%EB%8D%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    셰이더
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B3%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    텍스쳐
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%B3%80%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    변형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%A2%8C%ED%91%9C%20%EA%B3%B5%EA%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    좌표 공간
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B9%B4%EB%A9%94%EB%9D%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    카메라
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%83%89%EA%B9%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    색깔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기본적인 조명 효과
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머티리얼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%A1%B0%EB%AA%85%20%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명 맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%8B%A4%EC%96%91%ED%95%9C%20%EA%B4%91%EC%9B%90%20%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    다양한 광원 모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 개의 조명
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 개의 조명
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향광
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        점광원
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모든 것을 종합해 보면
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연습 문제
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        방향광
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        점광원
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모든 것을 종합해 보면
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연습 문제
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">여러 개의 조명</h1>
+<p>이전 장에서는 OpenGL 조명에 대해 많은 것을 배웠습니다. 퐁 셰이딩, 재질, 라이팅 맵, 다양한 광원 유형에 대해 알아보았죠. 이번 장에서는 지금까지 배운 모든 지식을 활용하여 6개의 활성 광원을 사용하는 조명이 완비된 장면을 만들어 보겠습니다. 태양과 같은 빛을 방향성 광원으로 구현하고, 장면 전체에 4개의 점광원을 배치한 다음, 손전등도 추가할 것입니다.</p>
+<p>장면에 여러 광원을 사용하려면 조명 계산을 GLSL 함수로 캡슐화해야 합니다. 여러 광원 유형 각각에 대해 서로 다른 계산이 필요하기 때문에 조명 계산을 할 때 코드가 매우 복잡해지기 때문입니다. 만약 이러한 모든 계산을 메인 함수에서만 수행한다면 코드를 이해하기 어려워질 것입니다.</p>
+<p>GLSL에서 함수는 C 언어의 함수와 매우 유사합니다. 함수 이름과 반환 타입이 있으며, main 함수 이전에 함수가 선언되지 않았다면 코드 파일 맨 위에 함수 프로토타입을 선언해야 합니다. 우리는 방향광, 점광, 스포트라이트 등 각 조명 유형별로 별도의 함수를 만들 것입니다.</p>
+<p>장면에 여러 개의 광원을 사용할 때 일반적인 접근 방식은 다음과 같습니다. 먼저 프래그먼트의 출력 색상을 나타내는 단일 색상 벡터를 사용합니다. 각 광원에 대해 해당 광원이 프래그먼트에 미치는 영향을 이 출력 색상 벡터에 더합니다. 따라서 장면의 각 광원은 개별적인 영향을 계산하고 최종 출력 색상에 반영합니다. 일반적인 구조는 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="c1">// 출력 색상 값을 정의합니다.</span>
+<span class="w">  </span><span class="kt">vec3</span><span class="w"> </span><span class="kr">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">  </span><span class="c1">// 출력에 방향광의 영향력(기여도)를 더합니다.</span>
+<span class="w">  </span><span class="kr">output</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">someFunctionToCalculateDirectionalLight</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// 모든 포인트 라이트에 대해 동일한 작업을 수행하십시오.</span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nr_of_point_lights</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">output</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">someFunctionToCalculatePointLight</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// 그리고 스포트라이트 같은 다른 조명도 추가하세요.</span>
+<span class="w">  </span><span class="kr">output</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">someFunctionToCalculateSpotLight</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="kr">output</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>실제 코드는 구현 방식에 따라 다를 수 있지만, 일반적인 구조는 동일합니다. 우리는 각 광원의 영향을 계산하고 그 결과 색상을 출력 색상 벡터에 추가하는 여러 함수를 정의합니다. 예를 들어 두 개의 광원이 프래그먼트 가까이에 있다면, 두 광원의 합산된 영향으로 인해 단일 광원만 있을 때보다 프래그먼트가 더 밝게 조명됩니다.</p>
+<h2 id="_2">방향광</h2>
+<p>프래그먼트 셰이더에서 방향광이 해당 프래그먼트에 미치는 영향을 계산하는 함수를 정의하려고 합니다. 이 함수는 몇 가지 매개변수를 받아 계산된 방향광 색상을 반환합니다.</p>
+<p>먼저 방향성 광원에 최소한으로 필요한 변수들을 설정해야 합니다. 이 변수들을 DirLight라는 구조체에 저장하고 유니폼 변수로 정의할 수 있습니다. 구조체의 변수들은 이전 장에서 다룬 내용과 유사할 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="n">DirLight</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="p">;</span>
+<span class="p">};</span><span class="w">  </span>
+<span class="k">uniform</span><span class="w"> </span><span class="n">DirLight</span><span class="w"> </span><span class="n">dirLight</span><span class="p">;</span>
+</code></pre></div>
+<p>그런 다음 dirLight 유니폼을 다음과 같은 프로토타입을 가진 함수에 전달할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">vec3</span><span class="w"> </span><span class="n">CalcDirLight</span><span class="p">(</span><span class="n">DirLight</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">viewDir</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<div class="admonition tip">
+<p>C와 C++처럼, 함수를 호출하려면 (이 경우에는 main 함수 내부에서) 함수는 호출하는 함수의 줄 번호보다 앞에 정의되어 있어야 합니다. 하지만 이 경우에는 main 함수 아래에 함수를 정의하는 것이 더 바람직하므로 이 요구 사항이 적용되지 않습니다. 따라서 C에서처럼 main 함수 위에 함수의 프로토타입을 선언합니다.</p>
+</div>
+<p>이 함수는 DirLight 구조체와 계산에 필요한 두 개의 벡터를 필요로 한다는 것을 알 수 있습니다. 이전 장을 성공적으로 완료했다면 이 함수의 내용은 전혀 놀랍지 않을 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">vec3</span><span class="w"> </span><span class="n">CalcDirLight</span><span class="p">(</span><span class="n">DirLight</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">viewDir</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">lightDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="o">-</span><span class="n">light</span><span class="p">.</span><span class="n">direction</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 확산 셰이딩</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 반사 셰이딩</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">reflectDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDir</span><span class="p">,</span><span class="w"> </span><span class="n">normal</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">viewDir</span><span class="p">,</span><span class="w"> </span><span class="n">reflectDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">material</span><span class="p">.</span><span class="n">shininess</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 모두 합친 결과</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">ambient</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">diffuse</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">specular</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>기본적으로 이전 장의 코드를 복사하고 함수 인수로 제공된 벡터를 사용하여 방향광의 기여 벡터를 계산했습니다. 그 결과, 주변광, 확산광 및 반사광의 기여도가 단일 색상 벡터로 반환됩니다.</p>
+<h2 id="_3">점광원</h2>
+<p>방향광과 마찬가지로, 주어진 프래그먼트에 대한 점광의 기여도(감쇠 포함)를 계산하는 함수를 정의하려고 합니다. 방향광과 마찬가지로, 점광에 필요한 모든 변수를 지정하는 구조체를 정의하고자 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="n">PointLight</span><span class="w"> </span><span class="p">{</span><span class="w">    </span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">constant</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">quadratic</span><span class="p">;</span><span class="w">  </span>
+
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="p">;</span>
+<span class="p">};</span><span class="w">  </span>
+<span class="cp">#define NR_POINT_LIGHTS 4  </span>
+<span class="k">uniform</span><span class="w"> </span><span class="n">PointLight</span><span class="w"> </span><span class="n">pointLights</span><span class="p">[</span><span class="n">NR_POINT_LIGHTS</span><span class="p">];</span>
+</code></pre></div>
+<p>보시다시피, GLSL에서 전처리 지시문을 사용하여 장면에 필요한 포인트 라이트의 개수를 정의했습니다. 그런 다음 이 NR_POINT_LIGHTS 상수를 사용하여 PointLight 구조체 배열을 생성합니다. GLSL의 배열은 C 언어의 배열과 유사하며 두 개의 대괄호를 사용하여 생성할 수 있습니다. 현재 데이터를 채워 넣을 PointLight 구조체가 4개 있습니다.</p>
+<p>점광원의 함수 프로토타입은 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">vec3</span><span class="w"> </span><span class="n">CalcPointLight</span><span class="p">(</span><span class="n">PointLight</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">fragPos</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">viewDir</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>이 함수는 필요한 모든 데이터를 인수로 받아 특정 포인트 라이트가 프래그먼트에 미치는 색상 기여도를 나타내는 vec3를 반환합니다. 다시 한번, 적절한 복사 붙여넣기를 통해 다음과 같은 함수를 얻을 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">vec3</span><span class="w"> </span><span class="n">CalcPointLight</span><span class="p">(</span><span class="n">PointLight</span><span class="w"> </span><span class="n">light</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">fragPos</span><span class="p">,</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">viewDir</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">lightDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fragPos</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 확산 셰이딩</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span><span class="w"> </span><span class="n">lightDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 반사 셰이딩</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">reflectDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reflect</span><span class="p">(</span><span class="o">-</span><span class="n">lightDir</span><span class="p">,</span><span class="w"> </span><span class="n">normal</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pow</span><span class="p">(</span><span class="n">max</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">viewDir</span><span class="p">,</span><span class="w"> </span><span class="n">reflectDir</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="n">material</span><span class="p">.</span><span class="n">shininess</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 감쇄</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">fragPos</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">constant</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">linear</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<span class="w">                 </span><span class="n">light</span><span class="p">.</span><span class="n">quadratic</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance</span><span class="p">));</span><span class="w">    </span>
+<span class="w">    </span><span class="c1">// 모두 합친 결과</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">ambient</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">ambient</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">diffuse</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">diffuse</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">diff</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">diffuse</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">specular</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">specular</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">spec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">material</span><span class="p">.</span><span class="n">specular</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">));</span>
+<span class="w">    </span><span class="n">ambient</span><span class="w">  </span><span class="o">*=</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span>
+<span class="w">    </span><span class="n">diffuse</span><span class="w">  </span><span class="o">*=</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span>
+<span class="w">    </span><span class="n">specular</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">ambient</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">diffuse</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">specular</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>이러한 기능을 함수로 추상화하면 코드 중복 없이 여러 개의 점광원에 대한 조명을 쉽게 계산할 수 있다는 장점이 있습니다. 메인 함수에서는 점광원 배열을 순회하면서 각 점광원에 대해 CalcPointLight 함수를 호출하는 루프를 생성하기만 하면 됩니다.</p>
+<h2 id="_4">모든 것을 종합해 보면</h2>
+<p>이제 방향광을 위한 함수와 점광원을 위한 함수를 모두 정의했으므로 이 모든 것을 메인 함수에 통합할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// properties</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">norm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">Normal</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">viewDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="n">viewPos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">FragPos</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// phase 1: Directional lighting</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CalcDirLight</span><span class="p">(</span><span class="n">dirLight</span><span class="p">,</span><span class="w"> </span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="n">viewDir</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// phase 2: Point lights</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NR_POINT_LIGHTS</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">CalcPointLight</span><span class="p">(</span><span class="n">pointLights</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">norm</span><span class="p">,</span><span class="w"> </span><span class="n">FragPos</span><span class="p">,</span><span class="w"> </span><span class="n">viewDir</span><span class="p">);</span><span class="w">    </span>
+<span class="w">    </span><span class="c1">// phase 3: Spot light</span>
+<span class="w">    </span><span class="c1">//result += CalcSpotLight(spotLight, norm, FragPos, viewDir);    </span>
+
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>각 광원 유형은 모든 광원이 처리될 때까지 최종 출력 색상에 영향을 미칩니다. 최종 색상은 장면 내 모든 광원의 색상 영향을 종합적으로 반영합니다. CalcSpotLight 함수에 대한 자세한 설명은 독자 여러분의 몫으로 남겨두겠습니다.</p>
+<div class="admonition tip">
+<p>이 접근 방식에는 광원 유형 함수 전반에 걸쳐 중복 계산이 많이 포함되어 있습니다(예: 반사 벡터, 확산 및 반사광 항 계산, 재질 텍스처 샘플링). 따라서 최적화할 여지가 있습니다.</p>
+</div>
+<p>방향광 구조체의 유니폼 값을 설정하는 것은 그다지 어렵지 않겠지만, 점광원의 유니폼 값은 PointLight 구조체의 배열이기 때문에 어떻게 설정해야 할지 궁금할 수 있습니다. 이는 이전에 다룬 적이 없는 내용입니다.</p>
+<p>다행히도 그다지 복잡하지는 않습니다. 구조체 배열의 유니폼 값을 설정하는 방법은 단일 구조체의 유니폼 값을 설정하는 방법과 동일하지만, 이번에는 유니폼의 위치를 ​​조회할 때 적절한 인덱스를 정의해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">lightingShader</span><span class="p">.</span><span class="n">setFloat</span><span class="p">(</span><span class="s">&quot;pointLights[0].constant&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+</code></pre></div>
+<p>여기서는 pointLights 배열에서 첫 번째 PointLight 구조체를 인덱싱하고 내부적으로 해당 상수 변수의 위치를 ​​가져온 다음 이 값을 1.0으로 설정합니다.</p>
+<p>4개의 포인트 라이트 각각에 대한 위치 벡터도 정의해야 한다는 점을 잊지 맙시다. 따라서 장면 전체에 포인트 라이트를 좀 더 넓게 배치해 보겠습니다. 포인트 라이트의 위치를 ​​담을 glm::vec3 배열을 하나 더 정의하겠습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="n">pointLightPositions</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">0.7f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.2f</span><span class="p">,</span><span class="w">  </span><span class="mf">2.0f</span><span class="p">),</span>
+<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">2.3f</span><span class="p">,</span><span class="w"> </span><span class="mf">-3.3f</span><span class="p">,</span><span class="w"> </span><span class="mf">-4.0f</span><span class="p">),</span>
+<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">-4.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-12.0f</span><span class="p">),</span>
+<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-3.0f</span><span class="p">)</span>
+<span class="p">};</span><span class="w">  </span>
+</code></pre></div>
+<p>다음으로 pointLights 배열에서 해당 PointLight 구조체를 인덱싱하고, 해당 구조체의 position 속성을 방금 정의한 위치 중 하나로 설정합니다. 또한 이제 광원 큐브를 하나만 그리는 대신 4개를 그려야 합니다. 컨테이너에서 했던 것처럼 각 광원 객체에 대해 서로 다른 모델 행렬을 생성하면 됩니다.</p>
+<p>만약 손전등까지 사용한다면, 모든 빛이 합쳐진 결과는 대략 다음과 같습니다.</p>
+<p><img alt="" src="../../static/multiple_lights_combined.png" /></p>
+<p>보시다시피 하늘 어딘가에 태양과 같은 형태의 전역 광원이 있는 것 같고, 장면 전체에 4개의 조명이 흩어져 있으며, 플레이어의 시점에서는 손전등이 보입니다. 꽤 멋지지 않나요?</p>
+<p>최종 애플리케이션의 전체 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/2.lighting/6.multiple_lights/multiple_lights.cpp">여기</a>에서 확인할 수 있습니다.</p>
+<p>이 이미지는 이전 장에서 사용했던 기본 조명 속성으로 설정된 모든 광원을 보여줍니다. 하지만 이러한 값을 조정해 보면 상당히 흥미로운 결과를 얻을 수 있습니다. 아티스트와 레벨 디자이너는 일반적으로 대형 에디터에서 이러한 모든 조명 변수를 조정하여 조명이 환경과 잘 어울리도록 합니다. 이 간단한 환경에서도 조명 속성을 조정하는 것만으로도 꽤 흥미로운 시각 효과를 만들어낼 수 있습니다.</p>
+<p><img alt="" src="../../static/multiple_lights_atmospheres.png" /></p>
+<p>조명을 더 잘 반영하도록 배경 색상도 변경했습니다. 보시다시피 조명 매개변수를 간단히 조정하는 것만으로도 완전히 다른 분위기를 연출할 수 있습니다.</p>
+<p>이제 OpenGL 조명에 대해 꽤 잘 이해하셨을 겁니다. 지금까지 배운 내용을 바탕으로 흥미롭고 시각적으로 풍부한 환경과 분위기를 만들어낼 수 있습니다. 다양한 값을 조절해 보면서 자신만의 분위기를 만들어 보세요.</p>
+<h2 id="_5">연습 문제</h2>
+<ul>
+<li>마지막 이미지에서처럼 조명의 속성 값을 조정해서 다양한 분위기를 (어느 정도) 재현할 수 있을까요? (<a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/2.lighting/6.multiple_lights_exercise1/multiple_lights_exercise1.cpp">해결 방법</a>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
