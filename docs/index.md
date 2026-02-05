@@ -56,8 +56,7 @@ LearnOpenGL은 여러 개의 일반 섹션으로 나뉩니다. 각 섹션은 여
 ## 라이선스
 모든 내용은 CC BY 4.0 라이선스로 배포됩니다.([https://creativecommons.org/licenses/by-nc/4.0/legalcode](https://creativecommons.org/licenses/by-nc/4.0/legalcode))
 
-원작자: [Joey de Vries](https://joeydevries.com)  
-원작자의 트위터(현 X): @JoeyDeVriez
+원작자: [Joey de Vries](https://x.com/JoeyDeVriez)
 
 ## 번역자
 저의 사이트도 확인해 보세요.  
