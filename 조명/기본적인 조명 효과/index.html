@@ -13,8 +13,10 @@
         <link rel="canonical" href="https://learnoglko.github.io/%EC%A1%B0%EB%AA%85/%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/">
       
       
-        <link rel="prev" href="../%EC%83%89/">
+        <link rel="prev" href="../%EC%83%89%EA%B9%94/">
       
+      
+        <link rel="next" href="../%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/">
       
       
         
@@ -640,14 +642,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../%EC%83%89/" class="md-nav__link">
+      <a href="../%EC%83%89%EA%B9%94/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    색
+    색깔
   
 
     
@@ -814,6 +816,62 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머티리얼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%A1%B0%EB%AA%85%20%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명 맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1065,7 +1123,7 @@
 <p>둘째, 모델 행렬이 불균일하게 스케일링될 경우, 정점들이 변형되어 법선 벡터가 더 이상 표면에 수직이 아니게 됩니다. 다음 이미지는 이러한 모델 행렬(불균일 스케일링 적용)이 법선 벡터에 미치는 영향을 보여줍니다.</p>
 <p><img alt="" src="../../static/basic_lighting_normal_transformation.png" /></p>
 <p>균일하지 않은 스케일을 적용할 때마다 법선 벡터가 해당 표면에 더 이상 수직이 아니게 되어 조명이 왜곡됩니다. (참고로 균일한 스케일은 법선 벡터의 크기만 변경하고 방향은 변경하지 않으며, 이는 정규화를 통해 쉽게 해결할 수 있습니다)</p>
-<p>이러한 문제를 해결하는 방법은 법선 벡터에 특화된 다른 모델 행렬을 사용하는 것입니다. 이 행렬을 <strong class="g">법선 행렬</strong>이라고 하며, 몇 가지 선형 대수 연산을 통해 법선 벡터의 잘못된 스케일링으로 인한 영향을 제거합니다. 이 행렬의 계산 방법에 대해 더 자세히 알고 싶다면 <a href="../../%EC%99%B8%EB%B6%80/The%20Normal%20Matrix/">이 글</a>을 참고하세요.</p>
+<p>이러한 문제를 해결하는 방법은 법선 벡터에 특화된 다른 모델 행렬을 사용하는 것입니다. 이 행렬을 <strong class="g">법선 행렬</strong>이라고 하며, 몇 가지 선형 대수 연산을 통해 법선 벡터의 잘못된 스케일링으로 인한 영향을 제거합니다. 이 행렬의 계산 방법에 대해 더 자세히 알고 싶다면 <a href="https://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/">이 글</a>을 참고하세요.</p>
 <p>법선 행렬은 '모델 행렬의 좌측 상단 3x3 부분의 역행렬의 전치 행렬'로 정의됩니다. 좀 복잡하죠? 이해가 잘 안 되더라도 걱정하지 마세요. 아직 역행렬과 전치 행렬에 대해서는 다루지 않았으니까요. 대부분의 자료에서는 법선 행렬을 모델-뷰 행렬에서 유도한다고 정의하지만, 우리는 뷰 공간이 아닌 월드 공간에서 작업하므로 모델 행렬에서 유도할 것입니다.</p>
 <p>정점 셰이더에서는 모든 행렬 유형에 대해 작동하는 역행렬 및 전치 함수를 사용하여 법선 행렬을 생성할 수 있습니다. 행렬을 3x3 행렬로 형변환하는 이유는 변환 속성을 없애고 vec3 법선 벡터와 곱할 수 있도록 하기 위함입니다.</p>
 <div class="highlight"><pre><span></span><code><span class="n">Normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">mat3</span><span class="p">(</span><span class="n">transpose</span><span class="p">(</span><span class="n">inverse</span><span class="p">(</span><span class="n">model</span><span class="p">)))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">aNormal</span><span class="p">;</span><span class="w">  </span>
