@@ -907,6 +907,144 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1038,7 +1176,7 @@ $ sudo cmake --install build # 그리고 설치합니다.
 <div class="highlight"><pre><span></span><code>$ pkg-config --modversion glfw3
 </code></pre></div>
 <p>제대로 설치되었다면 GLFW의 버전이 나올 것입니다. 우리는 이제 긴 링킹 옵션 대신 다음 명령어를 사용할 수 있습니다.</p>
-<div class="highlight"><pre><span></span><code>$ gcc main.c $(pkg-config --cflags --libs glfw3)
+<div class="highlight"><pre><span></span><code>$ g++ main.cpp glad.c -I./include $(pkg-config --cflags --libs glfw3) -lm
 </code></pre></div>
 <p>모두 마쳤다면 당신은 이제 리눅스 CMake를 모두 배웠습니다! 아직 배울것이 많습니다. 이제 다시 <a href="../%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD/">최초의 창</a>으로 이동하여 계속 진행하세요.(GLAD가 남았습니다.)</p>
 

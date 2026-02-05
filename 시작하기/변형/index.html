@@ -1129,6 +1129,144 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1865,6 +2003,10 @@ Trans . Scale = \begin{bmatrix} \textcolor{red}1 &amp; \textcolor{red}0 &amp; \t
 <p>이제 변환에 대한 모든 이론적 배경을 설명했으니, 실제로 이 지식을 어떻게 활용할 수 있는지 살펴보겠습니다. OpenGL에는 행렬이나 벡터에 대한 기능이 내장되어 있지 않으므로, 직접 수학 클래스와 함수를 정의해야 합니다. 이 책에서는 세부적인 수학적 계산은 생략하고 미리 만들어진 수학 라이브러리를 사용하는 방식을 택하겠습니다. 다행히 OpenGL에 최적화된 사용하기 쉬운 수학 라이브러리인 GLM이 있습니다.</p>
 <h3 id="glm">GLM</h3>
 <p>GLM은 Open<strong>GL M</strong>athematics의 약자로, 헤더 파일만으로 구성된 라이브러리입니다. 즉, 필요한 헤더 파일만 포함시키면 되고, 링크나 컴파일 과정은 필요하지 않습니다. GLM은 <a href="https://glm.g-truc.net/0.9.8/index.html">공식 웹사이트</a>에서 다운로드할 수 있습니다. 헤더 파일의 루트 디렉토리를 include 폴더에 복사한 후, 바로 시작해 보겠습니다.</p>
+<div class="admonition note">
+<p>현재는 빌딩이 필요해 진것으로 보입니다. 최초의 창에서 설명했듯이, CMake를 사용해 빌드할 수 있습니다.</p>
+<p>또한 리눅스인 경우 glm은 pkg-config로 지정해 주지 않아도 알아서 컴파일을 해주는걸로 보입니다.</p>
+</div>
 <p><img alt="" src="../../static/glm.png" /></p>
 <p>GLM에서 필요한 대부분의 기능은 다음과 같이 포함할 3개의 헤더 파일에 있습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;glm/glm.hpp&gt;</span>

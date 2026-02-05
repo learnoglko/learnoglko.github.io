@@ -996,6 +996,144 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1238,6 +1376,9 @@
 <h3 id="opengl">윈도우에서의 OpenGL</h3>
 <p>Windows 환경에서는 OpenGL 라이브러리인 <code>opengl32.lib</code>가 Microsoft SDK에 포함되어 있으며, 이 SDK는 Visual Studio를 설치할 때 기본적으로 설치됩니다. 이 장에서는 VS 컴파일러를 사용하고 Windows 환경을 기반으로 하므로 링커 설정에 <code>opengl32.lib</code>를 추가합니다. 참고로, 64비트 버전의 OpenGL 라이브러리도 32비트 버전과 마찬가지로 <code>opengl32.lib</code>라는 이름을 가지고 있는데, 다소 아쉬운 이름입니다.</p>
 <h3 id="opengl_1">리눅스에서의 OpenGL</h3>
+<div class="admonition note">
+<p><a href="/시작하기/최초의 창-리눅스/">이 장</a>을 참고하세요!</p>
+</div>
 <p>리눅스 시스템에서는 링커 설정에 <code>-lGL</code>옵션을 추가하여 <code>libGL.so</code> 라이브러리에 링크해야 합니다. 라이브러리를 찾을 수 없는 경우 Mesa, NVidia 또는 AMD 개발 패키지를 설치해야 할 수 있습니다.</p>
 <p>그런 다음, 링커 설정에 GLFW와 OpenGL 라이브러리를 모두 추가했으면 다음과 같이 GLFW 헤더 파일을 포함할 수 있습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;GLFW/glfw3.h&gt;</span>
@@ -1259,7 +1400,7 @@
 <p>보다시피 코드가 복잡해 보이고, 사용할 모든 함수에 일일이 이런 복잡한 작업을 하는것은 번거로운 과정입니다. 다행히 이러한 목적을 위한 라이브러리가 있으며, 그중 GLAD는 인기 있고 최신 라이브러리입니다.</p>
 <h3 id="glad_1">GLAD 세팅하기</h3>
 <p>GLAD는 앞서 언급한 번거로운 작업을 모두 처리해주는 <a href="https://github.com/Dav1dde/glad">오픈 소스</a> 라이브러리입니다. GLAD는 대부분의 일반적인 오픈 소스 라이브러리와는 약간 다른 설정 방식을 사용합니다. <a href="https://glad.dav1d.de/">웹 서비스</a>를 통해 어떤 버전의 OpenGL을 정의하고, 해당 버전에 맞는 모든 관련 OpenGL 함수를 로드할지 GLAD에 알려줄 수 있습니다.</p>
-<p>GLAD <a href="http://glad.dav1d.de">웹 서비스</a>에 접속하여 언어가 C++로 설정되어 있는지 확인하고, API 부분에서 OpenGL 버전(gl이라고 표시됨) 3.3 이상을 선택하세요(저희는 3.3 버전을 사용할 예정이며, 더 높은 버전도 괜찮습니다). 또한 프로필(Profile)이 Core로 설정되어 있고 "로더 생성(Generate a loader)" 옵션이 선택되어 있는지 확인하세요. 확장자는 (일단은) 무시하고 "생성(GENERATE)"을 클릭하여 라이브러리 파일을 생성합니다.</p>
+<p>GLAD <a href="http://glad.dav1d.de">웹 서비스</a>에 접속하여 언어가 C++로 설정되어 있는지 확인하고, API 부분에서 OpenGL 버전(gl이라고 표시됨) 3.3 이상을 선택하세요(저희는 3.3 버전을 사용할 예정이며, 더 높은 버전도 괜찮습니다). 또한 프로필(Profile)이 Core로 설정되어 있고 "로더 생성(Generate a loader)" 옵션이 선택되어 있는지 확인하세요. 확장자(Extensions)는 (일단은) 무시하고 "생성(GENERATE)"을 클릭하여 라이브러리 파일을 생성합니다.</p>
 <div class="admonition warning">
 <p>GLAD1 버전은 <a href="http://glad.dav1d.de">http://glad.dav1d.de</a>에서 배포됩니다. 우리는 GLAD1을 사용하므로, GLAD2 버전을 사용하지 마세요.</p>
 </div>
