@@ -967,6 +967,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1092,6 +1120,116 @@
     
   
     모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 OpenGL
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    고급 OpenGL
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20OpenGL/%EA%B9%8A%EC%9D%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    깊이 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20OpenGL/%EC%8A%A4%ED%85%90%EC%8B%A4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    스텐실 테스트
   
 
     
@@ -1511,9 +1649,9 @@
 <div class="admonition tip">
 <p>if 문에 &lt; 기호 대신 &gt; 기호가 있는 이유가 궁금하실 수 있습니다. 스포트라이트 안에 들어가려면 세타 값이 광원의 차단 값보다 작아야 하지 않을까요? 맞습니다. 하지만 각도 값은 코사인 값으로 표현된다는 점을 잊지 마세요. 0도는 코사인 값 1.0으로, 90도는 코사인 값 0.0으로 표현됩니다. 아래 식을 참고하세요.</p>
 <p><img alt="" src="../../static/light_casters_cos.png" /></p>
-<p>이제 코사인 값이 1.0에 가까울수록 각도가 작아지는 것을 알 수 있습니다. 따라서 세타 값이 차단 값보다 커야 하는 이유가 이해됩니다. 현재 차단 값은 코사인 값 12.5, 즉 0.976으로 설정되어 있으므로 코사인 세타 값이 0.976에서 1.0 사이이면 해당 조각이 마치 스포트라이트 안에 있는 것처럼 밝게 빛나게 됩니다.</p>
+<p>이제 코사인 값이 1.0에 가까울수록 각도가 작아지는 것을 알 수 있습니다. 따라서 세타 값이 차단 값보다 커야 하는 이유가 이해됩니다. 현재 차단 값은 코사인 값 12.5, 즉 0.976으로 설정되어 있으므로 코사인 세타 값이 0.976에서 1.0 사이이면 해당 프래그먼트가 마치 스포트라이트 안에 있는 것처럼 밝게 빛나게 됩니다.</p>
 </div>
-<p>애플리케이션을 실행하면 스포트라이트 원뿔 안쪽에 있는 조각들만 밝게 비추는 스포트라이트가 나타납니다. 다음과 같은 모습이 될 것입니다.</p>
+<p>애플리케이션을 실행하면 스포트라이트 원뿔 안쪽에 있는 프래그먼트들만 밝게 비추는 스포트라이트가 나타납니다. 다음과 같은 모습이 될 것입니다.</p>
 <p><img alt="" src="../../static/light_casters_spotlight_hard.png" /></p>
 <p>전체 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/2.lighting/5.3.light_casters_spot/light_casters_spot.cpp">여기</a>에서 확인할 수 있습니다.</p>
 <p>하지만 여전히 약간 부자연스러워 보입니다. 특히 스포트라이트의 가장자리가 너무 날카롭기 때문입니다. 빛이 스포트라이트 원뿔의 가장자리에 닿으면 부드럽게 사라지는 대신 완전히 꺼져 버립니다. 실제 스포트라이트라면 가장자리로 갈수록 빛이 서서히 줄어들겠죠.</p>
