@@ -56,3 +56,4 @@ nav:
   - 고급 OpenGL:
     - 깊이 테스트: 고급 OpenGL/깊이 테스트.md
     - 스텐실 테스트: 고급 OpenGL/스텐실 테스트.md
+    - 블렌딩: 고급 OpenGL/블렌딩.md
