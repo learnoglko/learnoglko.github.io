@@ -1,0 +1,1604 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="https://learnopengl.com의 한국어 번역입니다.">
+      
+      
+      
+        <link rel="canonical" href="https://learnoglko.github.io/%EA%B3%A0%EA%B8%89%20OpenGL/%EB%B8%94%EB%A0%8C%EB%94%A9/">
+      
+      
+        <link rel="prev" href="../%EC%8A%A4%ED%85%90%EC%8B%A4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>블렌딩 - LearnOpenGL Korean</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnOpenGL Korean" class="md-header__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnOpenGL Korean
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              블렌딩
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnOpenGL Korean" class="md-nav__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LearnOpenGL Korean
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시작하기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시작하기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/OpenGL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD-%EB%A6%AC%EB%88%85%EC%8A%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    리눅스에서의 최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%82%BC%EA%B0%81%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 삼각형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%85%B0%EC%9D%B4%EB%8D%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    셰이더
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B3%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    텍스쳐
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%B3%80%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    변형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%A2%8C%ED%91%9C%20%EA%B3%B5%EA%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    좌표 공간
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B9%B4%EB%A9%94%EB%9D%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    카메라
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%83%89%EA%B9%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    색깔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기본적인 조명 효과
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머티리얼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%A1%B0%EB%AA%85%20%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명 맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%8B%A4%EC%96%91%ED%95%9C%20%EA%B4%91%EC%9B%90%20%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    다양한 광원 모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%97%AC%EB%9F%AC%20%EA%B0%9C%EC%9D%98%20%EC%A1%B0%EB%AA%85/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 개의 조명
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 OpenGL
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    고급 OpenGL
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EA%B9%8A%EC%9D%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    깊이 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%8A%A4%ED%85%90%EC%8B%A4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    스텐실 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    블렌딩
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    블렌딩
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프래그먼트 버리기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        블렌딩
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        반투명 텍스처 렌더링
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="반투명 텍스처 렌더링">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        순서를 어기지 마세요
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프래그먼트 버리기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        블렌딩
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        반투명 텍스처 렌더링
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="반투명 텍스처 렌더링">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        순서를 어기지 마세요
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">블렌딩</h1>
+<p>OpenGL에서 <strong class="g">블렌딩</strong>은 객체의 <strong class="g">투명도</strong>를 구현하는 기술로 널리 알려져 있습니다. 투명도란 객체(또는 객체의 일부)가 단색이 아니라, 객체 자체의 색상과 뒤에 있는 다른 객체의 색상이 다양한 강도로 혼합된 색을 띠는 것을 의미합니다. 색유리창은 투명한 객체입니다. 유리는 고유한 색상을 가지고 있지만, 결과적으로 만들어지는 색상에는 유리 뒤에 있는 모든 객체의 색상도 포함되어 있습니다. 여러 픽셀 색상(서로 다른 객체의 색상)을 <strong class="g">혼합(blend)</strong>하여 하나의 색상을 만들기 때문에 '블렌딩'이라는 이름이 붙었습니다. 따라서 투명도를 통해 우리는 객체를 통해 볼 수 있습니다.</p>
+<p><img alt="" src="../../static/blending_transparency.png" /></p>
+<p>투명한 물체는 완전히 투명할 수도 있고(모든 색상을 통과시킴) 부분적으로 투명할 수도 있습니다(색상은 통과시키지만, 물체 자체의 색상도 일부 통과시킴). 물체의 투명도는 색상의 <strong class="g">알파</strong> 값으로 정의됩니다. 알파 색상 값은 여러분이 아마도 자주 보셨을 색상 벡터의 네 번째 요소입니다. 이 장 이전까지는 이 네 번째 요소를 항상 1.0으로 유지하여 물체의 투명도를 0.0으로 설정했습니다. 알파 값이 0.0이면 물체는 완전히 투명해집니다. 알파 값이 0.5이면 물체의 색상이 자체 색상 50%와 물체 뒤에 있는 색상의 50%로 구성되어 있음을 나타냅니다.</p>
+<p>지금까지 사용한 텍스처는 모두 빨강, 초록, 파랑의 세 가지 색상 구성 요소로 이루어져 있지만, 일부 텍스처에는 텍셀당 알파 값을 포함하는 알파 채널이 내장되어 있습니다. 이 알파 값은 텍스처의 어느 부분이 얼마나 투명한지를 정확하게 알려줍니다. 예를 들어, 다음 <a href="../../static/blending_transparent_window.png">창 텍스처</a>는 유리 부분의 알파 값이 0.25이고 모서리 부분의 알파 값이 0.0입니다. 유리 부분은 원래 완전히 빨간색이어야 하지만, 75%의 투명도를 가지고 있기 때문에 페이지 배경이 대부분 비쳐 보여 빨간색이 훨씬 덜해 보입니다.</p>
+<p><img alt="" src="../../static/blending_transparent_window.png" /></p>
+<p>곧 깊이 테스트 챕터에서 다룬 창 모양 텍스처를 장면에 추가할 예정이지만, 먼저 완전히 투명하거나 완전히 불투명한 픽셀에 투명도를 구현하는 더 쉬운 기법에 대해 알아보겠습니다.</p>
+<h2 id="_2">프래그먼트 버리기</h2>
+<p>일부 효과는 부분 투명도를 고려하지 않고, 텍스처의 색상 값에 따라 특정 부분을 표시하거나 아예 표시하지 않으려고 합니다. 잔디를 예로 들어보겠습니다. 잔디를 간단하게 만들려면 일반적으로 2D 사각형에 잔디 텍스처를 붙여넣고 장면에 배치합니다. 하지만 잔디는 정확히 2D 정사각형 모양이 아니므로 잔디 텍스처의 일부만 표시하고 나머지는 무시해야 합니다.</p>
+<p>다음 <a href="../../static/grass.png">텍스처</a>는 완전히 불투명(알파 값 1.0)이거나 완전히 투명(알파 값 0.0)이며 그 중간 값이 없는 텍스처입니다. 잔디가 없는 부분에서는 이미지 자체의 색상 대신 페이지의 배경색이 표시되는 것을 확인할 수 있습니다.</p>
+<p><img alt="" src="../../static/grass.png" /></p>
+<p>따라서 장면에 식물을 추가할 때 잔디의 정사각형 이미지가 보이는 것이 아니라 실제 잔디 부분만 보이고 나머지는 투명하게 보이도록 하고 싶습니다. 텍스처의 투명한 부분을 보여주는 프래그먼트들은 컬러 버퍼에 저장하지 않고 <strong class="g">버려야(discard)</strong> 합니다.</p>
+<p>그 전에 먼저 투명 텍스처를 로드하는 방법을 알아야 합니다. 알파 값을 가진 텍스처를 로드하는 데에는 크게 변경할 사항이 없습니다. stb_image는 이미지의 알파 채널이 있으면 자동으로 로드하지만, 텍스처 생성 과정에서 OpenGL에 이제 텍스처가 알파 채널을 사용한다는 것을 알려줘야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGBA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>또한 프래그먼트 셰이더에서 RGB 성분뿐만 아니라 텍스처의 4가지 색상 성분을 모두 가져와야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// FragColor = vec4(vec3(texture(texture1, TexCoords)), 1.0);</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이제 투명 텍스처를 불러오는 방법을 알았으니, 깊이 테스트 챕터에서 소개한 기본 장면에 여러 개의 풀잎을 추가하여 실제로 어떻게 작동하는지 테스트해 보겠습니다.</p>
+<p>잔디 잎의 위치를 ​​나타내기 위해 여러 개의 <code>glm::vec3</code> 벡터를 더한 작은 벡터 배열을 생성합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">vector</span><span class="o">&lt;</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vegetation</span><span class="p">;</span>
+<span class="n">vegetation</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">-1.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.48f</span><span class="p">));</span>
+<span class="n">vegetation</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">1.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.51f</span><span class="p">));</span>
+<span class="n">vegetation</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.7f</span><span class="p">));</span>
+<span class="n">vegetation</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">-0.3f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.3f</span><span class="p">));</span>
+<span class="n">vegetation</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.6f</span><span class="p">));</span><span class="w">  </span>
+</code></pre></div>
+<p>각각의 잔디 오브젝트는 잔디 텍스처가 적용된 단일 사각형으로 렌더링됩니다. 완벽한 3D 잔디 표현은 아니지만, 복잡한 모델을 대량으로 불러와 렌더링하는 것보다 훨씬 효율적입니다. 무작위 회전 및 크기 조정과 같은 몇 가지 기법을 사용하면 사각형으로도 상당히 사실적인 결과를 얻을 수 있습니다.</p>
+<p>잔디 텍스처가 사각형 오브젝트에 표시될 것이기 때문에, 다시 VAO를 생성하고, VBO를 채운 다음, 적절한 정점 속성 포인터를 설정해야 합니다. 바닥과 두 개의 큐브를 렌더링한 후에는 잔디 잎을 렌더링할 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">vegetationVAO</span><span class="p">);</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">grassTexture</span><span class="p">);</span><span class="w">  </span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">vegetation</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">vegetation</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w">               </span>
+<span class="w">    </span><span class="n">shader</span><span class="p">.</span><span class="n">setMat4</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>이제 애플리케이션을 실행하는 모습은 대략 다음과 같습니다.</p>
+<p><img alt="" src="../../static/blending_no_discard.png" /></p>
+<p>이러한 현상은 OpenGL이 기본적으로 알파 값을 어떻게 처리해야 하는지, 언제 버려야 하는지 알지 못하기 때문에 발생합니다. 따라서 우리가 직접 처리해야 합니다. 다행히 셰이더를 사용하면 이 작업은 매우 간단합니다. GLSL은 (한 번 호출되면) 프래그먼트가 더 이상 처리되지 않고 컬러 버퍼에 저장되지 않도록 하는 <code>discard</code> 명령어를 제공합니다. 이 명령어를 사용하면 프래그먼트의 알파 값이 특정 임계값보다 낮은지 확인하고, 낮으면 마치 처리되지 않은 것처럼 프래그먼트를 버릴 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture1</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">texColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">texColor</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span>
+<span class="w">        </span><span class="k">discard</span><span class="p">;</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texColor</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>여기서는 샘플링된 텍스처 색상의 알파 값이 임계값 0.1보다 낮은지 확인하고, 그렇다면 해당 프래그먼트를 버립니다. 이 프래그먼트 셰이더는 (거의) 완전히 투명하지 않은 프래그먼트만 렌더링하도록 합니다. 이제 제대로 된 모습이 될 것입니다.</p>
+<p><img alt="" src="../../static/blending_discard.png" /></p>
+<div class="admonition tip">
+<p>참고로, OpenGL은 텍스처의 경계를 샘플링할 때 경계 값과 텍스처 좌표가 래핑되어 참조되는 다음 텍셀 값을 보간합니다(기본적으로 래핑 매개변수를 <code>GL_REPEAT</code>로 설정했기 때문입니다). 일반적으로는 문제가 없지만, 투명 값을 사용하는 경우 텍스처 이미지 상단의 투명 값이 하단 경계의 단색 값으로 보간됩니다. 결과적으로 텍스처가 적용된 사각형 주위에 약간 반투명한 색상의 테두리가 나타날 수 있습니다. 이를 방지하려면 반복을 원하지 않는 알파 텍스처를 사용할 때마다 텍스처 래핑 방식을 <code>GL_CLAMP_TO_EDGE</code>로 설정하세요.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glTexParameteri</span><span class="p">(</span><span class="w"> </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_WRAP_S</span><span class="p">,</span><span class="w"> </span><span class="n">GL_CLAMP_TO_EDGE</span><span class="p">);</span><span class="w">   </span>
+<span class="n">glTexParameteri</span><span class="p">(</span><span class="w"> </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_WRAP_T</span><span class="p">,</span><span class="w"> </span><span class="n">GL_CLAMP_TO_EDGE</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<p>소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/3.1.blending_discard/blending_discard.cpp">여기</a>에서 찾을 수 있습니다.</p>
+<h2 id="_3">블렌딩</h2>
+<p>프래그먼트를 버리는 기능은 훌륭하지만, 반투명 이미지를 렌더링할 수 있는 유연성을 제공하지는 않습니다. 프래그먼트를 렌더링하거나 완전히 버리는 것 중 하나만 가능합니다. 투명도가 다른 이미지를 렌더링하려면 블렌딩을 활성화해야 합니다. OpenGL의 대부분 기능과 마찬가지로 GL_BLEND를 활성화하면 블렌딩도 활성화할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_BLEND</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>이제 블렌딩을 활성화했으니 OpenGL에게 실제로 어떻게 블렌딩해야 하는지 알려줘야 합니다.</p>
+<p>OpenGL에서의 블렌딩은 다음 방정식을 사용하여 수행됩니다.</p>
+<div class="arithmatex">\[
+\begin{equation}\vec{C}_{result} = \vec{\textcolor{green}C}_{source} * \textcolor{green}F_{source} + \vec{\textcolor{red}C}_{destination} * \textcolor{red}F_{destination}\end{equation}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\vec{\textcolor{green}C}_{source}\)</span>: 소스 색상 벡터입니다. 이는 프래그먼트 셰이더의 색상 출력입니다.</li>
+<li><span class="arithmatex">\(\vec{\textcolor{red}C}_{destination}\)</span>: 목적지 색상 벡터입니다. 이는 현재 색상 버퍼에 저장된 색상 벡터입니다.</li>
+<li><span class="arithmatex">\(\textcolor{green}F_{source}\)</span>: 소스 팩터 값입니다. 알파 값이 소스 색상에 미치는 영향을 설정합니다.</li>
+<li><span class="arithmatex">\(\textcolor{red}F_{destination}\)</span>: 목적지 요소 값입니다. 알파 값이 목적지 색상에 미치는 영향을 설정합니다.</li>
+</ul>
+<p>프래그먼트 셰이더가 실행되고 모든 테스트가 통과되면, 이 <strong class="g">블렌딩 방정식</strong>이 프래그먼트의 색상 출력과 현재 컬러 버퍼에 있는 색상에 적용됩니다. 소스 및 대상 색상은 OpenGL에서 자동으로 설정되지만, 소스 및 대상 계수는 원하는 값으로 설정할 수 있습니다. 간단한 예제부터 시작해 보겠습니다.</p>
+<p><img alt="" src="../../static/blending_equation.png" /></p>
+<p>두 개의 정사각형이 있는데, 그중 빨간색 정사각형 위에 반투명한 초록색 정사각형을 그려야 합니다. 빨간색 정사각형이 최종 색상(따라서 색상 버퍼에서 먼저 위치해야 함)이 되고, 이제 빨간색 정사각형 위에 초록색 정사각형을 그릴 것입니다.</p>
+<p>그렇다면 이제 문제는 요인 값을 어떻게 설정해야 하는가입니다. 적어도 녹색 사각형에 알파 값을 곱해야 하므로 <span class="arithmatex">\(F_{src}\)</span>를 소스 색상 벡터의 알파 값인 0.6으로 설정해야 합니다. 그런 다음 대상 사각형은 알파 값의 나머지 부분만큼 기여하도록 하는 것이 합리적입니다. 녹색 사각형이 최종 색상에 60%를 기여한다면 빨간색 사각형은 최종 색상에 40%를 기여하도록 해야 합니다(예: 1.0 - 0.6). 따라서 <span class="arithmatex">\(F_{destination}\)</span>을 소스 색상 벡터의 알파 값을 1에서 뺀 값으로 설정합니다. 그러면 방정식은 다음과 같습니다.</p>
+<div class="arithmatex">\[
+\begin{equation}\bar{C}_{result} = \begin{pmatrix} \textcolor{red}{0.0} \\ \textcolor{green}{1.0} \\ \textcolor{blue}{0.0} \\ \textcolor{purple}{0.6} \end{pmatrix} * \textcolor{green}{0.6} + \begin{pmatrix} \textcolor{red}{1.0} \\ \textcolor{green}{0.0} \\ \textcolor{blue}{0.0} \\ \textcolor{purple}{1.0} \end{pmatrix} * (\textcolor{red}{1 - 0.6}) \end{equation}
+\]</div>
+<p>그 결과, 합쳐진 정사각형 조각들은 녹색 60%와 빨간색 40%의 색을 띠게 됩니다.</p>
+<p><img alt="" src="../../static/blending_equation_mixed.png" /></p>
+<p>그렇게 얻어진 색상은 색상 버퍼에 저장되어 이전 색상을 대체합니다.</p>
+<p>이건 정말 좋지만, 실제로 OpenGL에게 그런 요소들을 사용하도록 어떻게 지시할까요? 다행히도 <code>glBlendFunc</code>라는 함수가 있습니다.</p>
+<p><code>glBlendFunc(GLenum sfactor, GLenum dfactor)</code> 함수는 소스 및 대상 팩터에 대한 옵션을 설정하는 두 개의 매개변수를 받습니다. OpenGL은 설정할 수 있는 다양한 옵션을 제공하며, 그중 가장 일반적인 옵션들을 아래에 나열합니다. 상수 색상 벡터 <span class="arithmatex">\(\vec{\textcolor{blue}C}_{constant}\)</span>는 <code>glBlendColor</code> 함수를 통해 별도로 설정할 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>행동</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GL_ZERO</td>
+<td>인수가 0과 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE</td>
+<td>인수가 1과 같습니다.</td>
+</tr>
+<tr>
+<td>GL_SRC_COLOR</td>
+<td>인수는 소스 색상 벡터 <span class="arithmatex">\(\bar{\color{green}C}_{source}\)</span>와 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_SRC_COLOR</td>
+<td>인수는 1에서 소스 색상 벡터를 뺀 값과 같습니다. (<span class="arithmatex">\(1 - \bar{\color{green}C}_{source}\)</span>)</td>
+</tr>
+<tr>
+<td>GL_DST_COLOR</td>
+<td>인수는 목적지 색상 벡터 <span class="arithmatex">\(\bar{\color{red}C}_{destination}\)</span> 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_DST_COLOR</td>
+<td>인수는 1에서 목적지 색상 벡터를 뺀 값과 같습니다. (<span class="arithmatex">\(1 - \bar{\color{red}C}_{destination}\)</span>)</td>
+</tr>
+<tr>
+<td>GL_SRC_ALPHA</td>
+<td>인수는 소스 색상 벡터 <span class="arithmatex">\(\bar{\color{green}C}_{source}\)</span>의 <span class="arithmatex">\(alpha\)</span> 성분과 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_SRC_ALPHA</td>
+<td>인수는 소스 색상 벡터 <span class="arithmatex">\(\bar{\color{green}C}_{source}\)</span>의 <span class="arithmatex">\(1−alpha\)</span>와 같습니다.</td>
+</tr>
+<tr>
+<td>GL_DST_ALPHA</td>
+<td>인수는 목적지 색상 벡터 <span class="arithmatex">\(\bar{\color{red}C}_{destination}\)</span>의 알파 성분과 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_DST_ALPHA</td>
+<td>인수는 목적지 색상 벡터 <span class="arithmatex">\(\bar{\color{red}C}_{destination}\)</span>의 <span class="arithmatex">\(1−alpha\)</span>와 같습니다.</td>
+</tr>
+<tr>
+<td>GL_CONSTANT_COLOR</td>
+<td>인수는 상수 색상 벡터 <span class="arithmatex">\(\bar{\color{blue}C}_{constant}\)</span>와 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_CONSTANT_COLOR</td>
+<td>인수는 1 - 상수 색상 벡터 <span class="arithmatex">\(\bar{\color{blue}C}_{constant}\)</span>와 같습니다.</td>
+</tr>
+<tr>
+<td>GL_CONSTANT_ALPHA</td>
+<td>인수는 상수 색상 벡터 <span class="arithmatex">\(\bar{\color{blue}C}_{constant}\)</span>의 알파 성분과 같습니다.</td>
+</tr>
+<tr>
+<td>GL_ONE_MINUS_CONSTANT_ALPHA</td>
+<td>인수는 상수 색상 벡터 <span class="arithmatex">\(\bar{\color{blue}C}_{constant}\)</span>의 <span class="arithmatex">\(1−alpha\)</span>와 같습니다.</td>
+</tr>
+</tbody>
+</table>
+<p>간단한 두 정사각형 예제의 블렌딩 결과를 얻으려면 소스 요소로는 소스 색상 벡터의 알파 값을, 대상 요소로는 동일한 색상 벡터의 <span class="arithmatex">\(1−alpha\)</span> 값을 사용해야 합니다. 이는 <code>glBlendFunc</code> 함수를 사용하면 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBlendFunc</span><span class="p">(</span><span class="n">GL_SRC_ALPHA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_ONE_MINUS_SRC_ALPHA</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p><code>glBlendFuncSeparate</code> 함수를 사용하면 RGB 채널과 알파 채널에 대해 각각 다른 옵션을 설정할 수도 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBlendFuncSeparate</span><span class="p">(</span><span class="n">GL_SRC_ALPHA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_ONE_MINUS_SRC_ALPHA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_ONE</span><span class="p">,</span><span class="w"> </span><span class="n">GL_ZERO</span><span class="p">);</span>
+</code></pre></div>
+<p>이 함수는 RGB 구성 요소를 이전에 설정한 대로 설정하지만, 결과 알파 구성 요소는 소스의 알파 값에만 영향을 받도록 합니다.</p>
+<p>OpenGL은 방정식의 소스 부분과 대상 부분 사이의 연산자를 변경할 수 있도록 하여 훨씬 더 큰 유연성을 제공합니다. 현재는 소스와 대상 구성 요소가 더해지지만, 원한다면 뺄 수도 있습니다. <code>glBlendEquation(GLenum mode)</code>를 사용하면 이 연산을 설정할 수 있으며, 5가지 옵션이 있습니다.</p>
+<ul>
+<li>GL_FUNC_ADD: 기본값으로, 두 색상을 서로 더합니다. <span class="arithmatex">\(\bar{C}_{result} = \color{green}{Src} + \color{red}{Dst}\)</span>.</li>
+<li>GL_FUNC_SUBTRACT: 두 색상을 서로 뺍니다. <span class="arithmatex">\(\bar{C}_{result} = \color{green}{Src} - \color{red}{Dst}\)</span>.</li>
+<li>GL_FUNC_REVERSE_SUBTRACT: 두 색상을 모두 빼지만 순서를 반전합니다. <span class="arithmatex">\(\bar{C}_{result} = \color{red}{Dst} - \color{green}{Src}\)</span>.</li>
+<li>GL_MIN: 두 색상의 구성 요소별 최소값을 취합니다. <span class="arithmatex">\(\bar{C}_{result} = min(\color{red}{Dst}, \color{green}{Src})\)</span>.</li>
+<li>GL_MAX: 두 색상의 구성 요소별 최댓값을 취합니다. <span class="arithmatex">\(\bar{C}_{result} = max(\color{red}{Dst}, \color{green}{Src})\)</span>.</li>
+</ul>
+<p>일반적으로 대부분의 연산에서 <code>GL_FUNC_ADD</code>가 선호되는 블렌딩 방정식이므로 <code>glBlendEquation</code> 호출을 생략할 수 있지만, 주류 회로를 벗어나려는 경우 다른 
+방정식도 필요에 맞을 수 있습니다.</p>
+<h2 id="_4">반투명 텍스처 렌더링</h2>
+<p>이제 OpenGL의 블렌딩 작동 방식을 알았으니, 여러 개의 반투명 창을 추가하여 배운 내용을 적용해 보겠습니다. 이 장의 시작 부분에서 사용했던 것과 동일한 장면을 사용하지만, 잔디 텍스처 대신 이 장 초반에 사용했던 <a href="../../static/blending_transparent_window.png">투명 창 텍스처</a>를 렌더링할 것입니다.</p>
+<p>먼저 초기화 과정에서 블렌딩을 활성화하고 적절한 블렌딩 함수를 설정합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_BLEND</span><span class="p">);</span>
+<span class="n">glBlendFunc</span><span class="p">(</span><span class="n">GL_SRC_ALPHA</span><span class="p">,</span><span class="w"> </span><span class="n">GL_ONE_MINUS_SRC_ALPHA</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>블렌딩을 활성화했으므로 프래그먼트를 버릴 필요가 없으므로 프래그먼트 셰이더를 원래 버전으로 되돌립니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture1</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture1</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이번에는 (OpenGL이 프래그먼트를 렌더링할 때마다) 현재 프래그먼트의 색상과 컬러 버퍼에 있는 프래그먼트 색상을 FragColor의 알파 값을 기준으로 결합합니다. 창 텍스처의 유리 부분이 반투명하기 때문에 이 창을 통해 나머지 장면을 볼 수 있어야 합니다.</p>
+<p><img alt="" src="../../static/blending_incorrect_order.png" /></p>
+<p>하지만 자세히 살펴보면 뭔가 이상하다는 것을 알 수 있습니다. 앞쪽 창문의 투명한 부분이 뒤쪽 창문들을 가리고 있습니다. 왜 이런 현상이 발생하는 걸까요?</p>
+<p>이유는 깊이 테스트가 블렌딩과 결합될 때 다소 까다롭게 작동하기 때문입니다. 깊이 버퍼에 기록할 때, 깊이 테스트는 프래그먼트의 투명도 여부를 고려하지 않으므로 투명한 부분도 다른 값과 마찬가지로 깊이 버퍼에 기록됩니다. 결과적으로 배경 창은 투명도를 무시하고 다른 불투명 객체처럼 깊이 테스트를 받게 됩니다. 투명한 부분이 뒤에 있는 창을 보여줘야 함에도 불구하고, 깊이 테스트는 이를 무시합니다.</p>
+<p>따라서 창을 원하는 대로 렌더링하고 깊이 버퍼가 모든 문제를 해결해 줄 거라고 기대할 수는 없습니다. 바로 이 부분에서 블렌딩이 다소 까다로워집니다. 창이 뒤에 있는 창을 보여주도록 하려면 먼저 배경의 창을 그려야 합니다. 즉, 창들을 가장 먼 곳부터 가장 가까운 곳까지 순서대로 정렬하고 그에 따라 직접 그려야 한다는 뜻입니다.</p>
+<div class="admonition tip">
+<p>풀잎처럼 완전히 투명한 물체의 경우, 투명한 부분을 합성하는 대신 버리는 옵션을 선택하면 이러한 문제들을 일부 해결할 수 있습니다 (깊이 문제 없음).</p>
+</div>
+<h3 id="_5">순서를 어기지 마세요</h3>
+<p>여러 객체에 블렌딩 효과를 적용하려면 가장 멀리 있는 객체를 먼저 그리고 가장 가까운 객체를 마지막에 그려야 합니다. 블렌딩되지 않는 일반 객체는 깊이 버퍼를 사용하여 평소처럼 그릴 수 있으므로 정렬할 필요가 없습니다. 다만, (정렬된) 투명 객체를 그리기 전에 일반 객체를 먼저 그려야 합니다. 불투명 객체와 투명 객체가 있는 장면을 그릴 때 일반적인 구성은 다음과 같습니다.</p>
+<ul>
+<li>불투명한 물체를 먼저 모두 그리세요.</li>
+<li>투명한 물체를 모두 정렬하세요.</li>
+<li>투명한 물체들을 정렬된 순서대로 모두 그리세요.</li>
+</ul>
+<p>투명한 객체를 정렬하는 한 가지 방법은 보는 사람의 시점에서 객체까지의 거리를 구하는 것입니다. 이는 카메라의 위치 벡터와 객체의 위치 벡터 사이의 거리를 계산함으로써 얻을 수 있습니다. 그런 다음 이 거리와 해당 위치 벡터를 STL 라이브러리의 맵 데이터 구조에 저장합니다. 맵은 키를 기준으로 값을 자동으로 정렬하므로, 거리를 키로 사용하여 모든 위치 데이터를 추가하면 자동으로 거리 값을 기준으로 정렬됩니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sorted</span><span class="p">;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">windows</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">length</span><span class="p">(</span><span class="n">camera</span><span class="p">.</span><span class="n">Position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windows</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">sorted</span><span class="p">[</span><span class="n">distance</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">windows</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>결과적으로 각 창의 위치가 거리 키 값을 기준으로 가장 짧은 거리부터 가장 긴 거리 순으로 정렬된 컨테이너 객체가 생성됩니다.</p>
+<p>그런 다음, 이번에는 렌더링할 때 지도의 각 값을 역순(가장 먼 곳에서 가장 가까운 곳까지)으로 가져와서 해당 창을 올바른 순서대로 그립니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="o">&gt;::</span><span class="n">reverse_iterator</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sorted</span><span class="p">.</span><span class="n">rbegin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">sorted</span><span class="p">.</span><span class="n">rend</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span><span class="w"> </span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span><span class="w">              </span>
+<span class="w">    </span><span class="n">shader</span><span class="p">.</span><span class="n">setMat4</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>맵에서 역순 이터레이터를 가져와 각 항목을 역순으로 순회한 다음 각 창 사각형을 해당 창 위치로 이동시킵니다. 투명 객체를 정렬하는 이 비교적 간단한 접근 방식은 이전 문제를 해결하며 이제 장면은 다음과 같습니다.</p>
+<p><img alt="" src="../../static/blending_sorted.png" /></p>
+<p>정렬 기능이 포함된 전체 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/3.2.blending_sort/blending_sorted.cpp">여기</a>에서 확인할 수 있습니다.</p>
+<p>이 특정 시나리오에서는 객체를 거리에 따라 정렬하는 방식이 효과적이지만, 회전, 크기 조정 또는 기타 변환을 고려하지 않으며, 특이한 모양의 객체에는 단순히 위치 벡터만으로는 부족한 다른 측정 기준이 필요합니다.</p>
+<p>장면 내 객체들을 정렬하는 것은 장면의 종류에 따라 크게 달라지는 어려운 작업이며, 추가적인 처리 능력 또한 요구됩니다. 불투명 객체와 투명 객체로 구성된 장면을 완벽하게 렌더링하는 것 또한 쉽지 않습니다. <strong class="g">순서에 독립적인 투명도 처리(order independent transparency)</strong>와 같은 고급 기술도 있지만, 이 장에서는 다루지 않습니다. 당분간은 일반적인 객체 블렌딩 방식을 사용해야 하지만, 주의해서 한계를 이해하고 활용한다면 꽤 괜찮은 블렌딩 효과를 얻을 수 있습니다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
