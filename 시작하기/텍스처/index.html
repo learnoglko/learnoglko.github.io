@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://learnoglko.github.io/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B3%90/">
+        <link rel="canonical" href="https://learnoglko.github.io/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B2%98/">
       
       
         <link rel="prev" href="../%EC%85%B0%EC%9D%B4%EB%8D%94/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>텍스쳐 - LearnOpenGL Korean</title>
+        <title>텍스처 - LearnOpenGL Korean</title>
       
     
     
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              텍스쳐
+              텍스처
             
           </span>
         </div>
@@ -464,7 +464,7 @@
   <span class="md-ellipsis">
     
   
-    텍스쳐
+    텍스처
   
 
     
@@ -482,7 +482,7 @@
   <span class="md-ellipsis">
     
   
-    텍스쳐
+    텍스처
   
 
     
@@ -511,7 +511,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 래핑
+        텍스처 래핑
       
     </span>
   </a>
@@ -522,12 +522,12 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 필터링
+        텍스처 필터링
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="텍스쳐 필터링">
+    <nav class="md-nav" aria-label="텍스처 필터링">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -573,7 +573,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 생성하기
+        텍스처 생성하기
       
     </span>
   </a>
@@ -1347,7 +1347,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 래핑
+        텍스처 래핑
       
     </span>
   </a>
@@ -1358,12 +1358,12 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 필터링
+        텍스처 필터링
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="텍스쳐 필터링">
+    <nav class="md-nav" aria-label="텍스처 필터링">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1409,7 +1409,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        텍스쳐 생성하기
+        텍스처 생성하기
       
     </span>
   </a>
@@ -1461,7 +1461,7 @@
 
 
 <p>원본: <a href="https://learnopengl.com/Getting-started/Textures">Textures</a></p>
-<h1 id="_1">텍스쳐</h1>
+<h1 id="_1">텍스처</h1>
 <p>우리는 객체에 더 많은 디테일을 추가하기 위해 각 정점에 색상을 지정하여 흥미로운 이미지를 만들 수 있다는 것을 알게 되었습니다. 하지만 상당한 사실감을 얻으려면 많은 정점이 필요하고 그만큼 많은 색상을 지정해야 합니다. 이는 각 모델에 더 많은 정점이 필요하고 각 정점에 색상 속성이 있어야 하므로 상당한 추가 오버헤드를 발생시킵니다.</p>
 <p>일반적으로 아티스트와 프로그래머들이 선호하는 방식은 <strong class="g">텍스처</strong>를 사용하는 것입니다. 텍스처는 객체에 디테일을 더하기 위해 사용되는 2D 이미지입니다(1D 및 3D 텍스처도 존재합니다). 예를 들어, 멋진 벽돌 이미지가 그려진 종이를 3D 집 위에 깔끔하게 접어 붙여 집 외벽이 돌로 된 것처럼 보이게 하는 것을 텍스처라고 생각해 보세요. 하나의 이미지에 많은 디테일을 담을 수 있기 때문에, 추가적인 정점을 지정하지 않고도 객체가 매우 정교해 보이는 효과를 줄 수 있습니다.</p>
 <div class="admonition tip">
@@ -1481,7 +1481,7 @@
 <span class="p">};</span>
 </code></pre></div>
 <p>텍스처 샘플링은 해석이 자유롭고 다양한 방식으로 구현될 수 있습니다. 따라서 우리는 OpenGL에게 텍스처를 어떻게 샘플링해야 하는지 알려주는 것이 우리의 역할입니다.</p>
-<h2 id="_2">텍스쳐 래핑</h2>
+<h2 id="_2">텍스처 래핑</h2>
 <p>텍스처 좌표는 일반적으로 (0,0)에서 (1,1) 사이의 범위를 갖지만, 이 범위를 벗어난 좌표를 지정하면 어떻게 될까요? OpenGL의 기본 동작은 텍스처 이미지를 반복하는 것입니다(기본적으로 부동 소수점 텍스처 좌표의 정수 부분을 무시합니다). 하지만 OpenGL은 더 많은 옵션을 제공합니다.</p>
 <ul>
 <li><code>GL_REPEAT</code>: 텍스처의 기본 동작입니다. 텍스처 이미지를 반복합니다.</li>
@@ -1500,7 +1500,7 @@
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">borderColor</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">};</span>
 <span class="n">glTexParameterfv</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_BORDER_COLOR</span><span class="p">,</span><span class="w"> </span><span class="n">borderColor</span><span class="p">);</span><span class="w"> </span>
 </code></pre></div>
-<h2 id="_3">텍스쳐 필터링</h2>
+<h2 id="_3">텍스처 필터링</h2>
 <p>텍스처 좌표는 해상도에 의존하지 않고 임의의 부동 소수점 값이 될 수 있으므로, OpenGL은 해당 텍스처 좌표를 어떤 텍스처 픽셀(<strong class="g">텍셀(texel)</strong>이라고도 함)에 매핑해야 하는지 파악해야 합니다. 이는 특히 크기가 매우 큰 객체와 저해상도 텍스처를 사용하는 경우에 중요해집니다. 짐작하셨겠지만, OpenGL에는 이러한 <strong class="g">텍스처 필터링</strong>을 위한 옵션도 있습니다. 여러 옵션이 있지만, 여기서는 가장 중요한 옵션인 <code>GL_NEAREST</code>와 <code>GL_LINEAR</code>에 대해 살펴보겠습니다.</p>
 <p><code>GL_NEAREST</code>(<strong class="g">최근접 이웃</strong> 또는 <strong class="g">점</strong> 필터링이라고도 함)는 OpenGL의 기본 텍스처 필터링 방식입니다. <code>GL_NEAREST</code>로 설정하면 OpenGL은 텍스처 좌표에 가장 가까운 중심을 가진 텍셀을 선택합니다. 아래 그림에서 십자 표시는 정확한 텍스처 좌표를 나타내는 4개의 픽셀을 보여줍니다. 왼쪽 상단의 텍셀이 텍스처 좌표에 가장 가까운 중심을 가지고 있으므로 샘플링된 색상으로 선택됩니다.</p>
 <p><img alt="" src="../../static/filter_nearest.png" /></p>
@@ -1544,7 +1544,7 @@
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stbi_load</span><span class="p">(</span><span class="s">&quot;container.jpg&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 </code></pre></div>
 <p>이 함수는 먼저 이미지 파일의 위치를 ​​입력으로 받습니다. 그런 다음 두 번째, 세 번째, 네 번째 인수로 세 개의 정수를 입력받아야 하는데, stb_image.h 파일은 이 값들을 결과 이미지의 너비, 높이, 그리고 색상 채널 수로 채웁니다. 이미지의 너비와 높이는 나중에 텍스처를 생성하는 데 필요합니다.</p>
-<h3 id="_6">텍스쳐 생성하기</h3>
+<h3 id="_6">텍스처 생성하기</h3>
 <p>OpenGL의 다른 객체들과 마찬가지로 텍스처도 ID로 참조됩니다. 이제 텍스처 ID를 만들어 보겠습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture</span><span class="p">;</span>
 <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">texture</span><span class="p">);</span>
@@ -1657,7 +1657,7 @@
 <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">);</span>
 </code></pre></div>
 <div class="admonition note">
-<p>정리하자면, 텍스쳐 유닛은 하나의 프래그먼트 셰이더에서 여러개의 이미지를 사용할 수 있게 해줍니다. 기존의 방법대로라면 바인드된 텍스쳐 하나만 사용할수 있었겠지만 텍스쳐 유닛을 사용한다면 여러가지 텍스쳐를 각각의 샘플러에 적용하여 여러개의 이미지를 사용할수 있게 됩니다. </p>
+<p>정리하자면, 텍스처 유닛은 하나의 프래그먼트 셰이더에서 여러개의 이미지를 사용할 수 있게 해줍니다. 기존의 방법대로라면 바인드된 텍스처 하나만 사용할수 있었겠지만 텍스처 유닛을 사용한다면 여러가지 텍스처를 각각의 샘플러에 적용하여 여러개의 이미지를 사용할수 있게 됩니다. </p>
 </div>
 <p>텍스처 유닛을 활성화한 후, <code>glBindTexture</code> 함수를 사용하여 해당 텍스처를 현재 활성화된 텍스처 유닛에 바인딩합니다. 텍스처 유닛 <code>GL_TEXTURE0</code>은 기본적으로 항상 활성화되어 있으므로 이전 예제에서는 <code>glBindTexture</code>를 사용할 때 텍스처 유닛을 활성화할 필요가 없었습니다.</p>
 <div class="admonition tip">
@@ -1713,7 +1713,7 @@
 <p><img alt="" src="../../static/textures_combined2.png" /></p>
 <p>정상적으로 작동하는 컨테이너가 하나라도 보이면 제대로 작업한 것입니다. <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/4.2.textures_combined/textures_combined.cpp">여기</a>에서 소스 코드를 확인해 볼 수 있습니다.</p>
 <h1 id="_9">연습 문제</h1>
-<p>텍스쳐에 더욱 익숙해지려면 다음 단계로 넘어가기 전에 이러한 연습을 해보는 것이 좋습니다.</p>
+<p>텍스처에 더욱 익숙해지려면 다음 단계로 넘어가기 전에 이러한 연습을 해보는 것이 좋습니다.</p>
 <ul>
 <li>프래그먼트 셰이더를 수정하여 웃는 얼굴만 반대쪽/반대 방향을 바라보도록 하세요 (<a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/4.3.textures_exercise1/textures_exercise1.cpp">해결 방법</a>).</li>
 <li>텍스처 좌표 범위를 0.0f에서 1.0f 대신 0.0f에서 2.0f로 지정하여 다양한 텍스처 래핑 방법을 실험해 보세요. 가장자리에 맞춰 클램핑된 하나의 컨테이너 이미지에 웃는 얼굴 4개를 표시할 수 있는지 확인해 보세요. (<a href="https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/4.4.textures_exercise2/textures_exercise2.cpp">해결 방법</a>, <a href="../../static/textures_exercise2.png">결과</a>) 그리고 다른 래핑 방법도 실험해 보세요.</li>
