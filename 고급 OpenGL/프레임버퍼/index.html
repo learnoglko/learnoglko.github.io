@@ -1,0 +1,1877 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="https://learnopengl.com의 한국어 번역입니다.">
+      
+      
+      
+        <link rel="canonical" href="https://learnoglko.github.io/%EA%B3%A0%EA%B8%89%20OpenGL/%ED%94%84%EB%A0%88%EC%9E%84%EB%B2%84%ED%8D%BC/">
+      
+      
+        <link rel="prev" href="../%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EC%BB%AC%EB%A7%81/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>프레임버퍼 - LearnOpenGL Korean</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnOpenGL Korean" class="md-header__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnOpenGL Korean
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              프레임버퍼
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnOpenGL Korean" class="md-nav__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LearnOpenGL Korean
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시작하기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시작하기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/OpenGL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD-%EB%A6%AC%EB%88%85%EC%8A%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    리눅스에서의 최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%82%BC%EA%B0%81%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 삼각형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%85%B0%EC%9D%B4%EB%8D%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    셰이더
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B3%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    텍스쳐
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%B3%80%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    변형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%A2%8C%ED%91%9C%20%EA%B3%B5%EA%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    좌표 공간
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B9%B4%EB%A9%94%EB%9D%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    카메라
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%83%89%EA%B9%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    색깔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기본적인 조명 효과
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머티리얼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%A1%B0%EB%AA%85%20%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명 맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%8B%A4%EC%96%91%ED%95%9C%20%EA%B4%91%EC%9B%90%20%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    다양한 광원 모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%97%AC%EB%9F%AC%20%EA%B0%9C%EC%9D%98%20%EC%A1%B0%EB%AA%85/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 개의 조명
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 OpenGL
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    고급 OpenGL
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EA%B9%8A%EC%9D%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    깊이 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%8A%A4%ED%85%90%EC%8B%A4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    스텐실 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%B8%94%EB%A0%8C%EB%94%A9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    블렌딩
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EC%BB%AC%EB%A7%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    페이스 컬링
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프레임버퍼
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프레임버퍼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프레임버퍼 만들기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="프레임버퍼 만들기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        텍스처 어태치먼트
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        렌더버퍼 어태치먼트
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        텍스처로 렌더링
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        후처리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        반전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        흑백
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커널 효과
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        흐림 효과
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엣지 검출
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연습 문제
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프레임버퍼 만들기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="프레임버퍼 만들기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        텍스처 어태치먼트
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        렌더버퍼 어태치먼트
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        텍스처로 렌더링
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        후처리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        반전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        흑백
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        커널 효과
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        흐림 효과
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엣지 검출
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연습 문제
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">프레임버퍼</h1>
+<p>지금까지 우리는 색상 값을 기록하는 컬러 버퍼, 깊이 정보를 기록하고 테스트하는 깊이 버퍼, 그리고 특정 조건에 따라 특정 조각을 버릴 수 있도록 하는 스텐실 버퍼 등 여러 종류의 화면 버퍼를 사용해 왔습니다. 이러한 버퍼들의 조합은 GPU 메모리의 어딘가에 저장되며 <strong class="g">프레임 버퍼</strong>라고 불립니다. OpenGL은 사용자가 직접 프레임 버퍼를 정의할 수 있는 유연성을 제공하며, 따라서 사용자 지정 컬러 버퍼(그리고 선택적으로 깊이 및 스텐실 버퍼)를 정의할 수 있습니다.</p>
+<p>지금까지 수행한 렌더링 작업은 모두 <strong class="g">기본 프레임버퍼</strong>에 연결된 렌더 버퍼를 기반으로 이루어졌습니다. 기본 프레임버퍼는 창을 생성할 때 생성되고 구성됩니다(GLFW가 이 작업을 수행합니다). 자체 프레임버퍼를 생성함으로써 렌더링 대상을 하나 더 확보할 수 있습니다.</p>
+<p>프레임버퍼의 사용법이 당장은 이해하기 어려울 수 있지만, 장면을 다른 프레임버퍼에 렌더링하면 그 결과를 활용하여 장면 내에 대칭 이미지를 만들거나 멋진 후처리 효과를 적용할 수 있습니다. 먼저 프레임버퍼의 작동 원리를 살펴보고, 그 다음에는 이러한 멋진 후처리 효과를 구현해 보겠습니다.</p>
+<h2 id="_2">프레임버퍼 만들기</h2>
+<p>OpenGL의 다른 객체와 마찬가지로 <code>glGenFramebuffers</code>라는 함수를 사용하여 프레임버퍼 객체(약칭 FBO)를 생성할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fbo</span><span class="p">;</span>
+<span class="n">glGenFramebuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fbo</span><span class="p">);</span>
+</code></pre></div>
+<p>이러한 객체 생성 및 사용 패턴은 지금까지 수십 번 보아온 것이므로 사용 기능은 이전에 살펴본 다른 객체들과 유사합니다. 먼저 프레임버퍼 객체를 생성하고, 활성 프레임버퍼로 바인딩한 다음, 몇 가지 작업을 수행하고 프레임버퍼 바인딩을 해제합니다. 프레임버퍼를 바인딩하려면 <code>glBindFramebuffer</code> 함수를 사용합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">fbo</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p><code>GL_FRAMEBUFFER</code> 타겟에 바인딩하면 이후의 모든 읽기 및 쓰기 프레임버퍼 작업은 현재 바인딩된 프레임버퍼에 영향을 미칩니다. 또한 <code>GL_READ_FRAMEBUFFER</code> 또는 <code>GL_DRAW_FRAMEBUFFER</code>에 바인딩하여 프레임버퍼를 읽기 또는 쓰기 대상으로 지정할 수도 있습니다. <code>GL_READ_FRAMEBUFFER</code>에 바인딩된 프레임버퍼는 glReadPixels와 같은 모든 읽기 작업에 사용되고, <code>GL_DRAW_FRAMEBUFFER</code>에 바인딩된 프레임버퍼는 렌더링, 지우기 및 기타 쓰기 작업의 대상으로 사용됩니다. 하지만 대부분의 경우 이러한 구분이 필요하지 않으며 일반적으로 <code>GL_FRAMEBUFFER</code>를 사용하여 두 대상 모두에 바인딩합니다.</p>
+<p>유감스럽게도 프레임버퍼가 아직 <strong class="g">완성되지(complete)</strong> 않아 사용할 수 없습니다. 프레임버퍼가 완성되려면 다음 요구 사항을 충족해야 합니다.</p>
+<ul>
+<li>최소한 하나의 버퍼(컬러 버퍼, 깊이 버퍼 또는 스텐실 버퍼)를 연결해야 합니다.</li>
+<li>적어도 하나 이상의 컬러 어태치먼트(Color Attachment)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>가 있어야 합니다.</li>
+<li>모든 어태치먼트는 반드시 완전한(완성된) 상태여야 합니다(메모리 할당 필수).</li>
+<li>각 버퍼에는 동일한 수의 샘플이 포함되어야 합니다.</li>
+</ul>
+<p>샘플이 무엇인지 모르시더라도 걱정하지 마세요. 추후 장에서 설명해 드리겠습니다.</p>
+<p>요구 사항을 보면 프레임버퍼에 연결할 수 있는 일종의 어태치먼트(부착물)를 생성하고 이 어태치먼트를 프레임버퍼에 연결해야 한다는 것을 알 수 있습니다. 모든 요구 사항을 충족한 후에는 <code>GL_FRAMEBUFFER</code>를 인수로 사용하는 <code>glCheckFramebufferStatus</code> 함수를 호출하여 프레임버퍼 처리가 성공적으로 완료되었는지 확인할 수 있습니다. 이 함수는 현재 바인딩된 프레임버퍼를 확인하고 <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glCheckFramebufferStatus.xhtml">사양</a>에 명시된 값 중 하나를 반환합니다. <code>GL_FRAMEBUFFER_COMPLETE</code>가 반환되면 모든 준비가 완료된 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="n">glCheckFramebufferStatus</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GL_FRAMEBUFFER_COMPLETE</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">// 축배를 듭시다!</span>
+</code></pre></div>
+<p>이후의 모든 렌더링 작업은 현재 바인딩된 프레임버퍼의 어태치먼트에 렌더링됩니다. 이 프레임버퍼는 기본 프레임버퍼가 아니므로 렌더링 명령은 창의 시각적 출력에 영향을 미치지 않습니다. 이러한 이유로 다른 프레임버퍼에 렌더링하는 것을 <strong class="g">오프스크린 렌더링</strong>이라고 합니다. 모든 렌더링 작업이 메인 창에 다시 시각적 영향을 미치도록 하려면 기본 프레임버퍼를 0에 바인딩하여 활성화해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">   </span>
+</code></pre></div>
+<p>프레임버퍼 관련 작업을 모두 마쳤으면 프레임버퍼 객체를 삭제하는 것을 잊지 마세요.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glDeleteFramebuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fbo</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>완전성 검사를 실행하기 전에 프레임버퍼에 하나 이상의 어태치먼트를 연결해야 합니다. 어태치먼트는 프레임버퍼의 버퍼 역할을 하는 메모리 위치로, 이미지와 유사합니다. 어태치먼트를 생성할 때는 텍스처 또는 렌더버퍼 객체 두 가지 옵션이 있습니다.</p>
+<h3 id="_3">텍스처 어태치먼트</h3>
+<p>프레임버퍼에 텍스처를 연결하면 모든 렌더링 명령은 일반적인 컬러/깊이 버퍼 또는 스텐실 버퍼처럼 텍스처에 데이터를 기록합니다. 텍스처를 사용하는 장점은 렌더링 결과가 텍스처 이미지 내부에 저장되므로 셰이더에서 쉽게 사용할 수 있다는 것입니다.</p>
+<p>프레임버퍼용 텍스처를 생성하는 방법은 일반 텍스처를 생성하는 방법과 거의 동일합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">texture</span><span class="p">;</span>
+<span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">texture</span><span class="p">);</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">);</span>
+
+<span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGB</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGB</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+
+<span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_LINEAR</span><span class="p">);</span>
+<span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_LINEAR</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>여기서 주요 차이점은 (필수 사항은 아니지만) 텍스처의 크기를 화면 크기와 동일하게 설정하고, 텍스처의 데이터 매개변수에 NULL을 전달한다는 것입니다. 이 텍스처의 경우 메모리만 할당하고 실제로 데이터를 채우지는 않습니다. 텍스처 채우기는 프레임 버퍼에 렌더링하는 순간 이루어집니다. 또한 대부분의 경우 래핑 메서드나 밉매핑은 필요하지 않으므로 신경 쓰지 않아도 됩니다.</p>
+<div class="admonition tip">
+<p>전체 화면을 더 작거나 큰 크기의 텍스처에 렌더링하려면 (프레임버퍼에 렌더링하기 전에) 새 텍스처 크기를 지정하여 <code>glViewport</code> 함수를 다시 호출해야 합니다. 그렇지 않으면 렌더링 명령이 텍스처의 일부만 채우게 됩니다.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+</div>
+<p>텍스처를 생성했으니 이제 마지막으로 해야 할 일은 프레임버퍼에 해당 텍스처를 연결하는 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glFramebufferTexture2D</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_COLOR_ATTACHMENT0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p><code>glFrameBufferTexture2D</code> 함수는 다음과 같은 매개변수를 갖습니다.</p>
+<ul>
+<li>target: 대상으로 지정할 프레임버퍼 유형(그리기, 읽기 또는 둘 다).</li>
+<li>attachment: 어태치먼트의 종류입니다. 지금은 컬러 어태치먼트를 첨부하고 있습니다. 끝에 붙은 0은 색상 어태치먼트를 여러 개 첨부할 수 있음을 나타냅니다. 이 부분은 나중에 자세히 다루겠습니다.</li>
+<li>textarget: 첨부할 텍스처의 유형입니다.</li>
+<li>texture: 실제로 적용할 텍스처입니다.</li>
+<li>level: 밉맵 레벨. 여기서는 값을 0으로 설정합니다.</li>
+</ul>
+<p>컬러 어태치먼트 외에도 프레임 버퍼 객체에 깊이 텍스처와 스텐실 텍스처를 첨부할 수 있습니다. 깊이 어태치먼트를 첨부하려면 어태치먼트 유형을 <code>GL_DEPTH_ATTACHMENT</code>로 지정합니다. 이때 텍스처의 <strong class="g">형식</strong>과 <strong class="g">내부 형식</strong> 유형은 깊이 버퍼의 저장 형식을 반영하도록 <code>GL_DEPTH_COMPONENT</code>로 변경해야 합니다. 스텐실 버퍼를 첨부하려면 두 번째 인수로 <code>GL_STENCIL_ATTACHMENT</code>를 사용하고 텍스처 형식을 <code>GL_STENCIL_INDEX</code>로 지정합니다.</p>
+<p>깊이 버퍼와 스텐실 버퍼를 하나의 텍스처로 연결하는 것도 가능합니다. 이 경우 텍스처의 각 32비트 값은 24비트의 깊이 정보와 8비트의 스텐실 정보를 포함합니다. 깊이 버퍼와 스텐실 버퍼를 하나의 텍스처로 연결하려면 <code>GL_DEPTH_STENCIL_ATTACHMENT</code> 타입을 사용하고 텍스처 형식을 깊이 및 스텐실 값이 결합된 형태로 구성합니다. 프레임 버퍼에 깊이 버퍼와 스텐실 버퍼를 하나의 텍스처로 연결하는 예는 아래와 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glTexImage2D</span><span class="p">(</span>
+<span class="w">  </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH24_STENCIL8</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">GL_DEPTH_STENCIL</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_INT_24_8</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span>
+<span class="p">);</span>
+
+<span class="n">glFramebufferTexture2D</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH_STENCIL_ATTACHMENT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="_4">렌더버퍼 어태치먼트</h3>
+<p><strong class="g">렌더버퍼 객체(Renderbuffer objects)</strong>는 텍스처가 도입된 후 프레임버퍼에 데이터를 저장하는 한 유형으로 OpenGL에 추가되었습니다. 텍스처 이미지와 마찬가지로 렌더버퍼 객체는 바이트, 정수, 픽셀 등의 배열로 이루어진 실제 버퍼입니다. 하지만 렌더버퍼 객체는 직접 읽을 수 없습니다. 이러한 특성 덕분에 OpenGL은 메모리 최적화를 통해 프레임버퍼에 오프스크린 렌더링을 수행할 때 텍스처보다 성능 우위를 확보할 수 있습니다.</p>
+<p>렌더버퍼 객체는 모든 렌더링 데이터를 텍스처별 형식으로 변환하지 않고 버퍼에 직접 저장하므로 쓰기 가능한 저장 매체로서 속도가 빠릅니다. 렌더버퍼 객체에서 직접 읽을 수는 없지만, 속도가 느린 <code>glReadPixels</code> 함수를 통해 읽을 수 있습니다. 이 함수는 현재 바인딩된 프레임 버퍼에서 지정된 영역의 픽셀 값을 반환하지만, 어태치먼트 자체에서 직접 읽는 것은 아닙니다.</p>
+<p>렌더버퍼 객체는 데이터를 네이티브 형식으로 저장하기 때문에 데이터를 쓰거나 다른 버퍼로 복사할 때 속도가 매우 빠릅니다. 따라서 버퍼 전환과 같은 작업도 렌더버퍼 객체를 사용하면 상당히 빠르게 처리됩니다. 매 프레임 끝에서 사용했던 <code>glfwSwapBuffers</code> 함수도 렌더버퍼 객체를 이용해 구현할 수 있습니다. 단순히 하나의 렌더버퍼 이미지에 데이터를 쓰고 마지막에 다른 이미지로 전환하면 됩니다. 렌더버퍼 객체는 이러한 종류의 작업에 매우 적합합니다.</p>
+<p>렌더버퍼 객체를 생성하는 코드는 프레임버퍼를 생성하는 코드와 유사합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">rbo</span><span class="p">;</span>
+<span class="n">glGenRenderbuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rbo</span><span class="p">);</span>
+</code></pre></div>
+<p>마찬가지로, 모든 후속 렌더버퍼 작업이 현재 렌더버퍼 객체에 영향을 미치도록 렌더버퍼 객체를 바인딩하려고 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindRenderbuffer</span><span class="p">(</span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">rbo</span><span class="p">);</span><span class="w"> </span>
+</code></pre></div>
+<p>렌더버퍼 객체는 쓰기 전용이기 때문에 깊이 및 스텐실 어태치먼트로 자주 사용됩니다. 대부분의 경우 버퍼에서 값을 읽을 필요는 없지만 깊이 및 스텐실 테스트에는 필요하기 때문입니다. 테스트를 위해 깊이 및 스텐실 값이 필요하지만 이러한 값을 샘플링할 필요는 없으므로 렌더버퍼 객체가 적합합니다. 이러한 버퍼에서 샘플링하지 않는 경우에는 일반적으로 렌더버퍼 객체가 선호됩니다.</p>
+<p>깊이 및 스텐실 렌더버퍼 객체를 생성하는 작업은 <code>glRenderbufferStorage</code> 함수를 호출하여 수행됩니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glRenderbufferStorage</span><span class="p">(</span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH24_STENCIL8</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">);</span>
+</code></pre></div>
+<p>렌더버퍼 객체를 생성하는 것은 텍스처 객체를 생성하는 것과 유사하지만, 이 객체는 텍스처처럼 범용 데이터 버퍼로 사용되는 대신 프레임버퍼에 연결하여 사용하도록 특별히 설계되었다는 점이 다릅니다. 여기서는 내부 형식으로 GL_DEPTH24_STENCIL8을 선택했는데, 이 형식은 깊이 버퍼와 스텐실 버퍼를 각각 24비트와 8비트로 저장합니다.</p>
+<p>이제 마지막으로 해야 할 일은 렌더버퍼 객체를 실제로 연결하는 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glFramebufferRenderbuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH_STENCIL_ATTACHMENT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">rbo</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>렌더버퍼 객체는 오프스크린 렌더링 프로젝트에서 더 효율적일 수 있지만, 렌더버퍼 객체와 텍스처를 언제 사용해야 하는지 명확히 구분하는 것이 중요합니다. 일반적으로 특정 버퍼에서 데이터를 샘플링할 필요가 전혀 없다면 해당 버퍼에 렌더버퍼 객체를 사용하는 것이 좋습니다. 색상이나 깊이 값과 같이 특정 버퍼에서 데이터를 샘플링해야 하는 경우에는 텍스처를 사용하는 것이 더 적절합니다.</p>
+<h2 id="_5">텍스처로 렌더링</h2>
+<p>프레임버퍼가 어떻게 작동하는지 (대략적으로) 알았으니 이제 실제로 활용해 볼 차례입니다. 우리가 만든 프레임버퍼 객체에 연결된 컬러 텍스처에 장면을 렌더링한 다음, 이 텍스처를 화면 전체를 덮는 간단한 사각형 영역 위에 그려 보겠습니다. 시각적 출력은 프레임버퍼를 사용하지 않았을 때와 완전히 동일하지만, 이번에는 모든 내용이 하나의 사각형 영역 위에 출력됩니다. 그렇다면 이것이 왜 유용할까요? 다음 섹션에서 그 이유를 살펴보겠습니다.</p>
+<p>가장 먼저 해야 할 일은 실제 프레임버퍼 객체를 생성하고 바인딩하는 것입니다. 이 과정은 비교적 간단합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">framebuffer</span><span class="p">;</span>
+<span class="n">glGenFramebuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">framebuffer</span><span class="p">);</span>
+<span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">framebuffer</span><span class="p">);</span><span class="w">   </span>
+</code></pre></div>
+<p>다음으로 프레임버퍼에 컬러 어태치먼트로 사용할 텍스처 이미지를 생성합니다. 텍스처의 크기를 창의 너비와 높이와 같게 설정하고 데이터는 초기화하지 않은 상태로 유지합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 텍스쳐 생성</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">textureColorbuffer</span><span class="p">;</span>
+<span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">textureColorbuffer</span><span class="p">);</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">textureColorbuffer</span><span class="p">);</span>
+<span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGB</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RGB</span><span class="p">,</span><span class="w"> </span><span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_MIN_FILTER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_LINEAR</span><span class="w"> </span><span class="p">);</span>
+<span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_LINEAR</span><span class="p">);</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 현재 바인딩된 프레임버퍼 객체에 연결</span>
+<span class="n">glFramebufferTexture2D</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_COLOR_ATTACHMENT0</span><span class="p">,</span><span class="w"> </span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">textureColorbuffer</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>또한 OpenGL이 깊이 테스트(및 선택적으로 스텐실 테스트)를 수행할 수 있도록 프레임 버퍼에 깊이(및 스텐실) 어태치먼트를 추가해야 합니다. 다른 버퍼가 아닌 컬러 버퍼만 샘플링하므로 이 목적을 위해 렌더버퍼 객체를 생성할 수 있습니다.</p>
+<p>렌더버퍼 객체를 생성하는 것은 그리 어렵지 않습니다. 다만, 깊이 및 스텐실를 같이 첨부하는 렌더버퍼 객체로 생성한다는 점을 기억해야 합니다. 내부 형식을 <code>GL_DEPTH24_STENCIL8</code>로 설정하는데, 이는 우리의 목적에 충분한 정밀도입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">rbo</span><span class="p">;</span>
+<span class="n">glGenRenderbuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rbo</span><span class="p">);</span>
+<span class="n">glBindRenderbuffer</span><span class="p">(</span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">rbo</span><span class="p">);</span><span class="w"> </span>
+<span class="n">glRenderbufferStorage</span><span class="p">(</span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH24_STENCIL8</span><span class="p">,</span><span class="w"> </span><span class="mi">800</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="p">);</span><span class="w">  </span>
+<span class="n">glBindRenderbuffer</span><span class="p">(</span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>렌더버퍼 객체에 충분한 메모리를 할당했으면 렌더버퍼 바인딩을 해제할 수 있습니다.</p>
+<p>그런 다음, 프레임버퍼를 완성하기 전 마지막 단계로 렌더버퍼 객체를 프레임버퍼의 깊이 및 스텐실 첨부점에 연결합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glFramebufferRenderbuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_DEPTH_STENCIL_ATTACHMENT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_RENDERBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">rbo</span><span class="p">);</span>
+</code></pre></div>
+<p>다음으로 프레임버퍼가 완성되었는지 확인하고, 완성되지 않았다면 오류 메시지를 출력합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="n">glCheckFramebufferStatus</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">GL_FRAMEBUFFER_COMPLETE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;ERROR::FRAMEBUFFER:: Framebuffer is not complete!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>프레임버퍼 바인딩을 해제하여 실수로 잘못된 프레임버퍼에 렌더링하는 일이 없도록 해야 합니다.</p>
+<p>프레임버퍼 생성이 완료되었으므로, 기본 프레임버퍼 대신 해당 프레임버퍼의 버퍼에 렌더링하려면 프레임버퍼 객체를 바인딩하기만 하면 됩니다. 이후의 모든 렌더링 명령은 현재 바인딩된 프레임버퍼에 영향을 미칩니다. 깊이 및 스텐실 연산 또한 현재 바인딩된 프레임버퍼에 깊이 및 스텐실 첨부 파일이 있는 경우 해당 파일에서 데이터를 읽어옵니다. 예를 들어 깊이 버퍼를 생략하면 모든 깊이 테스트 연산이 더 이상 작동하지 않습니다.</p>
+<p>따라서 장면 전체를 하나의 텍스처로 표현하려면 다음과 같은 단계를 거쳐야 합니다.</p>
+<ul>
+<li>새 프레임버퍼를 활성 프레임버퍼로 지정하여 평소처럼 장면을 렌더링합니다.</li>
+<li>기본 프레임버퍼에 바인딩합니다.</li>
+<li>새 프레임버퍼의 컬러 버퍼를 텍스처로 사용하여 화면 전체에 걸쳐 있는 사각형을 그립니다.</li>
+</ul>
+<p>깊이 테스트 챕터에서 사용했던 것과 동일한 장면을 렌더링하되, 이번에는 기존 방식의 <a href="../../static/container.jpg">컨테이너 텍스처</a>를 사용하겠습니다.</p>
+<p>사각형을 렌더링하기 위해 간단한 셰이더 세트를 새로 만들겠습니다. <a href="../../cube_code6/">정점 좌표를 정규화된 장치 좌표로 제공할 것이므로</a> 복잡한 행렬 변환은 포함하지 않고, 정점 셰이더의 출력으로 직접 전달할 것입니다. 정점 셰이더는 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">aPos</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">TexCoords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>특별히 복잡한 건 없습니다. 프래그먼트 셰이더는 훨씬 더 간단한데, 우리가 해야 할 일은 텍스처에서 샘플링하는 것뿐이기 때문입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">screenTexture</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w"> </span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">screenTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>그다음에는 화면 사각형에 대한 VAO를 생성하고 구성하는 것은 사용자에게 달려 있습니다. 프레임버퍼 절차의 단일 렌더링 반복은 다음과 같은 구조를 갖습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 첫 번째 패스</span>
+<span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">framebuffer</span><span class="p">);</span>
+<span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.1f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">);</span><span class="w"> </span><span class="c1">// 지금은 스텐실 버퍼를 사용하지 않습니다.</span>
+<span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEPTH_TEST</span><span class="p">);</span>
+<span class="n">DrawScene</span><span class="p">();</span><span class="w">    </span>
+
+<span class="c1">// 두 번째 패스</span>
+<span class="n">glBindFramebuffer</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// 기본값으로 세팅</span>
+<span class="n">glClearColor</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span><span class="w"> </span>
+<span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+
+<span class="n">screenShader</span><span class="p">.</span><span class="n">use</span><span class="p">();</span><span class="w">  </span>
+<span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">quadVAO</span><span class="p">);</span>
+<span class="n">glDisable</span><span class="p">(</span><span class="n">GL_DEPTH_TEST</span><span class="p">);</span>
+<span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span><span class="w"> </span><span class="n">textureColorbuffer</span><span class="p">);</span>
+<span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>몇 가지 유의할 사항이 있습니다. 첫째, 각 프레임 버퍼는 고유한 버퍼 세트를 가지고 있으므로 <code>glClear</code> 함수를 호출하여 각 버퍼를 적절한 비트로 설정하여 지워야 합니다. 둘째, 사각형을 그릴 때는 깊이 테스트를 비활성화합니다. 이는 사각형이 항상 다른 모든 요소보다 앞에 렌더링되도록 하기 위함입니다. 하지만 일반 장면을 그릴 때는 깊이 테스트를 다시 활성화해야 합니다.</p>
+<p>이 과정에서 오류가 발생할 수 있는 단계가 꽤 많으므로, 출력이 나오지 않으면 가능한 한 디버깅을 시도하고 해당 장의 관련 부분을 다시 읽어보세요. 모든 과정이 성공적으로 완료되면 다음과 같은 시각적 결과가 나타납니다.</p>
+<p><img alt="" src="../../static/framebuffers_screen_texture.png" /></p>
+<p>왼쪽은 시각적 출력 결과를 보여줍니다. 깊이 테스트 챕터에서 봤던 것과 완전히 동일하지만, 이번에는 단순한 사각형에 렌더링된 것입니다. 장면을 와이어프레임으로 렌더링하면 기본 프레임버퍼에 사각형 하나만 그려졌다는 것을 알 수 있습니다.</p>
+<p><a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/5.1.framebuffers/framebuffers.cpp">여기</a>에서 애플리케이션의 소스 코드를 찾을 수 있습니다.</p>
+<p>그렇다면 이것이 대체 무슨 용도로 쓰이는 걸까요? 이제 완전히 렌더링된 장면의 각 픽셀에 단일 텍스처 이미지로 자유롭게 접근할 수 있게 되었기 때문에, 프래그먼트 셰이더에서 흥미로운 효과들을 만들어낼 수 있게 된 것입니다.</p>
+<h2 id="_6">후처리</h2>
+<p>이제 전체 장면이 하나의 텍스처로 렌더링되었으므로 장면 텍스처를 조작하여 멋진 <strong class="g">후처리(post-processing)</strong> 효과를 만들 수 있습니다. 이 섹션에서는 몇 가지 인기 있는 후처리 효과와 창의력을 발휘하여 자신만의 효과를 만드는 방법을 보여드리겠습니다.</p>
+<p>가장 간단한 후처리 효과 중 하나부터 시작해 보겠습니다.</p>
+<h2 id="_7">반전</h2>
+<p>렌더링 출력의 각 색상에 접근할 수 있으므로 프래그먼트 셰이더에서 이러한 색상의 반전값을 반환하는 것은 그리 어렵지 않습니다. 화면 텍스처의 색상을 가져와 1.0에서 빼서 반전시키면 됩니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">vec3</span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">screenTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">)),</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>반전 효과는 비교적 간단한 후처리 효과이지만, 이미 독특한 결과물을 만들어냅니다.</p>
+<p><img alt="" src="../../static/framebuffers_inverse.png" /></p>
+<p>이제 프래그먼트 셰이더에 단 한 줄의 코드만 추가하면 장면 전체의 색상이 반전됩니다. 정말 멋지지 않나요?</p>
+<h2 id="_8">흑백</h2>
+<p>또 다른 흥미로운 효과는 장면에서 흰색, 회색, 검은색을 제외한 모든 색상을 제거하는 것입니다. 즉, 이미지 전체를 흑백으로 만드는 것이죠. 이를 쉽게 하는 방법은 모든 색상 구성 요소를 가져와서 평균을 내는 것입니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">screenTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">FragColor</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FragColor</span><span class="p">.</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FragColor</span><span class="p">.</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">3.0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">   </span>
+</code></pre></div>
+<p>이것만으로도 꽤 괜찮은 결과가 나오지만, 사람의 눈은 녹색에 가장 민감하고 파란색에는 가장 둔감한 경향이 있습니다. 따라서 물리적으로 가장 정확한 결과를 얻으려면 가중치 채널을 사용해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">screenTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2126</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FragColor</span><span class="p">.</span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.7152</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FragColor</span><span class="p">.</span><span class="n">g</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.0722</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">FragColor</span><span class="p">.</span><span class="n">b</span><span class="p">;</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p><img alt="" src="../../static/framebuffers_grayscale.png" /></p>
+<p>아마 당장은 차이를 알아차리지 못할 수도 있지만, 복잡한 장면에서는 이러한 가중치 회색조 효과가 더 사실적으로 보이는 경향이 있습니다.</p>
+<h2 id="_9">커널 효과</h2>
+<p>단일 텍스처 이미지에 후처리 작업을 수행하는 또 다른 장점은 해당 프래그먼트에 국한되지 않은 텍스처의 다른 부분에서 색상 값을 샘플링할 수 있다는 것입니다. 예를 들어 현재 텍스처 좌표 주변의 작은 영역을 선택하고 현재 텍스처 값 주변의 여러 텍스처 값을 샘플링할 수 있습니다. 그런 다음 이러한 값들을 창의적인 방식으로 조합하여 흥미로운 효과를 만들어낼 수 있습니다.</p>
+<p>커널(또는 컨볼루션 행렬)은 현재 픽셀을 중심으로 하는 작은 행렬 형태의 값 배열로, 주변 픽셀 값에 커널 값을 곱한 후 모두 더하여 하나의 값을 생성합니다. 현재 픽셀 주변 방향의 텍스처 좌표에 작은 오프셋을 더하고 커널을 기반으로 결과를 결합하는 것입니다. 커널의 예는 아래와 같습니다.</p>
+<div class="arithmatex">\[
+\begin{bmatrix}2 &amp; 2 &amp; 2 \\ 2 &amp; -15 &amp; 2 \\ 2 &amp; 2 &amp; 2 \end{bmatrix}
+\]</div>
+<p>이 커널은 주변 8개 픽셀 값을 입력받아 각각 2를 곱하고, 현재 픽셀 값에는 -15를 곱합니다. 예시 커널은 주변 픽셀 값에 커널 내에서 결정된 여러 가중치를 곱하고, 현재 픽셀 값에 큰 음수 가중치를 곱하여 결과의 ​​균형을 맞춥니다.</p>
+<div class="admonition tip">
+<p>인터넷에서 찾을 수 있는 대부분의 커널은 모든 가중치를 더하면 합계가 1이 됩니다. 만약 합계가 1이 되지 않는다면, 결과적으로 생성되는 텍스처 색상이 원래 텍스처 값보다 더 밝거나 어둡다는 의미입니다.</p>
+</div>
+<p>커널은 사용과 실험이 매우 간편하고 온라인에서 많은 예제를 찾을 수 있기 때문에 후처리 작업에 매우 유용한 도구입니다. 다만, 커널을 실제로 지원하려면 프래그먼트 셰이더를 약간 수정해야 합니다. 여기서는 사용할 각 커널이 3x3 커널이라고 가정합니다(대부분의 커널이 3x3 크기입니다).</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">300.0</span><span class="p">;</span><span class="w">  </span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">offsets</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec2</span><span class="p">[](</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span><span class="p">,</span><span class="w">  </span><span class="n">offset</span><span class="p">),</span><span class="w"> </span><span class="c1">// top-left</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span><span class="w">    </span><span class="n">offset</span><span class="p">),</span><span class="w"> </span><span class="c1">// top-center</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w">  </span><span class="n">offset</span><span class="p">),</span><span class="w"> </span><span class="c1">// top-right</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="n">f</span><span class="p">),</span><span class="w">   </span><span class="c1">// center-left</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span><span class="w">    </span><span class="mf">0.0</span><span class="n">f</span><span class="p">),</span><span class="w">   </span><span class="c1">// center-center</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0</span><span class="n">f</span><span class="p">),</span><span class="w">   </span><span class="c1">// center-right</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="o">-</span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">offset</span><span class="p">),</span><span class="w"> </span><span class="c1">// bottom-left</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="n">f</span><span class="p">,</span><span class="w">   </span><span class="o">-</span><span class="n">offset</span><span class="p">),</span><span class="w"> </span><span class="c1">// bottom-center</span>
+<span class="w">        </span><span class="kt">vec2</span><span class="p">(</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">offset</span><span class="p">)</span><span class="w">  </span><span class="c1">// bottom-right    </span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">kernel</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">[](</span>
+<span class="w">        </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w">  </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">sampleTex</span><span class="p">[</span><span class="mi">9</span><span class="p">];</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sampleTex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="n">texture</span><span class="p">(</span><span class="n">screenTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">.</span><span class="n">st</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offsets</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">col</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sampleTex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">kernel</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>프래그먼트 셰이더에서는 먼저 주변 텍스처 좌표 각각에 대한 9개의 vec2 오프셋 배열을 생성합니다. 오프셋은 상수 값이며 원하는 대로 사용자 지정할 수 있습니다. 다음으로 커널을 정의하는데, 이 경우에는 주변 픽셀을 흥미로운 방식으로 샘플링하여 각 색상 값을 선명하게 만드는 <strong class="g">샤프닝</strong> 커널을 사용합니다. 마지막으로 샘플링할 때 각 오프셋을 현재 텍스처 좌표에 더하고, 이러한 텍스처 값들을 가중치가 적용된 커널 값들과 곱합니다.</p>
+<p>우리가 사용한 샤프닝 커널의 결과물은 다음과 같습니다.</p>
+<p><img alt="" src="../../static/framebuffers_sharpen.png" /></p>
+<p>이는 플레이어가 약물에 취한 상태로 모험을 떠나는 흥미로운 상황의 기반이 될 수 있습니다.</p>
+<h2 id="_10">흐림 효과</h2>
+<p><strong class="g">흐림 효과(blur, 블러)</strong>를 생성하는 커널은 다음과 같이 정의됩니다.</p>
+<div class="arithmatex">\[
+\begin{bmatrix} 1 &amp; 2 &amp; 1 \\ 2 &amp; 4 &amp; 2 \\ 1 &amp; 2 &amp; 1 \end{bmatrix} / 16
+\]</div>
+<p>모든 값의 합이 16이므로, 샘플링된 색상을 직접 합산하여 반환하면 매우 밝은 색상이 나타나게 됩니다. 따라서 커널의 각 값을 16으로 나누어야 합니다. 그 결과 커널 배열은 다음과 같습니다.</p>
+<p>프래그먼트 셰이더의 커널 배열만 변경하면 후처리 효과를 완전히 바꿀 수 있습니다. 이제 결과는 다음과 같습니다.</p>
+<p><img alt="" src="../../static/framebuffers_blur.png" /></p>
+<p>이러한 흐림 효과는 흥미로운 가능성을 열어줍니다. 예를 들어, 시간에 따라 흐림 정도를 변화시켜 술에 취한 사람의 모습을 표현하거나, 주인공이 안경을 쓰지 않았을 때 흐림 정도를 높일 수 있습니다. 또한 흐림 효과는 색상 값을 부드럽게 하는 데 유용한 도구이며, 이는 이후 장에서 자세히 다룰 것입니다.</p>
+<p>보시다시피, 이렇게 간단한 커널 구현만 있으면 멋진 후처리 효과를 아주 쉽게 만들 수 있습니다. 마지막으로 인기 있는 효과 하나를 더 보여드리면서 이 장을 마무리하겠습니다.</p>
+<h2 id="_11">엣지 검출</h2>
+<p>아래에서 선명도 향상 커널과 유사한 <strong class="g">엣지 검출(edge-detection)</strong> 커널을 찾을 수 있습니다.</p>
+<div class="arithmatex">\[
+\begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; -8 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{bmatrix}
+\]</div>
+<p>이 커널은 모든 가장자리를 강조하고 나머지는 어둡게 처리하는데, 이미지에서 가장자리만 필요한 경우에 매우 유용합니다.</p>
+<p><img alt="" src="../../static/framebuffers_edge_detection.png" /></p>
+<p>이러한 커널이 포토샵과 같은 이미지 편집 도구/필터로 사용되는 것은 그리 놀라운 일이 아닐 것입니다. 그래픽 카드는 극도로 병렬적인 처리 능력을 통해 이미지 조각을 처리할 수 있기 때문에, 픽셀 단위로 이미지를 실시간으로 비교적 쉽게 조작할 수 있습니다. 따라서 이미지 편집 도구는 이미지 처리에 그래픽 카드를 사용하는 경향이 있습니다.</p>
+<h2 id="_12">연습 문제</h2>
+<ul>
+<li>프레임버퍼를 사용해서 백미러를 만들 수 있을까요? 이를 위해서는 장면을 두 번 그려야 합니다. 하나는 카메라가 180도 회전된 모습이고, 다른 하나는 정상적인 모습입니다. 화면 상단에 작은 사각형 영역을 만들어서 그 위에 백미러 텍스처를 적용해 보세요. 예를 들어 <a href="../../static/framebuffers_mirror.png">이런</a> 식으로요. (<a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/5.2.framebuffers_exercise1/framebuffers_exercise1.cpp">해결 방법</a>)</li>
+<li>커널 값을 다양하게 조절하여 자신만의 흥미로운 후처리 효과를 만들어 보세요. 인터넷에서 다른 흥미로운 커널을 검색해 보는 것도 좋습니다.</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>어태치먼트는 프레임버퍼에 연결되어 GPU가 렌더링 과정에서 생성한 색상, 깊이, 또는 스텐실 데이터를 실제로 저장하는 버퍼(이미지)이며, 프레임버퍼는 이러한 어태치먼트들을 담는 컨테이너 역할을 합니다.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>프레임버퍼에 바인딩 된 상태로 그리기 직전에 <code>glViewport</code> 함수를 호출해야 합니다. 또한 화면에 그리기 전에는 다시 <code>glViewport</code> 함수를 호출하여 원래 화면 크기로 돌아와야 합니다.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
