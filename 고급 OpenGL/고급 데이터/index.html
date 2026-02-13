@@ -1229,6 +1229,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        버퍼 복사하기
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1269,7 +1280,55 @@
 <p><code>glUnmapBuffer</code> 함수를 통해 포인터 연산이 완료되었음을 OpenGL에 알리면, OpenGL은 작업이 끝났음을 인식합니다. 매핑 해제를 통해 포인터는 무효화되고, OpenGL이 데이터를 버퍼에 성공적으로 매핑했다면 함수는 <code>GL_TRUE</code>를 반환합니다.</p>
 <p><code>glMapBuffer</code>를 사용하면 데이터를 임시 메모리에 먼저 저장하지 않고 버퍼에 직접 매핑할 수 있습니다. 파일에서 데이터를 직접 읽어 버퍼 메모리에 복사하는 경우를 생각해 보세요.</p>
 <h2 id="_2">정점 속성 일괄 처리</h2>
-<p><code>glVertexAttribPointer</code>를 사용하여 정점 배열 버퍼의 속성 레이아웃을 지정할 수 있었습니다. 정점 배열 버퍼 내에서 속성을 인터리빙했습니다. 즉, 각 정점에 대해 위치, 법선 및/또는 텍스처 좌표를 메모리에서 서로 인접하게 배치했습니다. 이제 버퍼에 대해 조금 더 알게 되었으니 다른 접근 방식을 취해 보겠습니다.</p>
+<p><code>glVertexAttribPointer</code>를 사용하여 버텍스 배열 버퍼의 내용에 대한 속성 레이아웃을 지정할 수 있었습니다. 버텍스 배열 버퍼 내에서는 속성들을 <strong class="g">인터리브(interleave)</strong><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 방식으로 배치했는데, 즉 각 버텍스마다 위치, 법선, 텍스처 좌표를 메모리상에 서로 나란히 배치한 것입니다. 이제 버퍼에 대해 조금 더 알게 되었으므로, 다른 접근 방식을 취할 수 있습니다.</p>
+<p>바로은 데이터를 인터리브 방식으로 저장하는 대신 속성 유형별로 큰 덩어리로 묶어 배치하는 것입니다. 123123123123과 같은 인터리브 방식 대신 111122223333과 같은 배치 방식을 사용하는 것입니다.</p>
+<p>파일에서 정점 데이터를 불러올 때 일반적으로 위치 배열과 법선 배열, 필요에 따라 텍스처 좌표 배열도 함께 가져옵니다. 이러한 배열들을 하나의 큰 배열로 결합하는 데에는 상당한 노력이 필요할 수 있습니다. 따라서 배치 처리 방식을 사용하는 것이 더 쉬운 해결책이며, <code>glBufferSubData</code>를 사용하여 쉽게 구현할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">positions</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">normals</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">tex</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+<span class="c1">// 버퍼 채우기</span>
+<span class="n">glBufferSubData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">positions</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">positions</span><span class="p">);</span>
+<span class="n">glBufferSubData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">positions</span><span class="p">),</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">normals</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">normals</span><span class="p">);</span>
+<span class="n">glBufferSubData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">normals</span><span class="p">),</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">tex</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tex</span><span class="p">);</span>
+</code></pre></div>
+<p>이렇게 하면 속성 배열 전체를 별도의 처리 과정 없이 버퍼로 직접 전송할 수 있습니다. <code>glBufferData</code>를 사용하여 하나의 큰 배열로 결합한 후 버퍼를 바로 채울 수도 있지만, <code>glBufferSubData</code>를 사용하면 이러한 작업에 훨씬 더 적합합니다.</p>
+<p>이러한 변경 사항을 반영하도록 정점 속성 포인터도 업데이트해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">  </span>
+<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">positions</span><span class="p">)));</span><span class="w">  </span>
+<span class="n">glVertexAttribPointer</span><span class="p">(</span>
+<span class="w">  </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">normals</span><span class="p">)));</span><span class="w">  </span>
+</code></pre></div>
+<p>참고로, 스트라이드 매개변수는 정점 속성의 크기와 같습니다. 다음 정점 속성 벡터는 해당 벡터의 3개(또는 2개) 구성 요소 바로 다음에 위치하기 때문입니다.</p>
+<p>이로써 정점 속성을 설정하고 지정하는 또 다른 접근 방식을 얻을 수 있습니다. 두 접근 방식 모두 사용 가능하며, 일반적으로 정점 속성을 설정하는 데 있어 좀 더 체계적인 방법입니다. 하지만 각 정점 셰이더 실행에 대한 정점 속성이 메모리에서 밀접하게 정렬되므로 인터리브 방식이 여전히 권장됩니다.</p>
+<h2 id="_3">버퍼 복사하기</h2>
+<p>버퍼에 데이터가 채워지면 해당 데이터를 다른 버퍼와 공유하거나 버퍼 내용을 다른 버퍼로 복사해야 할 수 있습니다. <code>glCopyBufferSubData</code> 함수를 사용하면 한 버퍼에서 다른 버퍼로 데이터를 비교적 쉽게 복사할 수 있습니다. 함수의 프로토타입은 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">glCopyBufferSubData</span><span class="p">(</span><span class="n">GLenum</span><span class="w"> </span><span class="n">readtarget</span><span class="p">,</span><span class="w"> </span><span class="n">GLenum</span><span class="w"> </span><span class="n">writetarget</span><span class="p">,</span><span class="w"> </span><span class="n">GLintptr</span><span class="w"> </span><span class="n">readoffset</span><span class="p">,</span>
+<span class="w">                         </span><span class="n">GLintptr</span><span class="w"> </span><span class="n">writeoffset</span><span class="p">,</span><span class="w"> </span><span class="n">GLsizeiptr</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</code></pre></div>
+<p><code>readtarget</code> 및 <code>writetarget</code> 매개변수는 복사할 버퍼의 대상을 지정합니다. 예를 들어, <code>VERTEX_ARRAY_BUFFER</code> 버퍼에서 <code>VERTEX_ELEMENT_ARRAY_BUFFER</code> 버퍼로 복사하려면 각각 <code>read</code> 및 <code>write</code> 대상으로 해당 버퍼를 지정합니다. 그러면 해당 버퍼 대상에 현재 바인딩된 버퍼들이 영향을 받게 됩니다.</p>
+<p>그런데 만약 우리가 두 개의 서로 다른 버텍스 배열 버퍼에 데이터를 읽고 쓰고 싶다면 어떻게 해야 할까요? 같은 버퍼 타겟에 두 버퍼를 동시에 바인딩할 수는 없습니다. 바로 이 이유 때문에 OpenGL은 데이터를 복사할 때 사용할 수 있는 읽기 전용 버퍼(<code>GL_COPY_READ_BUFFER</code>)와 쓰기 전용 버퍼(<code>GL_COPY_WRITE_BUFFER</code>)라는 두 개의 새로운 버퍼 타겟을 제공합니다. 이제 원하는 버퍼를 이 새로운 타겟에 바인딩하고, <code>readtarget과</code> <code>writetarget</code> 인수로 설정하면 됩니다.</p>
+<p><code>glCopyBufferSubData</code> 함수는 지정된 읽기 오프셋에서 지정된 크기의 데이터를 읽어 쓰기 오프셋에 있는 쓰기 대상 버퍼에 씁니다. 두 개의 정점 배열 버퍼 내용을 복사하는 예는 아래와 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_COPY_READ_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">vbo1</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_COPY_WRITE_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">vbo2</span><span class="p">);</span>
+<span class="n">glCopyBufferSubData</span><span class="p">(</span><span class="n">GL_COPY_READ_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_COPY_WRITE_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+</code></pre></div>
+<p>writetarget 버퍼를 새로운 버퍼 대상 유형 중 하나에만 바인딩하는 방식으로도 이 작업을 수행할 수 있었습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">vertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">vbo1</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_COPY_WRITE_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">vbo2</span><span class="p">);</span>
+<span class="n">glCopyBufferSubData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">GL_COPY_WRITE_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span><span class="w">  </span>
+</code></pre></div>
+<p>버퍼 조작 방법에 대한 추가적인 지식을 갖추면 버퍼를 더욱 흥미로운 방식으로 활용할 수 있습니다. OpenGL을 더 깊이 공부할수록 이러한 새로운 버퍼 메서드의 유용성은 더욱 커집니다. 다음 장에서는 <strong class="g">유니폼 버퍼 객체</strong>에 대해 다루면서 <code>glBufferSubData</code>를 효과적으로 활용할 것입니다.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>인터리브 방식이란, 데이터를 섞어서 저장하는 것입니다.<br />
+예를 들어서 위치, 법선, 텍스처 좌표 데이터를 각각 P, N, T라고 했을때,<br />
+메모리 위에 PNTPNTPNTPNT 같은 형식으로 저장하는 것입니다.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
