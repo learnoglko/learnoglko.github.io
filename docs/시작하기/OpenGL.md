@@ -109,5 +109,5 @@ glBindObject(GL_WINDOW_TARGET, 0);
 
 ## 참고자료
 
-[opengl.org](https://www.opengl.org/): OpenGL 공식 웹사이트
-[OpenGL registry](https://www.opengl.org/registry/): 모든 OpenGL 버전에 대한 사양과 확장기능
+ - [opengl.org](https://www.opengl.org/): OpenGL 공식 웹사이트
+ - [OpenGL registry](https://www.opengl.org/registry/): 모든 OpenGL 버전에 대한 사양과 확장기능
