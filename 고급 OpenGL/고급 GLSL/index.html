@@ -1,0 +1,1699 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="https://learnopengl.com의 한국어 번역입니다.">
+      
+      
+      
+        <link rel="canonical" href="https://learnoglko.github.io/%EA%B3%A0%EA%B8%89%20OpenGL/%EA%B3%A0%EA%B8%89%20GLSL/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>고급 GLSL - LearnOpenGL Korean</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#glsl" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnOpenGL Korean" class="md-header__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnOpenGL Korean
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              고급 GLSL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnOpenGL Korean" class="md-nav__button md-logo" aria-label="LearnOpenGL Korean" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LearnOpenGL Korean
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시작하기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시작하기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/OpenGL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenGL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B5%9C%EC%B4%88%EC%9D%98%20%EC%B0%BD-%EB%A6%AC%EB%88%85%EC%8A%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    리눅스에서의 최초의 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%B0%BD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 창
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%95%88%EB%85%95%20%EC%82%BC%EA%B0%81%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    안녕 삼각형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%85%B0%EC%9D%B4%EB%8D%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    셰이더
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%ED%85%8D%EC%8A%A4%EC%B2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    텍스처
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%B3%80%ED%98%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    변형
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%A2%8C%ED%91%9C%20%EA%B3%B5%EA%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    좌표 공간
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EC%B9%B4%EB%A9%94%EB%9D%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    카메라
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%83%89%EA%B9%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    색깔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8%20%EC%A1%B0%EB%AA%85%20%ED%9A%A8%EA%B3%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기본적인 조명 효과
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    머티리얼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%A1%B0%EB%AA%85%20%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조명 맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%8B%A4%EC%96%91%ED%95%9C%20%EA%B4%91%EC%9B%90%20%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    다양한 광원 모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EC%97%AC%EB%9F%AC%20%EA%B0%9C%EC%9D%98%20%EC%A1%B0%EB%AA%85/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    여러 개의 조명
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EC%A1%B0%EB%AA%85/%EB%81%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    끝
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델 로딩
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    모델 로딩
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/Assimp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assimp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%A9%94%EC%8B%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    메시
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EB%AA%A8%EB%8D%B8%20%EB%A1%9C%EB%94%A9/%EB%AA%A8%EB%8D%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    모델
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 OpenGL
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    고급 OpenGL
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EA%B9%8A%EC%9D%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    깊이 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EC%8A%A4%ED%85%90%EC%8B%A4%20%ED%85%8C%EC%8A%A4%ED%8A%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    스텐실 테스트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EB%B8%94%EB%A0%8C%EB%94%A9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    블렌딩
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EC%BB%AC%EB%A7%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    페이스 컬링
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%ED%94%84%EB%A0%88%EC%9E%84%EB%B2%84%ED%8D%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프레임버퍼
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%ED%81%90%EB%B8%8C%EB%A7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    큐브맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%EA%B3%A0%EA%B8%89%20%EB%8D%B0%EC%9D%B4%ED%84%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 데이터
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#glsl_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GLSL의 내장 변수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GLSL의 내장 변수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        정점 셰이더 변수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="정점 셰이더 변수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gl_pointsize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gl_PointSize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gl_vertexid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gl_VertexID
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프래그먼트 셰이더 변수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="프래그먼트 셰이더 변수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gl_fragcoord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gl_FragCoord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gl_frontfacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gl_FrontFacing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gl_fragdepth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gl_FragDepth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        인터페이스 블록
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        유니폼 버퍼 객체
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="유니폼 버퍼 객체">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        유니폼 블록 레이아웃
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="glsl">고급 GLSL</h1>
+<p>이 장에서는 장면의 시각적 품질을 획기적으로 향상시키는 초고급의 멋진 새 기능들을 다루지는 않습니다. 대신 GLSL의 흥미로운 측면들과 앞으로의 작업에 도움이 될 만한 유용한 팁들을 소개합니다. 기본적으로 GLSL을 사용하여 OpenGL 애플리케이션을 개발할 때 알아두면 좋은 기능들을 알려드리는 것입니다.</p>
+<p>이번 시간에는 흥미로운 <strong class="g">내장 변수</strong> 몇 가지와 셰이더 입력 및 출력을 구성하는 새로운 방법, 그리고 <strong class="g">유니폼 버퍼 객체</strong>라는 매우 유용한 도구에 대해 논의하겠습니다.</p>
+<h2 id="glsl_1">GLSL의 내장 변수</h2>
+<p>셰이더는 파이프라인 방식으로 작동하기 때문에 현재 셰이더 외부의 다른 소스에서 데이터를 얻으려면 데이터를 전달해야 합니다. 우리는 정점 속성, 유니폼, 샘플러를 통해 이를 수행하는 방법을 배웠습니다. 하지만 GLSL에는 gl_ 접두사가 붙은 몇 가지 추가 변수가 있는데, 이를 통해 데이터를 수집하거나 쓰는 추가적인 방법을 사용할 수 있습니다. 지금까지 살펴본 챕터에서 이미 두 가지 변수를 살펴보았습니다. 바로 정점 셰이더의 출력 벡터인 gl_Position과 프래그먼트 셰이더의 gl_FragCoord입니다.</p>
+<p>이번 글에서는 GLSL에 내장된 몇 가지 흥미로운 입력 및 출력 변수를 살펴보고, 이러한 변수들이 어떻게 유용하게 사용될 수 있는지 설명하겠습니다. 모든 내장 변수를 다루지는 않으므로, 모든 내장 변수를 확인하고 싶다면 <a href="https://wikis.khronos.org/opengl/Built-in_Variable_(GLSL)">OpenGL 위키</a>를 참조하세요.</p>
+<h3 id="_1">정점 셰이더 변수</h3>
+<p>우리는 이미 정점 셰이더의 클립 공간 출력 위치 벡터인 gl_Position을 살펴보았습니다. 정점 셰이더에서 gl_Position을 설정하는 것은 화면에 무언가를 렌더링하려면 반드시 필요한 조건입니다. 이전에 이미 살펴본 내용과 크게 다르지 않습니다.</p>
+<h4 id="gl_pointsize">gl_PointSize</h4>
+<p>우리가 선택할 수 있는 렌더링 기본 요소 중 하나는 <code>GL_POINTS</code>입니다. 이 경우 각 정점은 기본 요소이며 점으로 렌더링됩니다. OpenGL의 <code>glPointSize</code> 함수를 통해 렌더링되는 점의 크기를 설정할 수 있지만, 정점 셰이더에서도 이 값을 조절할 수 있습니다.</p>
+<p>GLSL에서 정의된 출력 변수 중 하나인 <code>gl_PointSize</code>는 픽셀 단위로 점의 너비와 높이를 설정할 수 있는 부동 소수점 변수입니다. 정점 셰이더에서 점의 크기를 설정함으로써 각 정점별로 점의 크기를 세밀하게 제어할 수 있습니다.</p>
+<p>정점 셰이더에서 점 크기에 영향을 주는 기능은 기본적으로 비활성화되어 있지만, 이 기능을 활성화하려면 OpenGL의 <code>GL_PROGRAM_POINT_SIZE</code>를 활성화해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_PROGRAM_POINT_SIZE</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>점 크기에 영향을 미치는 간단한 예는 점 크기를 클립 공간 위치의 z 값(즉, 뷰어에서 정점까지의 거리)과 같게 설정하는 것입니다. 이렇게 하면 뷰어가 정점에서 멀어질수록 점 크기가 커집니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w">    </span>
+<span class="w">    </span><span class="nb">gl_PointSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_Position</span><span class="p">.</span><span class="n">z</span><span class="p">;</span><span class="w">    </span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>그 결과, 우리가 그린 점들은 그 점에서 멀어질수록 더 크게 나타납니다.</p>
+<p><img alt="" src="../../static/advanced_glsl_pointsize.png" /></p>
+<p>정점별 점 크기를 다양하게 하는 것이 파티클 생성과 같은 기술에 흥미로운 요소라는 것을 쉽게 짐작할 수 있습니다.</p>
+<h4 id="gl_vertexid">gl_VertexID</h4>
+<p>gl_Position과 gl_PointSize는 정점 셰이더에서 출력되는 값으로 읽어들이는 변수이므로, 이 변수들에 값을 써넣어 결과에 영향을 줄 수 있습니다. 또한 정점 셰이더는 gl_VertexID라는 흥미로운 입력 변수를 제공하는데, 이 변수는 읽기 전용입니다.</p>
+<p>정수 변수 gl_VertexID는 현재 렌더링 중인 정점의 ID를 저장합니다. 인덱스 기반 렌더링(<code>glDrawElements</code> 사용) 시에는 현재 렌더링 중인 정점의 인덱스를 저장하고, 인덱스 없이 렌더링(<code>glDrawArrays</code> 사용) 시에는 렌더링 호출 시작 이후 현재 처리 중인 정점의 번호를 저장합니다.</p>
+<h3 id="_2">프래그먼트 셰이더 변수</h3>
+<p>프래그먼트 셰이더 내부에서는 몇 가지 흥미로운 변수에 접근할 수 있습니다. GLSL은 <code>gl_FragCoord</code>와 <code>gl_FrontFacing</code>이라는 두 가지 유용한 입력 변수를 제공합니다.</p>
+<h4 id="gl_fragcoord">gl_FragCoord</h4>
+<p>깊이 테스트에 대한 논의 과정에서 gl_FragCoord를 몇 번 본 적이 있는데, gl_FragCoord 벡터의 z 성분이 해당 프래그먼트의 깊이 값과 같기 때문입니다. 하지만 이 벡터의 x 및 y 성분을 활용하면 더욱 흥미로운 효과를 낼 수 있습니다.</p>
+<p>gl_FragCoord의 x 및 y 구성 요소는 창의 왼쪽 하단을 기준으로 하는 프래그먼트의 창 또는 화면 공간 좌표입니다. <code>glViewport</code>를 사용하여 800x600의 렌더링 창을 지정했으므로 프래그먼트의 화면 공간 좌표는 x 값이 0에서 800 사이, y 값이 0에서 600 사이가 됩니다.</p>
+<p>프래그먼트 셰이더를 사용하면 프래그먼트의 화면 좌표에 따라 다른 색상 값을 계산할 수 있습니다. <code>gl_FragCoord</code> 변수는 기술 데모에서 흔히 볼 수 있듯이, 서로 다른 프래그먼트 계산의 시각적 출력을 비교하는 데 사용됩니다. 예를 들어, 화면을 두 부분으로 나누어 창의 왼쪽과 오른쪽에 각각 다른 출력을 렌더링할 수 있습니다. 프래그먼트의 화면 좌표에 따라 다른 색상을 출력하는 프래그먼트 셰이더의 예는 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nb">gl_FragCoord</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">400</span><span class="p">)</span>
+<span class="w">        </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w">        </span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>창의 너비가 800이므로, 픽셀의 x 좌표가 400보다 작으면 해당 픽셀은 창의 왼쪽 끝에 위치하게 되며, 이 부분에 다른 색상을 지정해야 합니다.</p>
+<p><img alt="" src="../../static/advanced_glsl_fragcoord.png" /></p>
+<p>이제 완전히 다른 두 개의 프래그먼트 셰이더 결과를 계산하고 각각을 창의 다른 쪽에 표시할 수 있습니다. 이는 예를 들어 다양한 조명 기법을 테스트하는 데 매우 유용합니다.</p>
+<h4 id="gl_frontfacing">gl_FrontFacing</h4>
+<p>프래그먼트 셰이더에서 또 다른 흥미로운 입력 변수는 <code>gl_FrontFacing</code> 변수입니다. 페이스 컬링 챕터에서 언급했듯이 OpenGL은 정점의 감기 순서를 통해 면이 앞면인지 뒷면인지 판단할 수 있습니다. <code>gl_FrontFacing</code> 변수는 현재 프래그먼트가 앞면 또는 뒷면 중 어느 쪽에 속하는지를 알려줍니다. 예를 들어, 모든 뒷면에 서로 다른 색상을 출력하도록 설정할 수 있습니다.</p>
+<p><code>gl_FrontFacing</code> 변수는 프래그먼트가 앞면의 일부이면 <code>true</code>이고 그렇지 않으면 <code>false</code>인 부울 값입니다. 이 변수를 이용하면 안쪽과 바깥쪽에 서로 다른 텍스처를 적용한 큐브를 만들 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">frontTexture</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">backTexture</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nb">gl_FrontFacing</span><span class="p">)</span>
+<span class="w">        </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">frontTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">backTexture</span><span class="p">,</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>컨테이너 안을 들여다보면 이제 다른 머티리얼이 사용된 것을 볼 수 있습니다.</p>
+<p><img alt="" src="../../static/advanced_glsl_frontfacing.png" /></p>
+<h4 id="gl_fragdepth">gl_FragDepth</h4>
+<p>입력 변수 <code>gl_FragCoord</code>는 화면 공간 좌표를 읽고 현재 프래그먼트의 깊이 값을 얻을 수 있는 변수이지만, 읽기 전용 변수입니다. 프래그먼트의 화면 공간 좌표는 변경할 수 없지만, 깊이 값은 설정할 수 있습니다. GLSL은 셰이더 내에서 프래그먼트의 깊이 값을 수동으로 설정할 수 있도록 <code>gl_FragDepth</code>라는 출력 변수를 제공합니다.</p>
+<p>셰이더에서 깊이 값을 설정하려면 출력 변수에 0.0에서 1.0 사이의 값을 씁니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">gl_FragDepth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// 이 프래그먼트의 깊이 값은 이제 0.0입니다.</span>
+</code></pre></div>
+<p>셰이더가 <code>gl_FragDepth</code>에 아무것도 쓰지 않으면 해당 변수는 자동으로 <code>gl_FragCoord.z</code>에서 값을 가져옵니다.</p>
+<p>하지만 깊이 값을 수동으로 설정하는 데에는 중대한 단점이 있습니다. 그 이유는 프래그먼트 셰이더에서 <code>gl_FragDepth</code>에 값을 쓰는 순간 OpenGL이 조기 깊이 테스트(깊이 테스트 장에서 설명)를 비활성화하기 때문입니다. 프래그먼트 셰이더가 실행되기 전에 프래그먼트의 깊이 값을 알 수 없기 때문에 조기 깊이 테스트가 비활성화되는 것입니다. 프래그먼트 셰이더는 실제로 이 값을 변경할 수 있기 때문입니다.</p>
+<p><code>gl_FragDepth</code>에 값을 쓸 때는 이러한 성능 저하를 고려해야 합니다. 하지만 OpenGL 4.2부터는 프래그먼트 셰이더 상단에서 깊이 조건을 사용하여 <code>gl_FragDepth</code> 변수를 다시 선언함으로써 양쪽의 단점을 어느 정도 보완할 수 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">depth_</span><span class="o">&lt;</span><span class="n">condition</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nb">gl_FragDepth</span><span class="p">;</span>
+</code></pre></div>
+<p>여기서 condition은 다음과 같은 값을 가질 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">condition</th>
+<th style="text-align: left;">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>any</code></td>
+<td style="text-align: left;">기본값입니다. 조기 깊이 테스트가 비활성화됩니다.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>greater</code></td>
+<td style="text-align: left;">깊이 값은 <code>gl_FragCoord.z</code> ​​값보다 크게만 설정할 수 있습니다.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>less</code></td>
+<td style="text-align: left;">깊이 값은 <code>gl_FragCoord.z</code> ​​값보다 작게만 설정할 수 있습니다.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>unchanged</code></td>
+<td style="text-align: left;"><code>gl_FragDepth</code>에 쓰면 정확히 <code>gl_FragCoord.z</code>에 쓰이게 됩니다.</td>
+</tr>
+</tbody>
+</table>
+<p>깊이 조건을 <code>greater</code> 또는 <code>less</code>로 지정하면 OpenGL은 프래그먼트의 깊이 값보다 크거나 작은 깊이 값만 기록할 것이라고 가정할 수 있습니다. 이렇게 하면 깊이 버퍼 값이 <code>gl_FragCoord.z</code>의 다른 방향에 포함될 때에도 OpenGL은 초기 깊이 테스트를 수행할 수 있습니다.</p>
+<p>프래그먼트 셰이더에서 깊이 값을 높이면서도 초기 깊이 테스트를 일부 유지하려는 예시는 아래 프래그먼트 셰이더에 나와 있습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 420 core // GLSL 버전을 참고하세요!</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">depth_greater</span><span class="p">)</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nb">gl_FragDepth</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">gl_FragDepth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">gl_FragCoord</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이 기능은 OpenGL 버전 4.2 이상에서만 사용할 수 있다는 점에 유의하세요.</p>
+<h2 id="_3">인터페이스 블록</h2>
+<p>지금까지는 정점에서 프래그먼트 셰이더로 데이터를 보낼 때마다 여러 개의 입력/출력 변수를 선언했습니다. 이렇게 하나씩 선언하는 것이 한 셰이더에서 다른 셰이더로 데이터를 보내는 가장 쉬운 방법이지만, 애플리케이션 규모가 커질수록 여러 변수를 함께 보내야 할 가능성이 높아집니다.</p>
+<p>GLSL은 이러한 변수들을 체계적으로 관리할 수 있도록 인터페이스 블록이라는 기능을 제공합니다. 인터페이스 블록의 선언은 구조체 선언과 매우 유사하지만, 입력 블록인지 출력 블록인지에 따라 <code>in</code> 또는 <code>out</code> 키워드를 사용한다는 점이 다릅니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">projection</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="n">VS_OUT</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">vs_out</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w">    </span>
+<span class="w">    </span><span class="n">vs_out</span><span class="p">.</span><span class="n">TexCoords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이번에는 다음 셰이더로 보낼 모든 출력 변수를 한데 모으는 <code>vs_out</code>이라는 인터페이스 블록을 선언했습니다. 이는 다소 간단한 예이지만, 셰이더의 입력/출력을 체계적으로 정리하는 데 도움이 된다는 것을 쉽게 짐작할 수 있습니다. 또한 다음 장인 지오메트리 셰이더에서 살펴보겠지만, 셰이더의 입력/출력을 배열로 그룹화할 때도 유용합니다.</p>
+<p>다음으로 프래그먼트 셰이더에서 입력 인터페이스 블록을 선언해야 합니다. 블록 이름(VS_OUT)은 프래그먼트 셰이더에서도 정점 셰이더에서 사용한 것과 동일해야 하지만, 인스턴스 이름(vs_out)은 원하는 대로 지정할 수 있습니다. 단, 입력 값을 포함하는 프래그먼트 구조체에 vs_out와 같은 혼동을 일으킬 수 있는 이름은 피해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="n">VS_OUT</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">fs_in</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">texture</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span><span class="w">             </span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">texture</span><span class="p">,</span><span class="w"> </span><span class="n">fs_in</span><span class="p">.</span><span class="n">TexCoords</span><span class="p">);</span><span class="w">   </span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>인터페이스 블록 이름이 같으면 해당 입력과 출력이 서로 연결됩니다. 이는 코드를 체계적으로 정리하는 데 도움이 되는 유용한 기능이며, 기하 셰이더와 같은 특정 셰이더 단계 간을 넘나들 때 특히 유용합니다.</p>
+<h2 id="_4">유니폼 버퍼 객체</h2>
+<p>저희는 꽤 오랫동안 OpenGL을 사용해 오면서 유용한 기능들을 많이 익혔지만, 몇 가지 불편한 점도 발견했습니다. 예를 들어, 여러 셰이더를 사용할 때 대부분의 셰이더에서 동일한 유니폼 변수를 계속해서 설정해야 하는 문제가 있습니다.</p>
+<p>OpenGL은 <strong class="g">유니폼 버퍼 객체</strong>라는 도구를 제공하여 여러 셰이더 프로그램에서 동일하게 유지되는 전역 유니폼 변수 집합을 선언할 수 있도록 합니다. 유니폼 버퍼 객체를 사용하면 관련 유니폼 변수들을 고정된 GPU 메모리에 한 번만 설정하면 됩니다. 하지만 셰이더별로 고유한 유니폼 변수들은 여전히 ​​수동으로 설정해야 합니다. 유니폼 버퍼 객체를 생성하고 구성하는 데에는 약간의 작업이 필요합니다.</p>
+<p>유니폼 버퍼 객체는 다른 버퍼와 마찬가지로 <code>glGenBuffers</code> 함수를 사용하여 생성하고, <code>GL_UNIFORM_BUFFER</code> 버퍼 타겟에 바인딩한 후, 관련 유니폼 데이터를 버퍼에 저장할 수 있습니다. 유니폼 버퍼 객체의 데이터 저장 방식에는 몇 가지 규칙이 있으며, 이는 나중에 자세히 살펴보겠습니다. 먼저 간단한 정점 셰이더를 예로 들어 투영 행렬과 뷰 행렬을 소위 <strong class="g">유니폼 블록</strong>에 저장해 보겠습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">std140</span><span class="p">)</span><span class="w"> </span><span class="k">uniform</span><span class="w"> </span><span class="n">Matrices</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">mat4</span><span class="w"> </span><span class="n">projection</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">mat4</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>대부분의 예제에서는 사용하는 각 셰이더에 대해 매 프레임마다 투영 및 뷰 유니폼 행렬을 설정합니다. 이는 유니폼 버퍼 객체가 유용하게 사용되는 완벽한 예입니다. 이제 이러한 행렬을 한 번만 저장하면 되기 때문입니다.</p>
+<p>여기서는 4x4 행렬 두 개를 저장하는 Matrices라는 유니폼 블록을 선언했습니다. 유니폼 블록 내의 변수는 블록 이름을 접두사로 붙이지 않고 직접 접근할 수 있습니다. 그런 다음 이러한 행렬 값을 OpenGL 코드 내의 버퍼에 저장하고, 이 유니폼 블록을 선언한 각 셰이더는 해당 행렬에 접근할 수 있습니다.</p>
+<p>아마 지금쯤 <code>layout(std140)</code> 문이 무엇을 의미하는지 궁금하실 겁니다. 이 문은 현재 정의된 유니폼 블록이 내용에 대해 특정 메모리 레이아웃을 사용한다는 것을 나타냅니다. 즉, 이 구문은 <strong class="g">유니폼 블록의 레이아웃(uniform block layout)</strong>을 설정합니다.</p>
+<h3 id="_5">유니폼 블록 레이아웃</h3>
+<p>유니폼 블록의 내용은 버퍼 객체에 저장되는데, 이는 사실상 GPU 전역 메모리의 예약된 영역에 불과합니다. 이 메모리 영역에는 어떤 종류의 데이터가 저장되는지에 대한 정보가 없으므로, OpenGL에 메모리의 어느 부분이 셰이더의 어떤 유니폼 변수에 해당하는지 알려줘야 합니다.</p>
+<p>셰이더에서 다음과 같은 유니폼 블록을 상상해 보세요.</p>
+<div class="highlight"><pre><span></span><code><span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">std140</span><span class="p">)</span><span class="w"> </span><span class="k">uniform</span><span class="w"> </span><span class="n">ExampleBlock</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">vec3</span><span class="w">  </span><span class="n">vector</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">mat4</span><span class="w">  </span><span class="n">matrix</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w">  </span><span class="n">boolean</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">   </span><span class="n">integer</span><span class="p">;</span>
+<span class="p">};</span><span class="w">  </span>
+</code></pre></div>
+<p>우리가 알고 싶은 것은 각 변수의 크기(바이트)와 오프셋(블록 시작 위치에서부터)입니다. 그래야 해당 순서대로 버퍼에 변수를 배치할 수 있기 때문입니다. OpenGL에서는 각 요소의 크기가 명확하게 명시되어 있으며, C++ 데이터 유형과 직접적으로 대응합니다. 벡터와 행렬은 (대규모) 부동 소수점 배열입니다. 하지만 OpenGL에서 명확하게 명시되지 않은 것은 변수 사이의 <strong class="g">간격(spacing)</strong>입니다. 이 때문에 하드웨어는 변수를 원하는 위치에 배치하거나 패딩할 수 있습니다. 예를 들어, 하드웨어는 vec3을 float 옆에 배치할 수 있습니다. 하지만 모든 하드웨어가 이를 처리할 수 있는 것은 아니며, 일부 하드웨어는 float을 추가하기 전에 vec3을 4개의 float 배열로 패딩합니다. 이는 유용한 기능이지만, 우리에게는 불편할 수 있습니다.</p>
+<p>기본적으로 GLSL은 공유 레이아웃이라는 유니폼 메모리 레이아웃을 사용합니다. '공유'라는 이름은 하드웨어에서 오프셋이 한 번 정의되면 여러 프로그램에서 일관되게 공유되기 때문입니다. 공유 레이아웃을 사용하면 GLSL은 변수의 순서가 유지되는 한 최적화를 위해 유니폼 변수의 위치를 ​​변경할 수 있습니다. 각 유니폼 변수가 어떤 오프셋에 위치할지 알 수 없기 때문에 유니폼 버퍼를 정확하게 채우는 방법을 알 수 없습니다. <code>glGetUniformIndices</code>와 같은 함수를 사용하여 이 정보를 조회할 수 있지만, 이 장에서는 그 방법을 사용하지 않을 것입니다.</p>
+<p>공유 레이아웃은 공간 절약 최적화라는 이점을 제공하지만, 각 유니폼 변수에 대한 오프셋을 일일이 조회해야 하므로 상당한 작업량이 발생합니다. 따라서 일반적으로는 공유 레이아웃 대신 <strong class="g">std140</strong> 레이아웃을 사용하는 것이 좋습니다. std140 레이아웃은 일련의 규칙에 따라 각 변수 유형의 오프셋을 표준화하여 메모리 레이아웃을 명확하게 지정합니다. 이렇게 표준화되어 있기 때문에 각 변수의 오프셋을 수동으로 쉽게 파악할 수 있습니다.</p>
+<p>각 변수는 std140 레이아웃 규칙을 사용하여 유니폼 블록 내에서 변수가 차지하는 공간(패딩 포함)과 동일한 <strong class="g">기본 정렬(base alignment)</strong>을 갖습니다. 각 변수에 대해 <strong class="g">정렬된 오프셋</strong>, 즉 블록 시작 부분에서 변수까지의 바이트 오프셋을 계산합니다. 변수의 정렬된 바이트 오프셋은 기본 정렬의 배수여야 합니다. 다소 복잡해 보일 수 있지만, 곧 예제를 통해 명확해질 것입니다.</p>
+<p>정확한 레이아웃 규칙은 OpenGL의 유니폼 버퍼 사양(<a href="http://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt">여기</a>)에서 확인할 수 있지만, 가장 일반적인 규칙은 아래에 나열하겠습니다. GLSL에서 int, float, bool과 같은 각 변수 유형은 4바이트 값으로 정의되며, 각 4바이트 엔티티는 N으로 표현됩니다.</p>
+<table>
+<thead>
+<tr>
+<th>변수 유형</th>
+<th>레이아웃 규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>스칼라(예: 정수 또는 부울)</td>
+<td>각 스칼라는 기본 정렬값이 N입니다.</td>
+</tr>
+<tr>
+<td>벡터</td>
+<td>2N 또는 4N입니다. 즉, vec3는 4N의 기본 정렬을 가지고 있습니다.</td>
+</tr>
+<tr>
+<td>스칼라 또는 벡터의 배열</td>
+<td>각 요소는 vec4와 동일한 기본 정렬을 가지고 있습니다.</td>
+</tr>
+<tr>
+<td>행렬</td>
+<td>각 벡터의 기본 정렬이 vec4인 대규모 열 벡터 배열로 저장됩니다.</td>
+</tr>
+<tr>
+<td>스트럭트</td>
+<td>이전 규칙에 따라 계산된 요소 크기와 동일하지만, vec4 크기의 배수로 패딩됩니다.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
