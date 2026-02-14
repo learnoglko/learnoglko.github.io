@@ -269,3 +269,68 @@ layout (std140) uniform ExampleBlock
 | 스칼라 또는 벡터의 배열    | 각 요소는 vec4와 동일한 기본 정렬을 가지고 있습니다.                |
 | 행렬               | 각 벡터의 기본 정렬이 vec4인 대규모 열 벡터 배열로 저장됩니다.          |
 | 스트럭트             | 이전 규칙에 따라 계산된 요소 크기와 동일하지만, vec4 크기의 배수로 패딩됩니다. |
+
+OpenGL 사양의 대부분처럼 예제를 통해 이해하는 것이 더 쉽습니다. 앞서 소개했던 ExampleBlock이라는 유니폼 블록을 사용하여 std140 레이아웃에 따라 각 멤버의 정렬 오프셋을 계산해 보겠습니다.
+
+```glsl
+layout (std140) uniform ExampleBlock
+{
+                     // base alignment  // aligned offset
+    float value;     // 4               // 0 
+    vec3 vector;     // 16              // 16  (offset must be multiple of 16 so 4->16)
+    mat4 matrix;     // 16              // 32  (column 0)
+                     // 16              // 48  (column 1)
+                     // 16              // 64  (column 2)
+                     // 16              // 80  (column 3)
+    float values[3]; // 16              // 96  (values[0])
+                     // 16              // 112 (values[1])
+                     // 16              // 128 (values[2])
+    bool boolean;    // 4               // 144
+    int integer;     // 4               // 148
+}; 
+```
+
+연습 삼아 오프셋 값을 직접 계산하고 이 표와 비교해 보세요. std140 레이아웃 규칙에 따라 계산된 오프셋 값을 사용하면 `glBufferSubData`와 같은 함수를 통해 적절한 오프셋 위치에 데이터를 채워 넣을 수 있습니다. std140 레이아웃은 가장 효율적인 방법은 아니지만, 이 균일 블록을 선언한 모든 프로그램에서 메모리 레이아웃이 동일하게 유지된다는 것을 보장합니다.
+
+유니폼 블록 정의에 `layout(std140)` 문을 추가하면 OpenGL에 이 유니폼 블록이 std140 레이아웃을 사용한다고 알려줍니다. 버퍼를 채우기 전에 각 오프셋을 쿼리해야 하는 다른 두 가지 레이아웃이 있습니다. 공유 레이아웃은 이미 살펴보았고, 나머지 하나는 패킹 레이아웃입니다. 패킹 레이아웃을 사용할 경우, 컴파일러가 셰이더마다 다를 수 있는 유니폼 블록에서 유니폼 변수를 최적화할 수 있기 때문에 프로그램 간에 레이아웃이 동일하게 유지된다는 보장이 없습니다(공유되지 않음).
+
+### 유니폼 버퍼 써보기
+
+우리는 유니폼 블록을 정의하고 메모리 레이아웃을 지정했지만, 아직 실제로 어떻게 사용할지에 대해서는 논의하지 않았습니다.
+
+먼저, 익숙한 `glGenBuffers` 함수를 사용하여 유니폼 버퍼 객체를 생성해야 합니다. 버퍼 객체를 생성한 후에는 `glBufferData` 함수를 호출하여 `GL_UNIFORM_BUFFER` 타겟에 바인딩하고 충분한 메모리를 할당합니다.
+
+```c++
+unsigned int uboExampleBlock;
+glGenBuffers(1, &uboExampleBlock);
+glBindBuffer(GL_UNIFORM_BUFFER, uboExampleBlock);
+glBufferData(GL_UNIFORM_BUFFER, 152, NULL, GL_STATIC_DRAW); // 152바이트의 메모리를 할당
+glBindBuffer(GL_UNIFORM_BUFFER, 0);
+```
+
+이제 버퍼를 업데이트하거나 데이터를 삽입할 때마다 `uboExampleBlock`에 바인딩하고 `glBufferSubData`를 사용하여 메모리를 업데이트합니다. 이 유니폼 버퍼는 한 번만 업데이트하면 되고, 이 버퍼를 사용하는 모든 셰이더는 이제 업데이트된 데이터를 사용하게 됩니다. 그런데 OpenGL은 어떤 유니폼 버퍼가 어떤 유니폼 블록에 대응하는지 어떻게 알까요?
+
+OpenGL 환경에서는 유니폼 버퍼를 연결할 수 있는 여러 **바인딩 포인트**{:.g}가 정의되어 있습니다. 유니폼 버퍼를 생성한 후에는 이러한 바인딩 포인트 중 하나에 연결하고, 셰이더의 유니폼 블록 또한 동일한 바인딩 포인트에 연결하여 둘을 연결합니다. 다음 다이어그램은 이를 보여줍니다.
+
+![](../static/advanced_glsl_binding_points.png)
+
+보시다시피 여러 개의 유니폼 버퍼를 서로 다른 바인딩 포인트에 연결할 수 있습니다. 셰이더 A와 셰이더 B 모두 동일한 바인딩 포인트 0에 연결된 유니폼 블록을 가지고 있으므로, 두 셰이더의 유니폼 블록은 uboMatrices에 있는 동일한 유니폼 데이터를 공유합니다. 이는 두 셰이더가 동일한 Matrices 유니폼 블록을 정의해야 한다는 요구 사항 때문입니다.
+
+셰이더 유니폼 블록을 특정 바인딩 포인트에 설정하려면 프로그램 객체, 유니폼 블록 인덱스, 연결할 바인딩 포인트를 인수로 받는 `glUniformBlockBinding` 함수를 호출합니다. 유니폼 블록 인덱스는 셰이더에서 정의된 유니폼 블록의 위치 인덱스입니다. 이 인덱스는 프로그램 객체와 유니폼 블록 이름을 인수로 받는 `glGetUniformBlockIndex` 함수를 호출하여 얻을 수 있습니다. 다이어그램의 Lights 유니폼 블록을 바인딩 포인트 2에 설정하는 방법은 다음과 같습니다.
+
+```c++
+unsigned int lights_index = glGetUniformBlockIndex(shaderA.ID, "Lights");   
+glUniformBlockBinding(shaderA.ID, lights_index, 2);
+```
+
+이 과정을 각 셰이더마다 반복해야 한다는 점에 유의하십시오.
+
+!!! tip ""
+    OpenGL 4.2 버전부터는 레이아웃 지정자를 추가하여 셰이더에 유니폼 블록의 바인딩 포인트를 명시적으로 저장할 수 있으므로 `glGetUniformBlockIndex` 및 `glUniformBlockBinding` 호출을 생략할 수 있습니다. 다음 코드는 Lights 유니폼 블록의 바인딩 포인트를 명시적으로 설정합니다.
+
+    ```c++
+    layout(std140, binding = 2) uniform Lights { ... };
+    ```
+
+그런 다음 유니폼 버퍼 객체를 동일한 바인딩 지점에 바인딩해야 하며, 이는 `glBindBufferBase` 또는 `glBindBufferRange`를 사용하여 수행할 수 있습니다.
+
