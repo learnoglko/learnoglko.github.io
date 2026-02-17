@@ -290,7 +290,7 @@ layout (std140) uniform ExampleBlock
 }; 
 ```
 
-연습 삼아 오프셋 값을 직접 계산하고 이 표와 비교해 보세요. std140 레이아웃 규칙에 따라 계산된 오프셋 값을 사용하면 `glBufferSubData`와 같은 함수를 통해 적절한 오프셋 위치에 데이터를 채워 넣을 수 있습니다. std140 레이아웃은 가장 효율적인 방법은 아니지만, 이 균일 블록을 선언한 모든 프로그램에서 메모리 레이아웃이 동일하게 유지된다는 것을 보장합니다.
+연습 삼아 오프셋 값을 직접 계산하고 이 표와 비교해 보세요. std140 레이아웃 규칙에 따라 계산된 오프셋 값을 사용하면 `glBufferSubData`와 같은 함수를 통해 적절한 오프셋 위치에 데이터를 채워 넣을 수 있습니다. std140 레이아웃은 가장 효율적인 방법은 아니지만, 이 유니폼 블록을 선언한 모든 프로그램에서 메모리 레이아웃이 동일하게 유지된다는 것을 보장합니다.
 
 유니폼 블록 정의에 `layout(std140)` 문을 추가하면 OpenGL에 이 유니폼 블록이 std140 레이아웃을 사용한다고 알려줍니다. 버퍼를 채우기 전에 각 오프셋을 쿼리해야 하는 다른 두 가지 레이아웃이 있습니다. 공유 레이아웃은 이미 살펴보았고, 나머지 하나는 패킹 레이아웃입니다. 패킹 레이아웃을 사용할 경우, 컴파일러가 셰이더마다 다를 수 있는 유니폼 블록에서 유니폼 변수를 최적화할 수 있기 때문에 프로그램 간에 레이아웃이 동일하게 유지된다는 보장이 없습니다(공유되지 않음).
 
@@ -332,5 +332,88 @@ glUniformBlockBinding(shaderA.ID, lights_index, 2);
     layout(std140, binding = 2) uniform Lights { ... };
     ```
 
-그런 다음 유니폼 버퍼 객체를 동일한 바인딩 지점에 바인딩해야 하며, 이는 `glBindBufferBase` 또는 `glBindBufferRange`를 사용하여 수행할 수 있습니다.
+그런 다음 유니폼 버퍼 객체를 동일한 바인딩 포인트에 바인딩해야 하며, 이는 `glBindBufferBase` 또는 `glBindBufferRange`를 사용하여 수행할 수 있습니다.
+
+```c++
+glBindBufferBase(GL_UNIFORM_BUFFER, 2, uboExampleBlock); 
+// 또는
+glBindBufferRange(GL_UNIFORM_BUFFER, 2, uboExampleBlock, 0, 152);
+```
+
+`glBindbufferBase` 함수는 대상, 바인딩 포인트 인덱스 및 유니폼 버퍼 객체를 매개변수로 받습니다. 이 함수는 uboExampleBlock을 바인딩 포인트 2에 연결합니다. 이 지점부터 바인딩 포인트의 양쪽이 모두 연결됩니다. `glBindBufferRange` 함수를 사용할 수도 있는데, 이 함수는 오프셋과 크기 매개변수를 추가로 받습니다. 이 함수를 사용하면 유니폼 버퍼의 특정 범위만 바인딩 포인트에 연결할 수 있습니다. `glBindBufferRange`를 사용하면 여러 개의 서로 다른 유니폼 블록을 하나의 유니폼 버퍼 객체에 연결할 수 있습니다.
+
+이제 모든 설정이 완료되었으므로 유니폼 버퍼에 데이터를 추가할 수 있습니다. 모든 데이터를 단일 바이트 배열로 추가하거나 `glBufferSubData`를 사용하여 필요에 따라 버퍼의 일부를 업데이트할 수 있습니다. 유니폼 변수 boolean을 업데이트하려면 다음과 같이 유니폼 버퍼 객체를 업데이트하면 됩니다.
+
+```c++
+glBindBuffer(GL_UNIFORM_BUFFER, uboExampleBlock);
+int b = true; // GLSL에서 bool 값은 4바이트로 표현되므로 정수형 변수에 저장합니다.
+glBufferSubData(GL_UNIFORM_BUFFER, 144, 4, &b); 
+glBindBuffer(GL_UNIFORM_BUFFER, 0);
+```
+
+그리고 동일한 절차가 유니폼 블록 내의 다른 모든 유니폼 변수에도 적용되지만, 범위 인수는 다릅니다.
+
+### 간단한 예시
+
+그럼 유니폼 버퍼 객체의 실제 예제를 살펴보겠습니다. 지금까지 살펴본 코드 예제들을 보면 투영 행렬, 뷰 행렬, 모델 행렬 이렇게 세 가지 행렬을 계속해서 사용해 왔습니다. 이 행렬들 중에서 자주 변경되는 것은 모델 행렬뿐입니다. 만약 여러 셰이더에서 동일한 행렬들을 사용한다면 유니폼 버퍼 객체를 사용하는 것이 훨씬 효율적일 것입니다.
+
+투영 행렬과 뷰 행렬은 Matrices라는 유니폼 블록에 저장할 것입니다. 모델 행렬은 셰이더 간에 자주 변경되는 경향이 있으므로 유니폼 버퍼 객체를 사용해도 이점이 없기 때문에 여기에 저장하지 않을 것입니다.
+
+```glsl
+
+#version 330 core
+layout (location = 0) in vec3 aPos;
+
+layout (std140) uniform Matrices
+{
+    mat4 projection;
+    mat4 view;
+};
+uniform mat4 model;
+
+void main()
+{
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
+}
+```
+
+여기서 특별히 달라지는 점은 없지만, std140 레이아웃을 사용하는 유니폼 블록을 사용한다는 점이 다릅니다. 샘플 애플리케이션에서는 각각 다른 셰이더 프로그램을 사용하여 4개의 큐브를 표시할 것입니다. 이 4개의 셰이더 프로그램은 모두 동일한 정점 셰이더를 사용하지만, 각 셰이더마다 고유한 프래그먼트 셰이더를 가지고 있으며, 이 프래그먼트 셰이더는 셰이더마다 다른 단일 색상만 출력합니다.
+
+먼저, 정점 셰이더의 유니폼 블록을 바인딩 포인트 0으로 설정합니다. 각 셰이더마다 이 작업을 수행해야 한다는 점에 유의하십시오.
+
+```c++
+unsigned int uniformBlockIndexRed    = glGetUniformBlockIndex(shaderRed.ID, "Matrices");
+unsigned int uniformBlockIndexGreen  = glGetUniformBlockIndex(shaderGreen.ID, "Matrices");
+unsigned int uniformBlockIndexBlue   = glGetUniformBlockIndex(shaderBlue.ID, "Matrices");
+unsigned int uniformBlockIndexYellow = glGetUniformBlockIndex(shaderYellow.ID, "Matrices");  
+  
+glUniformBlockBinding(shaderRed.ID,    uniformBlockIndexRed, 0);
+glUniformBlockBinding(shaderGreen.ID,  uniformBlockIndexGreen, 0);
+glUniformBlockBinding(shaderBlue.ID,   uniformBlockIndexBlue, 0);
+glUniformBlockBinding(shaderYellow.ID, uniformBlockIndexYellow, 0);
+```
+
+다음으로 실제 유니폼 버퍼 객체를 생성하고 해당 버퍼를 바인딩 포인트 0에 바인딩합니다.
+
+```c++
+unsigned int uboMatrices
+glGenBuffers(1, &uboMatrices);
+  
+glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), NULL, GL_STATIC_DRAW);
+glBindBuffer(GL_UNIFORM_BUFFER, 0);
+  
+glBindBufferRange(GL_UNIFORM_BUFFER, 0, uboMatrices, 0, 2 * sizeof(glm::mat4));
+```
+
+먼저 버퍼에 필요한 메모리를 할당하는데, 이는 `glm::mat4` 크기의 두 배에 해당합니다. GLM의 행렬 타입 크기는 GLSL의 mat4에 직접적으로 대응합니다. 그런 다음 버퍼의 특정 영역, 이 경우에는 전체 버퍼를 바인딩 포인트 0에 연결합니다.
+
+이제 남은 것은 버퍼를 채우는 것뿐입니다. 투영 행렬의 시야각 값을 일정하게 유지한다면(카메라 줌은 더 이상 사용하지 않음) 애플리케이션에서 한 번만 업데이트하면 됩니다. 즉, 버퍼에 한 번만 삽입하면 된다는 뜻입니다. 버퍼 객체에 이미 충분한 메모리를 할당했으므로 렌더링 루프에 들어가기 전에 `glBufferSubData`를 사용하여 투영 행렬을 저장할 수 있습니다.
+
+```c++
+glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
+glBindBuffer(GL_UNIFORM_BUFFER, uboMatrices);
+glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projection));
+glBindBuffer(GL_UNIFORM_BUFFER, 0);  
+```
 
