@@ -417,3 +417,26 @@ glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(projecti
 glBindBuffer(GL_UNIFORM_BUFFER, 0);  
 ```
 
+이것으로 유니폼 버퍼 객체에 대한 설명은 끝입니다. Matrices 유니폼 블록을 포함하는 각 정점 셰이더는 이제 uboMatrices에 저장된 데이터를 포함하게 됩니다. 따라서 이제 서로 다른 셰이더를 사용하여 4개의 큐브를 그리면 투영 행렬과 뷰 행렬이 모두 동일해야 합니다.
+
+```c++
+glBindVertexArray(cubeVAO);
+shaderRed.use();
+glm::mat4 model = glm::mat4(1.0f);
+model = glm::translate(model, glm::vec3(-0.75f, 0.75f, 0.0f));	// move top-left
+shaderRed.setMat4("model", model);
+glDrawArrays(GL_TRIANGLES, 0, 36);        
+// ... draw Green Cube
+// ... draw Blue Cube
+// ... draw Yellow Cube	  
+```
+
+우리가 설정해야 할 유일한 유니폼 변수는 모델 유니폼 변수뿐입니다. 이와 같은 상황에서 유니폼 버퍼 객체를 사용하면 셰이더당 유니폼 변수 호출 횟수를 상당히 줄일 수 있습니다. 결과는 다음과 같습니다.
+
+![](../static/advanced_glsl_uniform_buffer_objects.png)
+
+각 큐브는 모델 행렬을 변환하여 창의 한쪽으로 이동하며, 서로 다른 프래그먼트 셰이더 덕분에 객체마다 색상이 다릅니다. 이는 유니폼 버퍼 객체를 사용할 수 있는 비교적 간단한 시나리오이지만, 대규모 렌더링 애플리케이션에서는 수백 개의 셰이더 프로그램이 활성화될 수 있으며, 바로 이러한 상황에서 유니폼 버퍼 객체의 진가가 발휘됩니다.
+
+[여기](https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/8.advanced_glsl_ubo/advanced_glsl_ubo.cpp)에서 전체 예제 애플리케이션의 소스 코드를 찾을 수 있습니다.
+
+유니폼 버퍼 객체는 단일 유니폼에 비해 여러 가지 장점이 있습니다. 첫째, 여러 유니폼을 한 번에 설정하는 것이 하나씩 설정하는 것보다 빠릅니다. 둘째, 여러 셰이더에서 동일한 유니폼을 변경해야 하는 경우 유니폼 버퍼에서 한 번만 변경하면 훨씬 간편합니다. 마지막으로, 언뜻 보기에는 명확하지 않지만, 유니폼 버퍼 객체를 사용하면 셰이더에서 훨씬 더 많은 유니폼을 사용할 수 있다는 장점이 있습니다. OpenGL은 처리할 수 있는 유니폼 데이터의 양에 제한이 있으며, 이 제한은 `GL_MAX_VERTEX_UNIFORM_COMPONENTS`를 통해 확인할 수 있습니다. 유니폼 버퍼 객체를 사용하면 이 제한이 훨씬 높아집니다. 따라서 유니폼 개수의 최대치에 도달하는 경우(예: 스켈레탈 애니메이션을 구현할 때) 항상 유니폼 버퍼 객체를 사용할 수 있습니다.
