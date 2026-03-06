@@ -62,3 +62,4 @@ nav:
     - 큐브맵: 고급 OpenGL/큐브맵.md
     - 고급 데이터: 고급 OpenGL/고급 데이터.md
     - 고급 GLSL: 고급 OpenGL/고급 GLSL.md
+    - 지오메트리 셰이더: 고급 OpenGL/지오메트리 셰이더.md
