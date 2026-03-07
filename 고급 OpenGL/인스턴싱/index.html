@@ -1269,6 +1269,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../고급 OpenGL/인스턴싱" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    인스턴싱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1295,6 +1323,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        인스턴스 배열
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        소행성 지대
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1328,6 +1386,246 @@
 <p>인스턴스화된 드로잉을 이해하기 위해, 단 한 번의 렌더링 호출로 100개의 2D 사각형을 정규화된 장치 좌표계에 렌더링하는 간단한 예제를 보여드리겠습니다. 이를 위해 100개의 오프셋 벡터로 구성된 유니폼 배열을 인덱싱하여 각 인스턴스화된 사각형의 위치를 ​​고유하게 지정합니다. 결과적으로 창 전체를 채우는 깔끔하게 정렬된 사각형 격자가 생성됩니다.</p>
 <p><img alt="" src="../../static/instancing_quads.png" /></p>
 <p>각 사각형은 총 6개의 정점을 가진 2개의 삼각형으로 구성됩니다. 각 정점에는 2D NDC 위치 벡터와 색상 벡터가 포함되어 있습니다. 아래는 이 예제에 사용된 정점 데이터입니다. 삼각형은 100개가 있을 때 화면에 제대로 맞도록 충분히 작게 설계되었습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">quadVertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// positions     // colors</span>
+<span class="w">    </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">     </span><span class="mf">0.05f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+
+<span class="w">    </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<span class="w">     </span><span class="mf">0.05f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">   </span>
+<span class="w">     </span><span class="mf">0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.05f</span><span class="p">,</span><span class="w">  </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>사각형들은 정점 셰이더에서 색상 벡터를 받아 출력으로 설정하는 프래그먼트 셰이더에서 색칠됩니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">FragColor</span><span class="p">;</span>
+
+<span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">fColor</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">fColor</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>아직까지는 새로운 내용은 없지만, 정점 셰이더 부분에서 흥미로운 일이 벌어지기 시작했습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aColor</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">fColor</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">offsets</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">offsets</span><span class="p">[</span><span class="nb">gl_InstanceID</span><span class="p">];</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColor</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>여기서는 총 100개의 오프셋 벡터를 포함하는 offsets라는 유니폼 배열을 정의했습니다. 정점 셰이더 내에서 <code>gl_InstanceID</code>를 사용하여 offsets 배열의 인덱싱을 통해 각 인스턴스에 대한 오프셋 벡터를 가져옵니다. 이제 인스턴스 드로잉으로 100개의 쿼드를 그리면 서로 다른 위치에 100개의 쿼드가 배치됩니다.</p>
+<p>렌더링 루프에 들어가기 전에 중첩된 for 루프에서 계산한 오프셋 위치를 실제로 설정해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glm</span><span class="o">::</span><span class="n">vec2</span><span class="w"> </span><span class="n">translations</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1f</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-10</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-10</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glm</span><span class="o">::</span><span class="n">vec2</span><span class="w"> </span><span class="n">translation</span><span class="p">;</span>
+<span class="w">        </span><span class="n">translation</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">10.0f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<span class="w">        </span><span class="n">translation</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">y</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">10.0f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<span class="w">        </span><span class="n">translations</span><span class="p">[</span><span class="n">index</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">translation</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>여기서는 10x10 그리드의 모든 위치에 대한 오프셋 벡터를 포함하는 100개의 변환 벡터 세트를 생성합니다. 변환 배열을 생성하는 것 외에도, 해당 데이터를 정점 셰이더의 유니폼 배열로 전달해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">shader</span><span class="p">.</span><span class="n">use</span><span class="p">();</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">shader</span><span class="p">.</span><span class="n">setVec2</span><span class="p">((</span><span class="s">&quot;offsets[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">translations</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이 코드 조각에서는 for 루프 카운터 i를 문자열로 변환하여 유니폼 위치를 조회하기 위한 위치 문자열을 동적으로 생성합니다. 그런 다음 오프셋 유니폼 배열의 각 항목에 해당하는 변환 벡터를 설정합니다.</p>
+<p>이제 모든 준비가 완료되었으므로 사각형 렌더링을 시작할 수 있습니다. 인스턴스 렌더링을 통해 그리려면 <code>glDrawArraysInstanced</code> 또는 <code>glDrawElementsInstanced</code>를 호출합니다. 요소 인덱스 버퍼를 사용하지 않으므로 <code>glDrawArrays</code> 버전을 호출하겠습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">quadVAO</span><span class="p">);</span>
+<span class="n">glDrawArraysInstanced</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p><code>glDrawArraysInstanced</code> 함수의 매개변수는 마지막 매개변수를 제외하고는 <code>glDrawArrays</code> 함수와 완전히 동일합니다. 마지막 매개변수는 그릴 사각형의 개수를 설정합니다. 10x10 그리드에 100개의 사각형을 표시하려고 하므로 이 값을 100으로 설정합니다. 이제 코드를 실행하면 100개의 다채로운 사각형으로 이루어진 익숙한 이미지가 나타날 것입니다.</p>
+<h2 id="_2">인스턴스 배열</h2>
+<p>이전 구현 방식은 특정 사용 사례에서는 잘 작동하지만, 100개 이상의 인스턴스를 렌더링하는 경우(이는 매우 흔한 경우입니다) 셰이더로 전송할 수 있는 유니폼 데이터 양에 한계가 생깁니다. 대안 중 하나는 <strong class="g">인스턴스 배열(instanced arrays)</strong>을 사용하는 것입니다. 인스턴스 배열은 정점 속성으로 정의되며(훨씬 더 많은 데이터를 저장할 수 있음), 정점 단위가 아닌 인스턴스 단위로 업데이트됩니다.</p>
+<p>정점 속성을 사용할 경우, 정점 셰이더가 실행될 때마다 GPU는 현재 정점에 해당하는 다음 정점 속성 세트를 가져옵니다. 하지만 정점 속성을 인스턴스 배열로 정의하면, 정점 셰이더는 인스턴스별로만 정점 속성 내용을 업데이트합니다. 이를 통해 정점별 데이터에는 표준 정점 속성을 사용하고, 인스턴스별로 고유한 데이터에는 인스턴스 배열을 사용할 수 있습니다.</p>
+<p>인스턴스 배열의 예를 보여드리기 위해 이전 예제를 가져와 오프셋 유니폼 배열을 인스턴스 배열로 변환해 보겠습니다. 이를 위해서는 정점 셰이더에 새로운 정점 속성을 추가하여 업데이트해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aColor</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aOffset</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">fColor</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">aOffset</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColor</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이제 <code>gl_InstanceID</code>를 사용하지 않고, 먼저 큰 균일 배열에 인덱싱하지 않고도 offset 속성을 직접 사용할 수 있습니다.</p>
+<p>인스턴스화된 배열은 위치 및 색상 변수와 마찬가지로 정점 속성이므로 해당 내용을 정점 버퍼 객체에 저장하고 속성 포인터를 구성해야 합니다. 먼저 이전 섹션에서 만든 변환 배열을 새 버퍼 객체에 저장하겠습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">instanceVBO</span><span class="p">;</span>
+<span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">instanceVBO</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">instanceVBO</span><span class="p">);</span>
+<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">translations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+</code></pre></div>
+<p>다음으로 정점 속성 포인터를 설정하고 정점 속성을 활성화해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">instanceVBO</span><span class="p">);</span>
+<span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">   </span>
+<span class="n">glVertexAttribDivisor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">  </span>
+</code></pre></div>
+<p>이 코드에서 흥미로운 부분은 마지막 줄에서 <code>glVertexAttribDivisor</code> 함수를 호출하는 것입니다. 이 함수는 OpenGL에게 정점 속성의 내용을 다음 요소로 업데이트할 시점을 알려줍니다. 첫 번째 매개변수는 해당 정점 속성이고, 두 번째 매개변수는 속성 제수입니다. 기본적으로 속성 제수는 0이며, 이는 OpenGL에게 정점 셰이더의 각 반복마다 정점 속성의 내용을 업데이트하도록 지시합니다. 이 속성을 1로 설정하면 새로운 인스턴스를 렌더링할 때마다 정점 속성의 내용을 업데이트하도록 OpenGL에 알리는 것입니다. 2로 설정하면 2개의 인스턴스마다 내용을 업데이트하는 식입니다. 속성 제수를 1로 설정하면 사실상 OpenGL에게 속성 위치 2에 있는 정점 속성이 인스턴스 배열임을 알려주는 것입니다.</p>
+<p>이제 <code>glDrawArraysInstanced</code>를 사용하여 사각형을 다시 렌더링하면 다음과 같은 출력을 얻게 됩니다.</p>
+<p><img alt="" src="../../static/instancing_quads.png" /></p>
+<p>이것은 이전 예제와 완전히 동일하지만, 인스턴스 배열을 사용하므로 인스턴스화된 드로잉을 위해 정점 셰이더에 훨씬 더 많은 데이터(메모리가 허용하는 한도 내에서)를 전달할 수 있습니다.</p>
+<p>재미 삼아 <code>gl_InstanceID</code>를 다시 사용하여 오른쪽 상단에서 왼쪽 하단으로 각 사각형의 크기를 천천히 줄여볼 수도 있습니다. 왜 안 되겠어요?</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">vec2</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aPos</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="nb">gl_InstanceID</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100.0</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">aOffset</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aColor</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>그 결과, 사각형의 초기 인스턴스는 매우 작게 그려지고, 인스턴스를 그리는 과정이 진행될수록 gl_InstanceID가 100에 가까워지면서 사각형은 원래 크기를 되찾게 됩니다. 이처럼 인스턴스 배열과 gl_InstanceID를 함께 사용하는 것은 완전히 합법적입니다.</p>
+<p><img alt="" src="../../static/instancing_quads_arrays.png" /></p>
+<p>인스턴스 렌더링이 어떻게 작동하는지 아직 잘 모르시거나 모든 요소가 어떻게 통합되는지 확인하고 싶으시다면, <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/10.1.instancing_quads/instancing_quads.cpp">여기</a>에서 애플리케이션의 전체 소스 코드를 찾아보실 수 있습니다.</p>
+<p>재미있긴 하지만, 이 예시들은 인스턴싱의 진정한 매력을 보여주는 좋은 예시는 아닙니다. 물론 인스턴싱이 어떻게 작동하는지 쉽게 이해할 수 있게 해주지만, 인스턴싱의 진가는 비슷한 객체를 대량으로 그릴 때 발휘됩니다. 그래서 우리는 우주로 나아가 보려고 합니다.</p>
+<h2 id="_3">소행성 지대</h2>
+<p>거대한 행성 하나가 거대한 소행성 고리의 중심에 있는 장면을 상상해 보세요. 이러한 소행성 고리는 수천, 수만 개의 암석 지형으로 구성될 수 있으며, 웬만한 그래픽 카드로는 렌더링이 불가능할 정도입니다. 이러한 시나리오에서는 인스턴스 렌더링이 특히 유용합니다. 모든 소행성을 하나의 모델로 표현할 수 있기 때문입니다. 각 소행성은 고유한 변환 행렬을 통해 각기 다른 형태로 표현됩니다.</p>
+<p>인스턴스 렌더링의 효과를 보여주기 위해 먼저 인스턴스 렌더링을 사용하지 않고 행성 주위를 떠다니는 소행성 장면을 렌더링해 보겠습니다. 이 장면에는 <a href="https://learnopengl.com/data/models/planet.zip">여기</a>에서 다운로드할 수 있는 대형 행성 모델과 행성 주위에 적절하게 배치된 여러 개의 소행성 암석이 포함됩니다. 소행성 암석 모델은 <a href="https://learnopengl.com/data/models/rock.zip">여기</a>에서 다운로드할 수 있습니다.</p>
+<p>코드 예제에서는 모델 로딩 장에서 이전에 정의한 모델 로더를 사용하여 모델을 로드합니다.</p>
+<p>원하는 효과를 얻기 위해 각 소행성에 대한 모델 변환 행렬을 생성할 것입니다. 변환 행렬은 먼저 소행성을 소행성 고리 내의 특정 위치로 이동시킨 다음, 고리가 더욱 자연스럽게 보이도록 이동 위치에 작은 무작위 변위 값을 추가합니다. 그 후 무작위 크기 조정과 무작위 회전을 적용합니다. 결과적으로 각 소행성이 행성 주위의 특정 위치로 이동하면서 다른 소행성들과 비교했을 때 더욱 자연스럽고 독특한 모습을 갖게 되는 변환 행렬이 생성됩니다.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">*</span><span class="n">modelMatrices</span><span class="p">;</span>
+<span class="n">modelMatrices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">[</span><span class="n">amount</span><span class="p">];</span>
+<span class="n">srand</span><span class="p">(</span><span class="n">glfwGetTime</span><span class="p">());</span><span class="w"> </span><span class="c1">// 난수 시드 초기화</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">radius</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50.0</span><span class="p">;</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.5f</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">amount</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// 1. 변환: [-offset, offset] 범위의 &#39;반지름&#39;을 사용하여 원을 따라 이동합니다.</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">amount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">360.0f</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">displacement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">radius</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">displacement</span><span class="p">;</span>
+<span class="w">    </span><span class="n">displacement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displacement</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.4f</span><span class="p">;</span><span class="w"> </span><span class="c1">// 필드의 높이는 x축과 z축의 너비에 비해 작게 유지하십시오.</span>
+<span class="w">    </span><span class="n">displacement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100.0f</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">radius</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">displacement</span><span class="p">;</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// 2. 크기: 0.05~0.25f 사이의 크기</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">100.0f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="n">scale</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// 3. 회전: (반)랜덤으로 선택된 회전축 벡터를 중심으로 임의 회전을 추가합니다.</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">rotAngle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rand</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">360</span><span class="p">);</span>
+<span class="w">    </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">rotAngle</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.4f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.6f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// 4. 이제 행렬 목록에 추가합니다.</span>
+<span class="w">    </span><span class="n">modelMatrices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이 코드는 다소 복잡해 보일 수 있지만, 기본적으로는 radius로 정의된 반지름을 가진 원을 따라 소행성의 x, z 위치를 변환하고, 각 소행성을 -offset과 offset만큼 원 주위로 무작위로 조금씩 이동시킵니다. 소행성 고리가 더 평평하게 보이도록 y 변위는 상대적으로 적게 적용합니다. 그런 다음 크기 및 회전 변환을 적용하고 결과 변환 행렬을 amount 크기의 modelMatrices 변수에 저장합니다. 여기서는 소행성 하나당 하나씩, 총 1000개의 모델 행렬을 생성합니다.</p>
+<p>행성과 암석 모델을 불러오고 셰이더 세트를 컴파일한 후, 렌더링 코드는 대략 다음과 같습니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 행성 그리기</span>
+<span class="n">shader</span><span class="p">.</span><span class="n">use</span><span class="p">();</span>
+<span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-3.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">));</span>
+<span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">4.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0f</span><span class="p">));</span>
+<span class="n">shader</span><span class="p">.</span><span class="n">setMat4</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="n">planet</span><span class="p">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">shader</span><span class="p">);</span>
+
+<span class="c1">// 운석 그리기</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">amount</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">shader</span><span class="p">.</span><span class="n">setMat4</span><span class="p">(</span><span class="s">&quot;model&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">modelMatrices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">rock</span><span class="p">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">shader</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>먼저 행성 모델을 그린 다음, 장면 크기에 맞게 약간 이동시키고 크기를 조정합니다. 그런 다음 이전에 생성한 변환 횟수와 동일한 수의 암석 모델을 그립니다. 하지만 각 암석을 그리기 전에 먼저 셰이더 내에서 해당 모델 변환 행렬을 설정합니다.</p>
+<p>그 결과, 행성 주위에 자연스러운 모습의 소행성 고리가 보이는 우주와 같은 장면이 연출됩니다.</p>
+<p><img alt="" src="../../static/instancing_asteroids.png" /></p>
+<p>이 장면은 프레임당 총 1001번의 렌더링 호출을 포함하며, 그중 1000번은 암석 모델 렌더링입니다. 이 장면의 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/10.2.asteroids/asteroids.cpp">여기</a>에서 확인할 수 있습니다.</p>
+<p>이 값을 늘리기 시작하면 장면이 원활하게 실행되지 않고 초당 렌더링할 수 있는 프레임 수가 급격히 줄어드는 것을 금방 알 수 있습니다. 이 값을 2000에 가깝게 설정하면 GPU 부하가 너무 심해져서 움직이기조차 어려워집니다.</p>
+<p>이제 동일한 장면을 인스턴스 렌더링을 사용하여 렌더링해 보겠습니다. 먼저 정점 셰이더를 약간 수정해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec3</span><span class="w"> </span><span class="n">aPos</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+<span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">instanceMatrix</span><span class="p">;</span>
+
+<span class="k">out</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">TexCoords</span><span class="p">;</span>
+
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">projection</span><span class="p">;</span>
+<span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">instanceMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">aPos</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">TexCoords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aTexCoords</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>이제 모델 유니폼 변수를 사용하지 않고, 대신 변환 행렬의 인스턴스 배열을 저장할 수 있도록 mat4를 정점 속성으로 선언합니다. 하지만 vec4보다 큰 데이터 타입을 정점 속성으로 선언하면 동작 방식이 약간 달라집니다. 정점 속성에 허용되는 최대 데이터 크기는 vec4입니다. mat4는 기본적으로 4개의 vec4와 같으므로, 이 특정 행렬에 4개의 정점 속성을 할당해야 합니다. 위치를 3으로 지정했으므로 행렬의 각 열은 3, 4, 5, 6의 정점 속성 위치를 갖게 됩니다.</p>
+<p>다음으로 해당 4개 정점 속성의 각 속성 포인터를 설정하고 인스턴스화된 배열로 구성해야 합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// vertex buffer object</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">buffer</span><span class="p">;</span>
+<span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+<span class="n">glBufferData</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">modelMatrices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">GL_STATIC_DRAW</span><span class="p">);</span>
+
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rock</span><span class="p">.</span><span class="n">meshes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">VAO</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rock</span><span class="p">.</span><span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">VAO</span><span class="p">;</span>
+<span class="w">    </span><span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">VAO</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// vertex attributes</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">vec4Size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec4</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">));</span>
+<span class="w">    </span><span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">));</span>
+<span class="w">    </span><span class="n">glEnableVertexAttribArray</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FLOAT</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vec4Size</span><span class="p">));</span>
+
+<span class="w">    </span><span class="n">glVertexAttribDivisor</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glVertexAttribDivisor</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glVertexAttribDivisor</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glVertexAttribDivisor</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glBindVertexArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>참고로, Mesh의 VAO 변수를 private 변수 대신 public 변수로 선언하여 정점 배열 객체에 접근할 수 있도록 약간의 편법을 사용했습니다. 가장 깔끔한 해결책은 아니지만, 이 예제에 맞게 간단히 수정한 것입니다. 이 작은 편법을 제외하면 코드는 명확할 것입니다. 기본적으로 OpenGL이 행렬의 각 정점 속성에 대한 버퍼를 어떻게 해석해야 하는지, 그리고 각 정점 속성이 인스턴스화된 배열임을 선언하는 것입니다.</p>
+<p>다음으로 메시의 VAO를 다시 가져와서 이번에는 <code>glDrawElementsInstanced</code>를 사용하여 그립니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// draw meteorites</span>
+<span class="n">instanceShader</span><span class="p">.</span><span class="n">use</span><span class="p">();</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rock</span><span class="p">.</span><span class="n">meshes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">glBindVertexArray</span><span class="p">(</span><span class="n">rock</span><span class="p">.</span><span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">VAO</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glDrawElementsInstanced</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="n">rock</span><span class="p">.</span><span class="n">meshes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">indices</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">GL_UNSIGNED_INT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+<p>이전 예제와 동일한 수의 소행성을 렌더링하지만, 이번에는 인스턴스 렌더링을 사용합니다. 결과는 완전히 동일해야 하지만, 소행성 수를 늘리면 인스턴스 렌더링의 강력한 성능을 확실히 확인할 수 있습니다. 인스턴스 렌더링을 사용하지 않았을 때는 약 1,000~1,500개의 소행성을 부드럽게 렌더링할 수 있었습니다. 하지만 인스턴스 렌더링을 사용하면 이 값을 100,000개까지 설정할 수 있습니다. 암석 모델의 정점이 576개라고 가정하면, 성능 저하 없이 매 프레임 약 5,700만 개의 정점을 렌더링할 수 있으며, 드로우 콜은 단 2회만 발생합니다!</p>
+<p><img alt="" src="../../static/instancing_asteroids_quantity.png" /></p>
+<p>이 이미지는 반지름 150.0f, 오프셋 25.0f인 100,000개의 소행성을 사용하여 렌더링되었습니다. 인스턴스 렌더링 데모의 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/4.advanced_opengl/10.3.asteroids_instanced/asteroids_instanced.cpp">여기</a>에서 확인할 수 있습니다.</p>
+<div class="admonition tip">
+<p>컴퓨터 사양에 따라 소행성 개수 10만 개는 너무 많을 수 있으므로, 적절한 프레임 속도가 나올 때까지 값을 조정해 보세요.</p>
+</div>
+<p>보시다시피, 적절한 환경에서 인스턴스 렌더링은 애플리케이션의 렌더링 성능을 크게 향상시킬 수 있습니다. 이러한 이유로 인스턴스 렌더링은 잔디, 식물, 파티클, 그리고 이와 같은 장면처럼 반복되는 형태가 많은 장면에서 흔히 사용됩니다.</p>
 
 
 
