@@ -1709,9 +1709,9 @@
 <p>각 좌표계에 대해서는 아래에서 더 자세히 설명하겠습니다.</p>
 <h2 id="_3">로컬 공간</h2>
 <p>로컬 공간이란 객체에 국한된 좌표 공간, 즉 객체가 처음 위치하는 좌표 공간을 말합니다. 블렌더와 같은 모델링 소프트웨어로 큐브를 만들었다고 가정해 보세요. 큐브의 원점은 아마도 (0,0,0)일 것입니다. 최종 결과물에서는 큐브의 위치가 다를 수 있지만요. 아마도 여러분이 만든 모든 모델은 초기 위치가 (0,0,0)일 것입니다. 따라서 모델의 모든 정점은 로컬 공간에 있습니다. 즉, 모든 정점이 객체에 국한되어 있는 것입니다.</p>
-<p>우리가 사용해 온 컨테이너의 꼭짓점은 원점 0.0을 기준으로 -0.5에서 0.5 사이의 좌표로 지정되었습니다. 이는 로컬 좌표입니다.</p>
+<p>우리가 사용해 온 컨테이너의 정점은 원점 0.0을 기준으로 -0.5에서 0.5 사이의 좌표로 지정되었습니다. 이는 로컬 좌표입니다.</p>
 <div class="admonition note">
-<p>이해하기 쉽게 말하자면 오브젝트의 모든 꼭짓점의 위치는 그 객체의 로컬 좌표로 써있다는 뜻입니다.</p>
+<p>이해하기 쉽게 말하자면 오브젝트의 모든 정점의 위치는 그 객체의 로컬 좌표로 써있다는 뜻입니다.</p>
 </div>
 <h2 id="_4">월드 공간</h2>
 <p>만약 모든 객체를 애플리케이션에 직접 불러온다면, 아마도 모든 객체가 월드 원점인 (0,0,0)에 서로 겹쳐서 배치될 것입니다. 이는 우리가 원하는 결과가 아닙니다. 우리는 각 객체가 더 큰 월드 안에서 적절한 위치에 배치될 수 있도록 위치를 정의해야 합니다. 월드 공간 좌표는 말 그대로 (게임) 월드를 기준으로 모든 정점의 좌표를 나타냅니다. 객체들이 (가급적 현실적인 방식으로) 월드 공간에 흩어져 있도록 변환해야 하는 좌표 공간이 바로 이 월드 공간입니다. 객체의 좌표는 <strong class="g">모델</strong> 행렬을 이용하여 로컬 공간에서 월드 공간으로 변환됩니다.</p>
@@ -1757,7 +1757,7 @@ out = \begin{pmatrix} x /w \\ y / w \\ z / w \end{pmatrix}
 </div>
 <p>직교 투영을 사용하면 각 정점 좌표가 복잡한 원근 분할 없이 클립 공간에 직접 매핑됩니다(원근 분할은 여전히 ​​수행되지만 w 구성 요소는 조작되지 않고 1로 유지되므로 아무런 영향을 미치지 않습니다). 직교 투영은 원근 투영을 사용하지 않기 때문에 멀리 있는 물체가 작아 보이지 않아 시각적으로 어색한 결과가 나타납니다. 이러한 이유로 직교 투영은 주로 2D 렌더링이나 원근으로 인한 정점 왜곡이 바람직하지 않은 건축 또는 엔지니어링 응용 분야에서 사용됩니다. Blender와 같은 3D 모델링 프로그램에서는 각 객체의 크기를 더 정확하게 표현하기 위해 직교 투영을 모델링에 사용하는 경우가 있습니다. 아래에서 Blender의 두 투영 방식을 비교해 볼 수 있습니다.</p>
 <p><img alt="" src="../../static/perspective_orthographic.png" /></p>
-<p>원근 투영에서는 멀리 있는 꼭짓점이 훨씬 작게 보이는 반면, 직교 투영에서는 각 꼭짓점이 사용자에게서 동일한 거리에 있는 것을 알 수 있습니다.</p>
+<p>원근 투영에서는 멀리 있는 정점이 훨씬 작게 보이는 반면, 직교 투영에서는 각 정점이 사용자에게서 동일한 거리에 있는 것을 알 수 있습니다.</p>
 <h2 id="_9">모든 것을 종합해보면</h2>
 <p>앞서 언급한 각 단계(모델, 뷰, 투영 행렬)에 대해 변환 행렬을 생성합니다. 그런 다음 정점 좌표는 다음과 같이 클립 좌표로 변환됩니다.</p>
 <div class="arithmatex">\[
@@ -1834,7 +1834,7 @@ V_{clip} = M_{projection} \cdot M_{view} \cdot M_{model} \cdot V_{local}
 <ul>
 <li>뒤로 기울어져 바닥에 붙어있어야 합니다.</li>
 <li>우리로부터 조금 더 멀리 떨어져 있습니다.</li>
-<li>원근감이 표현되어야 합니다. (꼭짓점이 멀어질수록 크기가 작아져야 합니다)</li>
+<li>원근감이 표현되어야 합니다. (정점이 멀어질수록 크기가 작아져야 합니다)</li>
 </ul>
 <p>결과가 실제로 이러한 요구 사항을 충족하는지 확인해 보겠습니다.</p>
 <p><img alt="" src="../../static/coordinate_systems_result.png" /></p>
@@ -1844,7 +1844,7 @@ V_{clip} = M_{projection} \cdot M_{view} \cdot M_{model} \cdot V_{local}
 <p>재미 삼아 시간이 지남에 따라 큐브가 회전하도록 두겠습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">glfwGetTime</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">radians</span><span class="p">(</span><span class="mf">50.0f</span><span class="p">),</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">));</span><span class="w"> </span>
 </code></pre></div>
-<p>그다음에는 (인덱스를 지정하지 않았으므로) <code>glDrawArrays</code>를 사용하여 큐브를 그리겠습니다. 이번에는 꼭짓점의 개수를 36개로 지정합니다.</p>
+<p>그다음에는 (인덱스를 지정하지 않았으므로) <code>glDrawArrays</code>를 사용하여 큐브를 그리겠습니다. 이번에는 정점의 개수를 36개로 지정합니다.</p>
 <div class="highlight"><pre><span></span><code><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">);</span>
 </code></pre></div>
 <p>다음과 비슷한 결과가 나올 것입니다. (클릭해서 확인하세요.)</p>

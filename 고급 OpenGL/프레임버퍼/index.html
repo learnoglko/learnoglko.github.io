@@ -1646,7 +1646,7 @@
 <li>모든 어태치먼트는 반드시 완전한(완성된) 상태여야 합니다(메모리 할당 필수).</li>
 <li>각 버퍼에는 동일한 수의 샘플이 포함되어야 합니다.</li>
 </ul>
-<p>샘플이 무엇인지 모르시더라도 걱정하지 마세요. 추후 장에서 설명해 드리겠습니다.</p>
+<p>샘플이 무엇인지 모르시더라도 걱정하지 마세요. 추후 장(안티 에일리어싱 장)에서 설명해 드리겠습니다.</p>
 <p>요구 사항을 보면 프레임버퍼에 연결할 수 있는 일종의 어태치먼트(부착물)를 생성하고 이 어태치먼트를 프레임버퍼에 연결해야 한다는 것을 알 수 있습니다. 모든 요구 사항을 충족한 후에는 <code>GL_FRAMEBUFFER</code>를 인수로 사용하는 <code>glCheckFramebufferStatus</code> 함수를 호출하여 프레임버퍼 처리가 성공적으로 완료되었는지 확인할 수 있습니다. 이 함수는 현재 바인딩된 프레임버퍼를 확인하고 <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glCheckFramebufferStatus.xhtml">사양</a>에 명시된 값 중 하나를 반환합니다. <code>GL_FRAMEBUFFER_COMPLETE</code>가 반환되면 모든 준비가 완료된 것입니다.</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="n">glCheckFramebufferStatus</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GL_FRAMEBUFFER_COMPLETE</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// 축배를 듭시다!</span>

@@ -1753,7 +1753,7 @@
 <p>막히는 부분이 있으면 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/3.1.shaders_uniform/shaders_uniform.cpp">여기</a>에서 소스 코드를 확인하세요.</p>
 <p>보시다시피, 유니폼은 매 프레임마다 변경될 수 있는 속성을 설정하거나 애플리케이션과 셰이더 간에 데이터를 교환하는 데 유용한 도구입니다. 하지만 각 정점에 색상을 설정하려면 어떻게 해야 할까요? 이 경우 정점의 개수만큼 유니폼을 선언해야 합니다. 더 나은 해결책은 정점 속성에 더 많은 데이터를 포함하는 것이며, 지금부터 그 방법을 살펴보겠습니다.</p>
 <h3 id="_6">더 많은 속성!</h3>
-<p>이전 장에서 VBO를 채우고, 정점 속성 포인터를 구성하고, 이 모든 것을 VAO에 저장하는 방법을 살펴보았습니다. 이번에는 정점 데이터에 색상 데이터도 추가하려고 합니다. 정점 배열에 3개의 float형 색상 데이터를 추가할 것입니다. 삼각형의 각 꼭짓점에 각각 빨강, 초록, 파랑 ​​색상을 할당합니다.</p>
+<p>이전 장에서 VBO를 채우고, 정점 속성 포인터를 구성하고, 이 모든 것을 VAO에 저장하는 방법을 살펴보았습니다. 이번에는 정점 데이터에 색상 데이터도 추가하려고 합니다. 정점 배열에 3개의 float형 색상 데이터를 추가할 것입니다. 삼각형의 각 정점에 각각 빨강, 초록, 파랑 ​​색상을 할당합니다.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">vertices</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// positions         // colors</span>
 <span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">   </span><span class="c1">// bottom right</span>
@@ -1802,7 +1802,7 @@
 <p>막히는 부분이 있으면 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/1.getting_started/3.2.shaders_interpolation/shaders_interpolation.cpp">여기</a>에서 소스 코드를 확인하세요.</p>
 <p>이미지가 예상과 다를 수 있는 이유는, 현재 보이는 것처럼 방대한 색상 팔레트가 아닌 단 3가지 색상만 제공했기 때문입니다. 이는 프래그먼트 셰이더의 <strong class="g">프래그먼트 보간(fragment interpolation)</strong>이라는 기능 때문입니다. 삼각형을 렌더링할 때 래스터화 단계에서는 일반적으로 처음에 지정한 정점 수보다 훨씬 많은 프래그먼트가 생성됩니다. 그러면 래스터라이저는 삼각형 모양에서 각 프래그먼트의 위치를 ​​​​결정합니다.<br />
 이러한 위치를 기반으로 프래그먼트 셰이더의 모든 입력 변수를 보간합니다. 예를 들어, 위쪽 점이 녹색이고 아래쪽 점이 파란색인 선이 있다고 가정해 보겠습니다. 프래그먼트 셰이더가 선의 약 70% 지점에 있는 프래그먼트에서 실행되면, 결과적으로 해당 프래그먼트의 색상 입력 속성은 녹색과 파란색의 선형 조합, 더 정확하게는 30% 파란색과 70% 녹색이 됩니다.</p>
-<p>삼각형에서 일어난 일이 바로 이것입니다. 꼭짓점이 3개이므로 색상도 3개입니다. 삼각형의 픽셀들을 보면 대략 5만 개 정도의 프래그먼트가 포함되어 있을 것으로 추정되는데, 프래그먼트 셰이더가 이 픽셀들 사이에서 색상을 보간한 것입니다. 색상을 자세히 살펴보면 모든 것이 이해가 될 것입니다. 빨간색에서 파란색으로 갈수록 먼저 보라색을 거쳐 다시 파란색으로 변합니다. 프래그먼트 보간은 프래그먼트 셰이더의 모든 입력 속성에 적용됩니다.</p>
+<p>삼각형에서 일어난 일이 바로 이것입니다. 정점이 3개이므로 색상도 3개입니다. 삼각형의 픽셀들을 보면 대략 5만 개 정도의 프래그먼트가 포함되어 있을 것으로 추정되는데, 프래그먼트 셰이더가 이 픽셀들 사이에서 색상을 보간한 것입니다. 색상을 자세히 살펴보면 모든 것이 이해가 될 것입니다. 빨간색에서 파란색으로 갈수록 먼저 보라색을 거쳐 다시 파란색으로 변합니다. 프래그먼트 보간은 프래그먼트 셰이더의 모든 입력 속성에 적용됩니다.</p>
 <h2 id="_7">우리가 만든 셰이더 클래스</h2>
 <p>셰이더를 작성하고 컴파일하고 관리하는 것은 상당히 번거로울 수 있습니다. 셰이더에 대한 마지막 단계로, 디스크에서 셰이더를 읽어 컴파일 및 링크하고 오류를 검사하며 사용하기 쉬운 셰이더 클래스를 만들어 우리의 작업을 좀 더 간편하게 만들어 보겠습니다. 또한 이를 통해 지금까지 배운 지식들을 유용한 추상 객체로 캡슐화하는 방법에 대한 아이디어를 얻을 수 있을 것입니다.</p>
 <p>학습 및 이식성을 위해 셰이더 클래스 전체를 헤더 파일에 작성하겠습니다. 먼저 필요한 헤더 파일을 추가하고 클래스 구조를 정의해 보겠습니다.</p>
