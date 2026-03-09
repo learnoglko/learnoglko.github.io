@@ -1,41 +1,42 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import re
 
-# 두 벡터 정의
-u = np.array([1, 1, 0])
-v = np.array([0, 1, 1])
+def has_batchim(word):
+    if not word:
+        return False
+    last_char = word[-1]
+    if 0xAC00 <= ord(last_char) <= 0xD7AF:
+        return (ord(last_char) - 0xAC00) % 28 != 0
+    return False
 
-# 외적 계산
-w = np.cross(u, v)
+def fix_josa(text):
+    """텍스트 내 조사를 받침에 맞게 교정"""
+    # 교정할 조사 쌍 정의
+    josa_map = {
+        '은': '는', '는': '은',
+        '이': '가', '가': '이',
+        '을': '를', '를': '을',
+        '과': '와', '와': '과'
+    }
+    
+    words = text.split()
+    fixed_words = []
+    
+    for word in words:
+        base = word[:-1]
+        josa = word[-1]
+        
+        if josa in josa_map:
+            should_have_batchim_josa = has_batchim(base)
 
-# 원점
-origin = np.array([0, 0, 0])
+            if should_have_batchim_josa and josa in ['는', '가', '를', '와']:
+                word = base + josa_map[josa]
+            elif not should_have_batchim_josa and josa in ['은', '이', '을', '과']:
+                word = base + josa_map[josa]
+        
+        fixed_words.append(word)
+        
+    return " ".join(fixed_words)
 
-# 인터랙티브 3D 시각화
-fig = plt.figure(figsize=(8,6))
-ax = fig.add_subplot(111, projection='3d')
 
-# 벡터 그리기
-ax.quiver(*origin, *u, color='r', label='u', linewidth=2, arrow_length_ratio=0.1)
-ax.quiver(*origin, *v, color='g', label='v', linewidth=2, arrow_length_ratio=0.1)
-ax.quiver(*origin, *w, color='b', label='u x v', linewidth=2, arrow_length_ratio=0.1)
-
-# 평면 시각화 (u와 v가 만드는 평면)
-plane_x, plane_y = np.meshgrid(np.linspace(0,1.5,2), np.linspace(0,1.5,2))
-# u, v 평면 근사
-plane_z = 0.5*plane_x + 0.5*plane_y  # 단순화된 평면 예시
-ax.plot_surface(plane_x, plane_y, plane_z, color='y', alpha=0.2)
-
-# 축 설정
-ax.set_xlim([0,2])
-ax.set_ylim([0,2])
-ax.set_zlim([0,2])
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Z')
-ax.set_title('벡터 u, v와 외적 u x v (회전 가능)')
-ax.legend()
-ax.view_init(elev=20., azim=30)  # 초기 시점
-plt.tight_layout()
-plt.show()
+sample_text = "텍스처 어태치먼트과 렌더버퍼 객체"
+print(fix_josa(sample_text))
