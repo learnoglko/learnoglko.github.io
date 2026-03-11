@@ -840,12 +840,12 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        감쇄
+        감쇠
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="감쇄">
+    <nav class="md-nav" aria-label="감쇠">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -863,7 +863,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        감쇄 구현하기
+        감쇠 구현하기
       
     </span>
   </a>
@@ -1502,6 +1502,116 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 조명
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    고급 조명
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20%EC%A1%B0%EB%AA%85/%EA%B3%A0%EA%B8%89%20%EC%A1%B0%EB%AA%85/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    고급 조명
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20%EC%A1%B0%EB%AA%85/%EA%B0%90%EB%A7%88%20%EB%B3%B4%EC%A0%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    감마 보정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1555,12 +1665,12 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        감쇄
+        감쇠
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="감쇄">
+    <nav class="md-nav" aria-label="감쇠">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1578,7 +1688,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        감쇄 구현하기
+        감쇠 구현하기
       
     </span>
   </a>
@@ -1721,19 +1831,19 @@
 <p><img alt="" src="../../static/light_casters_point.png" /></p>
 <p>앞 장에서는 단순한 점광원을 다루었습니다. 특정 위치에 광원이 있고, 그 광원에서 모든 방향으로 빛이 산란된다고 가정했습니다. 하지만 우리가 정의한 광원은 광선이 절대 사라지지 않도록 시뮬레이션하여 광원이 매우 강한 것처럼 보이게 했습니다. 대부분의 3D 응용 프로그램에서는 전체 장면이 아닌 광원 근처 영역만 비추는 광원을 시뮬레이션하는 것이 바람직합니다.</p>
 <p>이전 장에서 다룬 조명 장면에 10개의 컨테이너를 추가하면 맨 뒤쪽 컨테이너가 광원 바로 앞에 있는 컨테이너와 동일한 강도로 조명되는 것을 알 수 있습니다. 아직 거리에 따라 빛의 강도가 감소하는 로직이 구현되지 않았기 때문입니다. 우리는 광원에 가까운 컨테이너에 비해 맨 뒤쪽 컨테이너가 약간만 밝게 조명되도록 하고 싶습니다.</p>
-<h3 id="_4">감쇄</h3>
-<p>빛이 이동하는 거리에 따라 빛의 세기가 감소하는 현상을 일반적으로 <strong class="g">감쇄(Attenuation)</strong>라고 합니다. 빛의 세기를 거리에 따라 줄이는 한 가지 방법은 선형 방정식을 사용하는 것입니다. 이러한 방정식은 거리에 따라 빛의 세기를 선형적으로 감소시켜 멀리 있는 물체가 덜 밝게 보이도록 합니다. 그러나 이러한 선형 함수는 현실과 다소 동떨어져 보입니다. 실제 세계에서 빛은 가까이 있을 때는 매우 밝지만, 광원의 밝기는 멀어질수록 급격히 감소하고, 남은 빛의 세기는 거리에 따라 서서히 감소합니다. 따라서 빛의 세기를 줄이는 데에는 다른 방정식이 필요합니다.</p>
-<p>다행히도 똑똑한 사람들이 이미 이 문제를 해결해 주었습니다. 다음 공식은 광원으로부터 파편까지의 거리를 기준으로 감쇄 값을 계산하고, 이 값을 나중에 빛의 강도 벡터와 곱합니다.</p>
+<h3 id="_4">감쇠</h3>
+<p>빛이 이동하는 거리에 따라 빛의 세기가 감소하는 현상을 일반적으로 <strong class="g">감쇠(Attenuation)</strong>라고 합니다. 빛의 세기를 거리에 따라 줄이는 한 가지 방법은 선형 방정식을 사용하는 것입니다. 이러한 방정식은 거리에 따라 빛의 세기를 선형적으로 감소시켜 멀리 있는 물체가 덜 밝게 보이도록 합니다. 그러나 이러한 선형 함수는 현실과 다소 동떨어져 보입니다. 실제 세계에서 빛은 가까이 있을 때는 매우 밝지만, 광원의 밝기는 멀어질수록 급격히 감소하고, 남은 빛의 세기는 거리에 따라 서서히 감소합니다. 따라서 빛의 세기를 줄이는 데에는 다른 방정식이 필요합니다.</p>
+<p>다행히도 똑똑한 사람들이 이미 이 문제를 해결해 주었습니다. 다음 공식은 광원으로부터 파편까지의 거리를 기준으로 감쇠 값을 계산하고, 이 값을 나중에 빛의 강도 벡터와 곱합니다.</p>
 <div class="arithmatex">\[
 \begin{equation} F_{att} = \frac{1.0}{K_c + K_l * d + K_q * d^2} \end{equation}
 \]</div>
-<p>여기서 <span class="arithmatex">\(d\)</span>는 프래그먼트에서 광원까지의 거리를 나타냅니다. 감쇄 값을 계산하기 위해 <strong class="g">상수항</strong> <span class="arithmatex">\(K_c\)</span>, <strong class="g">선형항</strong> <span class="arithmatex">\(K_l\)</span>, <strong class="g">이차항</strong> <span class="arithmatex">\(K_q\)</span>의 세 가지 (설정 가능한) 계수를 정의합니다.</p>
+<p>여기서 <span class="arithmatex">\(d\)</span>는 프래그먼트에서 광원까지의 거리를 나타냅니다. 감쇠 값을 계산하기 위해 <strong class="g">상수항</strong> <span class="arithmatex">\(K_c\)</span>, <strong class="g">선형항</strong> <span class="arithmatex">\(K_l\)</span>, <strong class="g">이차항</strong> <span class="arithmatex">\(K_q\)</span>의 세 가지 (설정 가능한) 계수를 정의합니다.</p>
 <ul>
 <li>상수항은 보통 1.0으로 유지되는데, 이는 분모가 1보다 작아지지 않도록 하기 위한 것입니다. 분모가 1보다 작아지면 특정 거리에서 강도가 증폭되는데, 이는 우리가 원하는 효과가 아니기 때문입니다.</li>
 <li>선형항은 거리 값과 곱해져 강도를 선형적으로 감소시킵니다.</li>
 <li>이차항은 거리의 제곱에 곱해져 광원의 강도가 제곱에 비례하여 감소하도록 합니다. 거리가 짧을 때는 이차항이 선형항에 비해 중요하지 않지만, 거리가 멀어질수록 그 영향이 훨씬 커집니다.</li>
 </ul>
-<p>이차항 때문에 빛은 거리가 충분히 멀어져 이차항이 선형항을 넘어설 때까지는 대부분 선형적으로 감소하다가, 그 이후에는 빛의 강도가 훨씬 빠르게 감소합니다. 결과적으로 가까운 거리에서는 빛이 매우 강하지만, 거리가 멀어질수록 밝기가 급격히 감소하다가 결국에는 더 느린 속도로 밝기가 감소하는 현상이 나타납니다. 다음 그래프는 이러한 감쇄 현상이 100m 거리에서 어떻게 나타나는지를 보여줍니다.</p>
+<p>이차항 때문에 빛은 거리가 충분히 멀어져 이차항이 선형항을 넘어설 때까지는 대부분 선형적으로 감소하다가, 그 이후에는 빛의 강도가 훨씬 빠르게 감소합니다. 결과적으로 가까운 거리에서는 빛이 매우 강하지만, 거리가 멀어질수록 밝기가 급격히 감소하다가 결국에는 더 느린 속도로 밝기가 감소하는 현상이 나타납니다. 다음 그래프는 이러한 감쇠 현상이 100m 거리에서 어떻게 나타나는지를 보여줍니다.</p>
 <p><img alt="" src="../../static/attenuation.png" /></p>
 <p>거리가 가까울수록 빛의 강도가 가장 높지만, 거리가 멀어질수록 강도가 크게 감소하여 약 100m 지점에서 0에 도달하는 것을 볼 수 있습니다. 이것이 바로 우리가 원하는 결과입니다.</p>
 <h4 id="_5">적절한 값을 선택하기</h4>
@@ -1823,8 +1933,8 @@
 </tbody>
 </table>
 <p>보시다시피, 상수항 <span class="arithmatex">\(K_c\)</span>는 모든 경우에 1.0으로 유지됩니다. 선형항 <span class="arithmatex">\(K_l\)</span>은 일반적으로 더 먼 거리를 커버하기 위해 상당히 작은 값으로 설정되며, 이차항 <span class="arithmatex">\(K_q\)</span>는 더욱 작은 값으로 설정됩니다. 구현 시 이러한 값들이 어떤 영향을 미치는지 직접 실험해 보시기 바랍니다. 저희 환경에서는 대부분의 조명에 대해 32~100 정도의 거리면 충분합니다.</p>
-<h4 id="_6">감쇄 구현하기</h4>
-<p>감쇄를 구현하려면 프래그먼트 셰이더에 상수항, 선형항, 이차항 등 세 가지 추가 값이 필요합니다. 이 값들은 이전에 정의한 Light 구조체에 저장하는 것이 가장 좋습니다. 참고로, 이것은 방향광이 아닌 점광원이므로 (이전 장에서처럼) 위치를 사용하여 lightDir을 다시 계산해야 합니다.</p>
+<h4 id="_6">감쇠 구현하기</h4>
+<p>감쇠를 구현하려면 프래그먼트 셰이더에 상수항, 선형항, 이차항 등 세 가지 추가 값이 필요합니다. 이 값들은 이전에 정의한 Light 구조체에 저장하는 것이 가장 좋습니다. 참고로, 이것은 방향광이 아닌 점광원이므로 (이전 장에서처럼) 위치를 사용하여 lightDir을 다시 계산해야 합니다.</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="n">Light</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">  </span>
 
@@ -1842,15 +1952,15 @@
 <span class="n">lightingShader</span><span class="p">.</span><span class="n">setFloat</span><span class="p">(</span><span class="s">&quot;light.linear&quot;</span><span class="p">,</span><span class="w">    </span><span class="mf">0.09f</span><span class="p">);</span>
 <span class="n">lightingShader</span><span class="p">.</span><span class="n">setFloat</span><span class="p">(</span><span class="s">&quot;light.quadratic&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.032f</span><span class="p">);</span><span class="w"> </span>
 </code></pre></div>
-<p>프래그먼트 셰이더에서 감쇄를 구현하는 것은 비교적 간단합니다. 단순히 방정식에 따라 감쇄 값을 계산하고 이 값을 주변광, 확산광 및 반사광 구성 요소에 곱하면 됩니다.</p>
+<p>프래그먼트 셰이더에서 감쇠를 구현하는 것은 비교적 간단합니다. 단순히 방정식에 따라 감쇠 값을 계산하고 이 값을 주변광, 확산광 및 반사광 구성 요소에 곱하면 됩니다.</p>
 <p>방정식이 제대로 작동하려면 광원까지의 거리가 필요합니다. 벡터의 길이를 계산하는 방법을 기억하시나요? 프래그먼트와 광원 사이의 차이 벡터를 계산하고 그 결과 벡터의 길이를 취하면 거리 항을 얻을 수 있습니다. 이를 위해 GLSL의 내장 함수인 <code>length</code>를 사용할 수 있습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">length</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">FragPos</span><span class="p">);</span>
 <span class="kt">float</span><span class="w"> </span><span class="n">attenuation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">constant</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">light</span><span class="p">.</span><span class="n">linear</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
 <span class="w">                    </span><span class="n">light</span><span class="p">.</span><span class="n">quadratic</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">distance</span><span class="p">));</span><span class="w">  </span>
 </code></pre></div>
-<p>그런 다음 이 감쇄 값을 주변광, 확산광 및 반사광 색상에 곱하여 조명 계산에 포함시킵니다.</p>
+<p>그런 다음 이 감쇠 값을 주변광, 확산광 및 반사광 색상에 곱하여 조명 계산에 포함시킵니다.</p>
 <div class="admonition tip">
-<p>주변광 성분을 그대로 두면 거리에 따라 주변 조도가 감소하지 않지만, 광원이 두 개 이상 사용될 경우 모든 주변광 성분이 누적되기 시작합니다. 이 경우에는 주변광도 함께 감쇄시켜야 합니다. 환경에 가장 적합한 설정을 찾기 위해 여러 가지 시도를 해보세요.</p>
+<p>주변광 성분을 그대로 두면 거리에 따라 주변 조도가 감소하지 않지만, 광원이 두 개 이상 사용될 경우 모든 주변광 성분이 누적되기 시작합니다. 이 경우에는 주변광도 함께 감쇠시켜야 합니다. 환경에 가장 적합한 설정을 찾기 위해 여러 가지 시도를 해보세요.</p>
 </div>
 <div class="highlight"><pre><span></span><code><span class="n">ambient</span><span class="w">  </span><span class="o">*=</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span><span class="w"> </span>
 <span class="n">diffuse</span><span class="w">  </span><span class="o">*=</span><span class="w"> </span><span class="n">attenuation</span><span class="p">;</span>
@@ -1859,7 +1969,7 @@
 <p>애플리케이션을 실행하면 다음과 같은 결과가 나타납니다.</p>
 <p><img alt="" src="../../static/light_casters_point_light.png" /></p>
 <p>현재 앞쪽 컨테이너들만 색이 보이고, 가장 가까운 컨테이너가 가장 밝은 것을 볼 수 있습니다. 뒤쪽 컨테이너들은 광원에서 너무 멀리 떨어져 있어 전혀 색깔이 보이지 않습니다. 애플리케이션의 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/2.lighting/5.2.light_casters_point/light_casters_point.cpp">여기</a>에서 확인할 수 있습니다.</p>
-<p>따라서 점광원은 조명 계산에 위치와 감쇄를 설정할 수 있는 광원입니다. 조명 도구에 추가되는 또 다른 유형의 광원인 셈입니다.</p>
+<p>따라서 점광원은 조명 계산에 위치와 감쇠를 설정할 수 있는 광원입니다. 조명 도구에 추가되는 또 다른 유형의 광원인 셈입니다.</p>
 <h2 id="_7">스포트라이트</h2>
 <p>마지막으로 살펴볼 조명은 <strong class="g">스포트라이트</strong>입니다. 스포트라이트는 주변 환경의 특정 위치에 설치된 광원으로, 모든 방향으로 빛을 비추는 대신 특정 방향으로만 빛을 비춥니다. 따라서 스포트라이트가 비추는 방향을 중심으로 일정 반경 내에 있는 물체만 밝게 빛나고, 그 외의 부분은 어둡게 유지됩니다. 가로등이나 손전등이 스포트라이트의 좋은 예입니다.</p>
 <p>OpenGL에서 스포트라이트는 월드 공간 위치, 방향, 그리고 스포트라이트의 반경을 지정하는 차단 각도로 표현됩니다. 각 프래그먼트에 대해 해당 프래그먼트가 스포트라이트의 차단 방향(즉, 원뿔형 범위) 내에 있는지 계산하고, 만약 그렇다면 해당 프래그먼트에 조명을 비춥니다. 다음 이미지는 스포트라이트의 작동 방식을 보여줍니다.</p>
