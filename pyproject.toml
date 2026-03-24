@@ -1,0 +1,11 @@
+[project]
+name = "learn-opengl-korean"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "mkdocs-material>=9.7.6",
+    "properdocs>=1.6.7",
+    "pymdown-extensions>=10.21",
+]
