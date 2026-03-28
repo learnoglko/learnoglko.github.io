@@ -1571,6 +1571,89 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    그림자
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    그림자
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20%EC%A1%B0%EB%AA%85/%EA%B7%B8%EB%A6%BC%EC%9E%90/%EC%84%80%EB%8F%84%EC%9A%B0%20%EB%A7%A4%ED%95%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    섀도우 매핑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1740,7 +1823,7 @@
 <p>그렇다면 확산광을 계산하려면 무엇이 필요할까요?</p>
 <ul>
 <li>법선 벡터: 정점의 표면에 수직인 벡터.</li>
-<li>방향 광선: 광원의 위치와 파편의 위치 차이 벡터인 방향 벡터입니다. 이 광선을 계산하려면 광원의 위치 벡터와 파편의 위치 벡터가 필요합니다.</li>
+<li>방향 광선: 광원의 위치와 프래그먼트의 위치 차이 벡터인 방향 벡터입니다. 이 광선을 계산하려면 광원의 위치 벡터와 프래그먼트의 위치 벡터가 필요합니다.</li>
 </ul>
 <h3 id="_4">법선 벡터</h3>
 <p>법선 벡터는 정점의 표면에 수직인 (단위) 벡터입니다. 정점 자체는 표면이 없기 때문에 (공간상의 한 점일 뿐입니다), 주변 정점들을 이용하여 정점의 표면을 파악하고 법선 벡터를 구합니다. 외적을 이용하면 큐브의 모든 정점에 대한 법선 벡터를 계산할 수 있지만, 3D 큐브는 복잡한 도형이 아니므로 단순히 정점 데이터에 수동으로 추가하는 것이 더 간단합니다. 업데이트된 정점 데이터 배열은 <a href="../../cube_code3/">여기</a>에서 확인할 수 있습니다. 법선 벡터가 각 평면의 표면에 수직인 벡터임을 시각적으로 이해해 보세요 (큐브는 6개의 평면으로 이루어져 있습니다).</p>

@@ -1605,6 +1605,89 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    그림자
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    그림자
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%EA%B3%A0%EA%B8%89%20%EC%A1%B0%EB%AA%85/%EA%B7%B8%EB%A6%BC%EC%9E%90/%EC%84%80%EB%8F%84%EC%9A%B0%20%EB%A7%A4%ED%95%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    섀도우 매핑
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1833,7 +1916,7 @@
 <p>이전 장에서 다룬 조명 장면에 10개의 컨테이너를 추가하면 맨 뒤쪽 컨테이너가 광원 바로 앞에 있는 컨테이너와 동일한 강도로 조명되는 것을 알 수 있습니다. 아직 거리에 따라 빛의 강도가 감소하는 로직이 구현되지 않았기 때문입니다. 우리는 광원에 가까운 컨테이너에 비해 맨 뒤쪽 컨테이너가 약간만 밝게 조명되도록 하고 싶습니다.</p>
 <h3 id="_4">감쇠</h3>
 <p>빛이 이동하는 거리에 따라 빛의 세기가 감소하는 현상을 일반적으로 <strong class="g">감쇠(Attenuation)</strong>라고 합니다. 빛의 세기를 거리에 따라 줄이는 한 가지 방법은 선형 방정식을 사용하는 것입니다. 이러한 방정식은 거리에 따라 빛의 세기를 선형적으로 감소시켜 멀리 있는 물체가 덜 밝게 보이도록 합니다. 그러나 이러한 선형 함수는 현실과 다소 동떨어져 보입니다. 실제 세계에서 빛은 가까이 있을 때는 매우 밝지만, 광원의 밝기는 멀어질수록 급격히 감소하고, 남은 빛의 세기는 거리에 따라 서서히 감소합니다. 따라서 빛의 세기를 줄이는 데에는 다른 방정식이 필요합니다.</p>
-<p>다행히도 똑똑한 사람들이 이미 이 문제를 해결해 주었습니다. 다음 공식은 광원으로부터 파편까지의 거리를 기준으로 감쇠 값을 계산하고, 이 값을 나중에 빛의 강도 벡터와 곱합니다.</p>
+<p>다행히도 똑똑한 사람들이 이미 이 문제를 해결해 주었습니다. 다음 공식은 광원으로부터 프래그먼트까지의 거리를 기준으로 감쇠 값을 계산하고, 이 값을 나중에 빛의 강도 벡터와 곱합니다.</p>
 <div class="arithmatex">\[
 \begin{equation} F_{att} = \frac{1.0}{K_c + K_l * d + K_q * d^2} \end{equation}
 \]</div>
