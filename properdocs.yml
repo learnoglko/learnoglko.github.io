@@ -6,6 +6,7 @@ site_url: https://learnoglko.github.io/
 
 theme:
   name: material
+  custom_dir: src/templates
 
 markdown_extensions:
   - admonition
