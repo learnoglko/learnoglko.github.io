@@ -1924,9 +1924,9 @@
 <p><img alt="" src="../../../static/shadow_mapping_theory_spaces.png" /></p>
 <p>왼쪽 이미지는 방향성 광원(모든 광선이 평행함)이 큐브 아래 표면에 그림자를 드리우는 모습을 보여줍니다. 깊이 맵에 저장된 깊이 값을 사용하여 가장 가까운 지점을 찾고, 이를 통해 프래그먼트가 그림자에 가려져 있는지 여부를 판단합니다. 깊이 맵은 광원에 특화된 뷰 행렬과 투영 행렬을 사용하여 장면을 (광원의 관점에서) 렌더링함으로써 생성됩니다. 이 투영 행렬과 뷰 행렬은 함께 변환 <span class="arithmatex">\(T\)</span>를 형성하여 모든 3D 위치를 광원의 (가시) 좌표 공간으로 변환합니다.</p>
 <div class="admonition tip">
-<p>방향광은 무한히 멀리 떨어져 있는 것으로 모델링되므로 위치를 갖지 않습니다. 하지만 그림자 매핑을 위해서는 광원의 시점에서 장면을 렌더링해야 하므로 광원의 방향을 따라 어딘가의 위치에서 장면을 렌더링해야 합니다.</p>
+<p>방향광은 무한히 멀리 떨어져 있는 것으로 모델링되므로 위치를 갖지 않습니다. 하지만 섀도우 매핑을 위해서는 광원의 시점에서 장면을 렌더링해야 하므로 광원의 방향을 따라 어딘가의 위치에서 장면을 렌더링해야 합니다.</p>
 </div>
-<p>오른쪽 이미지에서는 동일한 방향의 광원과 뷰어를 볼 수 있습니다. 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>에 프래그먼트를 렌더링하는데, 이 점이 그림자에 가려져 있는지 여부를 판단해야 합니다. 이를 위해 먼저 변환 함수 <span class="arithmatex">\(T\)</span>를 사용하여 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>를 광원의 좌표 공간으로 변환합니다. 이제 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>는 광원의 시점에서 본 모습이므로, z 좌표는 깊이에 해당하며 이 예에서는 0.9입니다. 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>를 사용하여 깊이/그림자 맵에서 광원의 시점에서 가장 가까운 가시적인 깊이 값을 얻을 수 있습니다. 이 값은 샘플링된 깊이가 0.4인 점 <span class="arithmatex">\(\vec{\textcolor{green}{C}}\)</span>에 있습니다. 깊이 맵에서 얻은 깊이 값이 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>의 깊이보다 작으므로 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>는 가려져 그림자에 가려져 있다고 결론지을 수 있습니다.</p>
+<p>오른쪽 이미지에서는 동일한 방향의 광원과 뷰어를 볼 수 있습니다. 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>에 프래그먼트를 렌더링하는데, 이 점이 그림자에 가려져 있는지 여부를 판단해야 합니다. 이를 위해 먼저 변환 함수 <span class="arithmatex">\(T\)</span>를 사용하여 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>를 광원의 좌표 공간으로 변환합니다. 이제 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>는 광원의 시점에서 본 모습이므로, z 좌표는 깊이에 해당하며 이 예에서는 0.9입니다. 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>를 사용하여 깊이/섀도우 맵에서 광원의 시점에서 가장 가까운 가시적인 깊이 값을 얻을 수 있습니다. 이 값은 샘플링된 깊이가 0.4인 점 <span class="arithmatex">\(\vec{\textcolor{green}{C}}\)</span>에 있습니다. 깊이 맵에서 얻은 깊이 값이 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>의 깊이보다 작으므로 점 <span class="arithmatex">\(\vec{\textcolor{red}{P}}\)</span>는 가려져 그림자에 가려져 있다고 결론지을 수 있습니다.</p>
 <p>따라서 섀도우 매핑은 두 단계로 구성됩니다. 첫 번째 단계에서는 깊이 맵을 렌더링하고, 두 번째 단계에서는 장면을 정상적으로 렌더링한 후 생성된 깊이 맵을 사용하여 프래그먼트가 그림자에 가려져 있는지 여부를 계산합니다. 다소 복잡하게 들릴 수 있지만, 단계별로 살펴보면 이해하기 쉬울 것입니다.</p>
 <h2 id="_3">깊이 맵</h2>
 <p>첫 번째 단계에서는 깊이 맵을 생성해야 합니다. 깊이 맵은 광원의 시점에서 렌더링된 깊이 텍스처로, 그림자 테스트에 사용됩니다. 장면의 렌더링 결과를 텍스처에 저장해야 하므로 프레임 버퍼가 다시 필요합니다.</p>
@@ -2011,7 +2011,7 @@
 <span class="p">}</span><span class="w">  </span>
 </code></pre></div>
 <p>이 빈 프래그먼트 셰이더는 아무런 처리도 하지 않으며, 실행이 끝나면 깊이 버퍼가 업데이트됩니다. 해당 줄의 주석을 해제하여 깊이를 명시적으로 설정할 수도 있지만, 사실상 내부적으로는 이와 같은 방식으로 처리됩니다.</p>
-<p>이제 깊이/그림자 맵을 렌더링하는 과정은 다음과 같습니다.</p>
+<p>이제 깊이/섀도우 맵을 렌더링하는 과정은 다음과 같습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="n">simpleDepthShader</span><span class="p">.</span><span class="n">use</span><span class="p">();</span>
 <span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">lightSpaceMatrixLocation</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">GL_FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">glm</span><span class="o">::</span><span class="n">value_ptr</span><span class="p">(</span><span class="n">lightSpaceMatrix</span><span class="p">));</span>
 
@@ -2169,7 +2169,7 @@
 <p><img alt="" src="../../../static/shadow_mapping_acne_diagram.png" /></p>
 <p>섀도우 맵은 해상도에 제한이 있기 때문에, 광원에서 비교적 멀리 떨어져 있는 여러 프래그먼트가 깊이 맵에서 동일한 값을 샘플링할 수 있습니다. 이미지는 바닥을 보여주는데, 각 노란색 기울어진 패널은 깊이 맵의 단일 텍셀을 나타냅니다. 보시다시피, 여러 프래그먼트가 동일한 깊이 샘플을 샘플링합니다.</p>
 <p>일반적으로는 문제가 없지만, 광원이 표면을 비스듬히 바라보는 경우 문제가 발생합니다. 이 경우 깊이 맵 또한 비스듬한 각도로 렌더링되기 때문입니다. 그러면 여러 프래그먼트가 동일한 기울어진 깊이 텍셀에 접근하게 되는데, 일부는 바닥 위에 있고 일부는 아래에 있게 되어 그림자 불일치가 발생합니다. 이로 인해 일부 프래그먼트는 그림자에 가려진 것으로 간주되고 일부는 그렇지 않은 것으로 간주되어 이미지에서 줄무늬 패턴이 나타납니다.</p>
-<p>표면(또는 그림자 맵)의 깊이를 작은 편향량만큼 오프셋하는 <strong class="g">그림자 편향(shadow bias)</strong>이라는 간단한 방법을 사용하면 이 문제를 해결할 수 있습니다. 이렇게 하면 프래그먼트가 표면 위에 잘못 표시되는 문제를 방지할 수 있습니다.</p>
+<p>표면(또는 섀도우 맵)의 깊이를 작은 편향량만큼 오프셋하는 <strong class="g">그림자 편향(shadow bias)</strong>이라는 간단한 방법을 사용하면 이 문제를 해결할 수 있습니다. 이렇게 하면 프래그먼트가 표면 위에 잘못 표시되는 문제를 방지할 수 있습니다.</p>
 <p><img alt="" src="../../../static/shadow_mapping_acne_bias.png" /></p>
 <p>바이어스를 적용하면 모든 샘플의 깊이가 표면의 깊이보다 작아지므로 표면 전체가 그림자 없이 정확하게 조명됩니다. 이러한 바이어스는 다음과 같이 구현할 수 있습니다.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="n">bias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.005</span><span class="p">;</span>
@@ -2184,7 +2184,7 @@
 <h3 id="_9">피터 패닝</h3>
 <p>그림자 편향을 사용하는 단점은 객체의 실제 깊이에 오프셋을 적용한다는 것입니다. 결과적으로, 아래 그림에서 볼 수 있듯이 (과장된 편향 값 사용 시) 편향 값이 너무 커지면 실제 객체 위치와 그림자 위치 사이에 눈에 띄는 차이가 발생할 수 있습니다.</p>
 <p><img alt="" src="../../../static/shadow_mapping_peter_panning.png" /></p>
-<p>이 그림자 현상은 객체가 그림자에서 약간 분리되어 보이는 것처럼 보이기 때문에 <strong class="g">피터 패닝</strong>이라고 불립니다. 깊이 맵을 렌더링할 때 전면 컬링을 사용하면 피터 패닝 문제를 대부분 해결할 수 있습니다. 페이스 컬링 챕터에서 설명했듯이 OpenGL은 기본적으로 후면을 컬링합니다. 그림자 맵 단계에서 전면을 컬링하도록 OpenGL에 지시함으로써 이 순서를 바꾸는 것입니다.</p>
+<p>이 그림자 현상은 객체가 그림자에서 약간 분리되어 보이는 것처럼 보이기 때문에 <strong class="g">피터 패닝</strong>이라고 불립니다. 깊이 맵을 렌더링할 때 전면 컬링을 사용하면 피터 패닝 문제를 대부분 해결할 수 있습니다. 페이스 컬링 챕터에서 설명했듯이 OpenGL은 기본적으로 후면을 컬링합니다. 섀도우 맵 단계에서 전면을 컬링하도록 OpenGL에 지시함으로써 이 순서를 바꾸는 것입니다.</p>
 <p>깊이 맵에는 깊이 값만 필요하기 때문에, 솔리드 객체의 경우 앞면의 깊이를 사용하든 뒷면의 깊이를 사용하든 상관없습니다. 뒷면의 깊이를 사용해도 객체 내부에 그림자가 있더라도 결과가 달라지지 않습니다. 어차피 내부는 보이지 않으니까요.</p>
 <p><img alt="" src="../../../static/shadow_mapping_culling.png" /></p>
 <p>피터 패닝 현상을 해결하기 위해 섀도우 맵 생성 중에 모든 정면 면을 제거합니다. 단, 먼저 <code>GL_CULL_FACE</code>를 활성화해야 합니다.</p>
@@ -2222,7 +2222,7 @@
 <p><img alt="" src="../../../static/shadow_mapping_over_sampling_fixed.png" /></p>
 <p>결과적으로, 투영된 파편 좌표가 깊이 맵 범위 내에 있는 부분에만 그림자가 생기고, 광원 절두체 바깥에는 그림자가 보이지 않게 됩니다. 게임에서는 보통 이러한 현상이 원거리에서만 발생하도록 구현하기 때문에, 이전에 나타났던 확연한 검은 영역보다 훨씬 더 자연스러운 효과입니다.</p>
 <h2 id="pcf">PCF</h2>
-<p>현재 그림자는 풍경에 멋진 분위기를 더해주지만, 아직 우리가 원하는 수준에는 미치지 못합니다. 그림자 부분을 확대해 보면 그림자 매핑이 해상도에 따라 어떻게 달라지는지 금방 알 수 있습니다.</p>
+<p>현재 그림자는 풍경에 멋진 분위기를 더해주지만, 아직 우리가 원하는 수준에는 미치지 못합니다. 그림자 부분을 확대해 보면 섀도우 매핑이 해상도에 따라 어떻게 달라지는지 금방 알 수 있습니다.</p>
 <p><img alt="" src="../../../static/shadow_mapping_zoom.png" /></p>
 <p>깊이 맵은 고정된 해상도를 가지므로, 깊이 정보가 텍셀당 하나 이상의 프래그먼트에 걸쳐 나타나는 경우가 많습니다. 결과적으로 여러 프래그먼트가 깊이 맵에서 동일한 깊이 값을 샘플링하여 동일한 그림자 영역을 생성하게 되고, 이로 인해 들쭉날쭉한 블록 모양의 가장자리가 만들어집니다.</p>
 <p>깊이 맵 해상도를 높이거나 광원 절두체를 장면에 최대한 가깝게 맞추면 이러한 덩어리진 그림자를 줄일 수 있습니다.</p>
@@ -2243,7 +2243,7 @@
 <p>여기서 <code>textureSize</code>는 주어진 샘플러 텍스처의 밉맵 레벨 0에서의 너비와 높이를 나타내는 vec2 값을 반환합니다. 이 값을 1로 나누면 단일 텍셀의 크기가 되는데, 이 크기를 사용하여 텍스처 좌표를 오프셋함으로써 각 샘플이 서로 다른 깊이 값을 샘플링하도록 합니다. 여기서는 투영된 좌표의 x, y 값을 중심으로 9개의 값을 샘플링하고, 그림자 가림 현상을 검사한 후, 최종적으로 전체 샘플 수로 평균을 냅니다.</p>
 <p>샘플 수를 늘리거나 texelSize 변수를 변경하면 부드러운 그림자의 품질을 향상시킬 수 있습니다. 아래는 간단한 PCF를 적용한 그림자입니다.</p>
 <p><img alt="" src="../../../static/shadow_mapping_soft_shadows.png" /></p>
-<p>멀리서 보면 그림자가 훨씬 자연스럽고 부드러워 보입니다. 확대해서 보면 그림자 매핑으로 인한 해상도 왜곡 현상이 여전히 나타나지만, 일반적으로 대부분의 용도에서 만족스러운 결과를 얻을 수 있습니다.</p>
+<p>멀리서 보면 그림자가 훨씬 자연스럽고 부드러워 보입니다. 확대해서 보면 섀도우 매핑으로 인한 해상도 왜곡 현상이 여전히 나타나지만, 일반적으로 대부분의 용도에서 만족스러운 결과를 얻을 수 있습니다.</p>
 <p>예제의 전체 소스 코드는 <a href="https://github.com/JoeyDeVries/LearnOpenGL/blob/master/src/5.advanced_lighting/3.1.3.shadow_mapping/shadow_mapping.cpp">여기</a>에서 확인할 수 있습니다.</p>
 <p>PCF에는 실제로 훨씬 더 많은 기능이 있으며, 부드러운 그림자의 품질을 상당히 향상시킬 수 있는 다양한 기술이 있지만, 이 장의 분량을 고려하여 나중에 자세히 다루도록 하겠습니다.</p>
 <h2 id="vs">직교 투영 vs 원근 투영</h2>
@@ -2279,7 +2279,7 @@
 <li><a href="http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/">Tutorial 16 : Shadow mapping</a>: opengl-tutorial.org의 섀도우 매핑 튜토리얼과 유사하지만 몇 가지 추가 설명이 있습니다.</li>
 <li><a href="http://ogldev.atspace.co.uk/www/tutorial23/tutorial23.html">Shadow Mapping - Part 1</a>: ogldev의 또 다른 섀도우 매핑 튜토리얼입니다.</li>
 <li><a href="https://www.youtube.com/watch?v=EsccgeUpdsM">How Shadow Mapping Works</a>: TheBennyBox가 제작한 섀도우 매핑 및 구현 방법에 대한 3부작 유튜브 튜토리얼입니다.</li>
-<li><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee416324%28v=vs.85%29.aspx">Common Techniques to Improve Shadow Depth Maps</a>: 마이크로소프트에서 그림자 맵의 품질을 향상시키는 다양한 기술을 소개하는 훌륭한 기사입니다.</li>
+<li><a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee416324%28v=vs.85%29.aspx">Common Techniques to Improve Shadow Depth Maps</a>: 마이크로소프트에서 섀도우 맵의 품질을 향상시키는 다양한 기술을 소개하는 훌륭한 기사입니다.</li>
 <li><a href="https://www.youtube.com/watch?v=uueB2kVvbHo">How I Implemented Shadows in my Game Engine</a>: ThinMatrix가 섀도우 맵 개선 방법에 대해 설명한 훌륭한 영상입니다.</li>
 </ul>
 
