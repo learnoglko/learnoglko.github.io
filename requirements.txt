@@ -1,3 +1,0 @@
-properdocs
-mkdocs-material>=9.5
-pymdown-extensions>=10.0
