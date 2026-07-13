@@ -71,10 +71,4 @@ nav:
     - 감마 보정: 고급 조명/감마 보정.md
     - 그림자:
       - 섀도우 매핑: 고급 조명/그림자/섀도우 매핑.md
-  
-  - PBR:
-    - 이론: PBR/이론.md
-    - 라이팅: PBR/라이팅.md
-    - IBL:
-      - 확산 조도: PBR/IBL/확산 조도.md
-      - Specular IBL: PBR/IBL/Specular IBL.md
+      - 포인트 섀도우: 고급 조명/그림자/포인트 섀도우.md
